@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icon"/>
+    <qresource prefix="/">
+        <file>notessa_resources/icon/notessa_logo.png</file>
+        <file>notessa_resources/icon/player/pause_icon.png</file>
+        <file>notessa_resources/icon/player/play_icon.png</file>
+        <file>notessa_resources/icon/player/stop_icon.png</file>
+        <file>notessa_resources/icon/player/volume_max_icon.png</file>
+        <file>notessa_resources/icon/player/volume_muted_icon.png</file>
+    </qresource>
+</RCC>
