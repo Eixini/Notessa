@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+dist/
+build/
+eggs/
+*.egg-info/
+poetry.lock
+*.whl
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDEs and editors
+.idea/
+
+# Poetry
+.poetry/
+.cache/
+artifacts/
+.env
+
+# macOS
+*.DS_Store
+
+# Git
+.git/
+*.db
+
+#Other
+desktop.ini
