@@ -38,3 +38,4 @@ artifacts/
 
 #Other
 desktop.ini
+*.qrc
