@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
 
         # Signal - Slots
         self.ui.createTextNoteButton.clicked.connect(self.create_text_note)
-
+        self.ui.closeApplicationButton.clicked.connect(lambda: self.close())
 
 
     def create_text_note(self):
