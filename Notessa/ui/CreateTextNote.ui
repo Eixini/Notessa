@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>CreateTextNoteWindow</class>
+ <widget class="QDialog" name="CreateTextNoteWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,6 +23,19 @@
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
+     <item>
+      <widget class="QLineEdit" name="textNoteName">
+       <property name="inputMask">
+        <string>NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</string>
+       </property>
+       <property name="maxLength">
+        <number>256</number>
+       </property>
+       <property name="placeholderText">
+        <string>Enter note name...</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QTextEdit" name="textNoteField">
        <property name="placeholderText">

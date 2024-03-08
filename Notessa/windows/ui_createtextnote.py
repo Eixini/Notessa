@@ -6,30 +6,37 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDialog, QGridLayout, QHBoxLayout,
-    QLayout, QPushButton, QSizePolicy, QSpacerItem,
-    QTextEdit, QVBoxLayout, QWidget)
+    QLayout, QLineEdit, QPushButton, QSizePolicy,
+    QSpacerItem, QTextEdit, QVBoxLayout, QWidget)
+
 
 class Ui_CreateTextNoteWindow(object):
-    def setupUi(self, Dialog):
-        if not Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
-        Dialog.resize(896, 504)
+    def setupUi(self, Ui_CreateTextNoteWindow):
+        if not Ui_CreateTextNoteWindow.objectName():
+            Ui_CreateTextNoteWindow.setObjectName(u"Ui_CreateTextNoteWindow")
+        Ui_CreateTextNoteWindow.resize(896, 504)
         icon = QIcon()
         icon.addFile(u":/resource/icons/text.png", QSize(), QIcon.Normal, QIcon.Off)
-        Dialog.setWindowIcon(icon)
-        self.gridLayout = QGridLayout(Dialog)
+        Ui_CreateTextNoteWindow.setWindowIcon(icon)
+        self.gridLayout = QGridLayout(Ui_CreateTextNoteWindow)
         self.gridLayout.setObjectName(u"gridLayout")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.textNoteField = QTextEdit(Dialog)
+        self.textNoteName = QLineEdit(Ui_CreateTextNoteWindow)
+        self.textNoteName.setObjectName(u"textNoteName")
+        self.textNoteName.setMaxLength(256)
+
+        self.verticalLayout.addWidget(self.textNoteName)
+
+        self.textNoteField = QTextEdit(Ui_CreateTextNoteWindow)
         self.textNoteField.setObjectName(u"textNoteField")
 
         self.verticalLayout.addWidget(self.textNoteField)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.saveButton = QPushButton(Dialog)
+        self.saveButton = QPushButton(Ui_CreateTextNoteWindow)
         self.saveButton.setObjectName(u"saveButton")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -46,7 +53,7 @@ class Ui_CreateTextNoteWindow(object):
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer)
 
-        self.cancelButton = QPushButton(Dialog)
+        self.cancelButton = QPushButton(Ui_CreateTextNoteWindow)
         self.cancelButton.setObjectName(u"cancelButton")
         sizePolicy.setHeightForWidth(self.cancelButton.sizePolicy().hasHeightForWidth())
         self.cancelButton.setSizePolicy(sizePolicy)
@@ -63,15 +70,16 @@ class Ui_CreateTextNoteWindow(object):
         self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
 
-        self.retranslateUi(Dialog)
+        self.retranslateUi(Ui_CreateTextNoteWindow)
 
-        QMetaObject.connectSlotsByName(Dialog)
+        QMetaObject.connectSlotsByName(Ui_CreateTextNoteWindow)
     # setupUi
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.textNoteField.setPlaceholderText(QCoreApplication.translate("Dialog", u"Here you can write your note...", None))
-        self.saveButton.setText(QCoreApplication.translate("Dialog", u"Save", None))
-        self.cancelButton.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
+    def retranslateUi(self, Ui_CreateTextNoteWindow):
+        Ui_CreateTextNoteWindow.setWindowTitle(QCoreApplication.translate("Ui_CreateTextNoteWindow", u"Dialog", None))
+        self.textNoteName.setPlaceholderText(QCoreApplication.translate("Ui_CreateTextNoteWindow", u"Enter note name...", None))
+        self.textNoteField.setPlaceholderText(QCoreApplication.translate("Ui_CreateTextNoteWindow", u"Here you can write your note...", None))
+        self.saveButton.setText(QCoreApplication.translate("Ui_CreateTextNoteWindow", u"Save", None))
+        self.cancelButton.setText(QCoreApplication.translate("Ui_CreateTextNoteWindow", u"Cancel", None))
     # retranslateUi
 
