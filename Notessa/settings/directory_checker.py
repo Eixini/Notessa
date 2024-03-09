@@ -51,3 +51,14 @@ class DirectoryChecker():
     def text_notes_directory(self) -> str:
         return f'{self.applicationDataLocation}{QDir.separator()}Notes{QDir.separator()}TextNotes'
 
+
+    def voice_notes_directory(self) -> str:
+        return f'{self.applicationDataLocation}{QDir.separator()}Notes{QDir.separator()}VoiceNotes'
+
+
+    def video_notes_directory(self) -> str:
+        return f'{self.applicationDataLocation}{QDir.separator()}Notes{QDir.separator()}VideoNotes'
+
+
+    def paint_notes_directory(self) -> str:
+        return f'{self.applicationDataLocation}{QDir.separator()}Notes{QDir.separator()}PaintNotes'
