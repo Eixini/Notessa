@@ -22,11 +22,18 @@ class CreateTextNote(QDialog):
 
         if not self.ui.textNoteName.text() == '':
             datetime = QDateTime.currentDateTime()
-            file = str(f'{self.ui.textNoteName.text()}_'
-                         f'{datetime.date().day()}-{datetime.date().month()}-{datetime.date().year()}_'
-                         f'{datetime.time().hour()}-{datetime.time().minute()}-{datetime.time().second()}.txt')
+            fileName = str()
 
-            with open(f'{dirCheck.text_notes_directory()}{QDir.separator()}{file}', 'w') as fp:
+            if QFile(f'{dirCheck.text_notes_directory()}{QDir.separator()}{self.ui.textNoteName.text()}.txt').exists():
+                print('A note with the same name already exists.')
+                fileName = str(f'{dirCheck.text_notes_directory()}{QDir.separator()}{self.ui.textNoteName.text()}_'
+                            f'{datetime.date().day()}-{datetime.date().month()}-{datetime.date().year()}_'
+                            f'{datetime.time().hour()}-{datetime.time().minute()}-{datetime.time().second()}-{datetime.time().msec()}.txt')
+            else:
+                fileName = str(f'{dirCheck.text_notes_directory()}{QDir.separator()}{self.ui.textNoteName.text()}.txt')
+
+            print(fileName)
+            with open(fileName, 'w') as fp:
                 fp.write(self.ui.textNoteField.toPlainText())
 
             print('Text note create!')
