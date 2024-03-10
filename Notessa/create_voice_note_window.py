@@ -60,17 +60,22 @@ class CreateVoiceNote(QDialog):
         self.recorder.setMediaFormat(self._media_format)
         self.session.setRecorder(self.recorder)
 
+        # ???????
+        self.recorder.durationChanged.connect(self.changeLabel)
+
         # Signal - Slot
         self.ui.recordButton.clicked.connect(self.record_voice_note)
         self.ui.stopButton.clicked.connect(self.stop_voice_note)
         self.ui.backButtun.clicked.connect(lambda: self.reject())
+        self.ui.pauseButton.clicked.connect(self.pause_voice_note)
 
 
     def record_voice_note(self):
-        if not self.ui.voiceNoteName.text() == '':
+        if (not self.ui.voiceNoteName.text() == '' and
+                not self.recorder.recorderState() == 'RecorderState.PausedState'):
 
             self.ui.stopButton.setEnabled(True)
-            self.ui.recordButton.setEnabled(False)
+            # self.ui.recordButton.setEnabled(False)
 
             # Avoid name change
             self.ui.voiceNoteName.setReadOnly(True)
@@ -78,16 +83,20 @@ class CreateVoiceNote(QDialog):
             self.ui.pauseButton.setVisible(True)
             print(self.recorder.recorderState())
             dirChecker = DirectoryChecker()
-            datetime = QDateTime().currentDateTime()
             file = f'{dirChecker.voice_notes_directory()}{QDir.separator()}{self.ui.voiceNoteName.text()}'
             url = f'{QDir.toNativeSeparators(file)}'
             self.recorder.setOutputLocation(QUrl.fromLocalFile(url))
 
             self.recorder.record()
+        elif self.recorder.recorderState() == 'RecorderState.PausedState':
+            self.recorder.record()
         else:
             msgBox = QMessageBox()
             msgBox.setText('Please, enter note name.')
             msgBox.exec()
+
+    def pause_voice_note(self):
+        self.recorder.pause()
 
     def stop_voice_note(self):
         self.ui.stopButton.setEnabled(False)
@@ -102,3 +111,6 @@ class CreateVoiceNote(QDialog):
             self.recorder.stop()
         self.accept()
 
+    def changeLabel(self):
+        timeDuratin = self.recorder.duration()
+        self.ui.durationLabel.setText(f'{timeDuratin/1000}')
