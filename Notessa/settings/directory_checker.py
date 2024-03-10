@@ -5,7 +5,6 @@ class DirectoryChecker():
 
     def __init__(self):
         self.applicationDataLocation = str(QStandardPaths.writableLocation(QStandardPaths.AppConfigLocation))
-        self.size_notes_on_disk()
 
     def application_directory_checker(self):
         appDir = QDir()
@@ -56,10 +55,12 @@ class DirectoryChecker():
         return f'{self.applicationDataLocation}{QDir.separator()}Notes{QDir.separator()}PaintNotes'
 
     def size_notes_on_disk(self) -> str:
+        """The method allows you to calculate the total number
+        of notes in the notes directory and the amount of disk space they occupy.
+        It also calculates for individual types of notes."""
         dirIter = QDirIterator(f'{self.applicationDataLocation}{QDir.separator()}Notes',
                                flags=QDirIterator.Subdirectories)
-        totalSize = 0
-        textNotesSize = 0
+
         countAndSize = {
             'total': {
                 'size': 0,
@@ -123,10 +124,7 @@ class DirectoryChecker():
         for key, value in countAndSize.items():
             countAndSize[key] = self.convertSize(countAndSize[key])
 
-        # print(f'text notes size: {textNotesSize}, total notes size: {round(totalSize, 2)} {unit}, files count: {filesCount}')
-        print(f'TOTAL:\n\t{countAndSize['total']}\nTEXT:\n\t{countAndSize['text']}')
-
-        # return {'size': totalSize, 'unit:' unit, }
+        return countAndSize
 
     def convertSize(self, val: dict):
         print(val)
