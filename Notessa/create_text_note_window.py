@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QDialog, QWidget
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
 from PySide6.QtCore import QEasingCurve, QPropertyAnimation, Qt, Slot, QFile, QDateTime, QDir
 from windows.ui_createtextnote import Ui_CreateTextNoteWindow
 from settings.directory_checker import DirectoryChecker
@@ -10,6 +10,8 @@ class CreateTextNote(QDialog):
         super().__init__()
         self.ui = Ui_CreateTextNoteWindow()
         self.ui.setupUi(self)
+
+        self.ui.textNoteName.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_ ]){255}'))
 
         #Signal-Slot
         self.ui.cancelButton.clicked.connect(lambda: self.reject())
