@@ -32,18 +32,11 @@ class Ui_ShowNotesWindow(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.renameNoteButton = QPushButton(ShowNotesWindow)
-        self.renameNoteButton.setObjectName(u"renameNoteButton")
+        self.showNoteButton = QPushButton(ShowNotesWindow)
+        self.showNoteButton.setObjectName(u"showNoteButton")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.renameNoteButton.sizePolicy().hasHeightForWidth())
-        self.renameNoteButton.setSizePolicy(sizePolicy)
-
-        self.horizontalLayout.addWidget(self.renameNoteButton)
-
-        self.showNoteButton = QPushButton(ShowNotesWindow)
-        self.showNoteButton.setObjectName(u"showNoteButton")
         sizePolicy.setHeightForWidth(self.showNoteButton.sizePolicy().hasHeightForWidth())
         self.showNoteButton.setSizePolicy(sizePolicy)
 
@@ -79,7 +72,6 @@ class Ui_ShowNotesWindow(object):
 
     def retranslateUi(self, ShowNotesWindow):
         ShowNotesWindow.setWindowTitle(QCoreApplication.translate("ShowNotesWindow", u"Show notes", None))
-        self.renameNoteButton.setText(QCoreApplication.translate("ShowNotesWindow", u"Rename note", None))
         self.showNoteButton.setText(QCoreApplication.translate("ShowNotesWindow", u"Show note", None))
         self.deleteNoteButton.setText(QCoreApplication.translate("ShowNotesWindow", u"Delete note", None))
         self.toMainMenuButton.setText(QCoreApplication.translate("ShowNotesWindow", u"Main menu", None))

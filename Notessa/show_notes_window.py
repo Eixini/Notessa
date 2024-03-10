@@ -6,7 +6,7 @@ from Notessa.model.NotesModel import NotesModel
 from Notessa.settings.directory_checker import DirectoryChecker
 from Notessa.NoteItemDelegate import NoteItemDelegate
 from Notessa.note_windows.ShowTextNoteWindow import ShowTextNoteWindow
-import Notessa.rc_icons
+from Notessa import rc_icons
 
 
 class ShowNotesWindow(QDialog):
@@ -14,6 +14,11 @@ class ShowNotesWindow(QDialog):
         super().__init__()
         self.ui = Ui_ShowNotesWindow()
         self.ui.setupUi(self)
+
+        self.setWindowIcon(QIcon(':/resource/icons/list.png'))
+        self.ui.toMainMenuButton.setIcon(QIcon(':/resource/icons/back.png'))
+        self.ui.showNoteButton.setIcon(QIcon(':/resource/icons/info.png'))
+        self.ui.deleteNoteButton.setIcon(QIcon(':/resource/icons/garbage.png'))
 
         # Model
         self.noteModel = NotesModel()
