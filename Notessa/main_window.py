@@ -4,6 +4,7 @@ from PySide6.QtCore import QEasingCurve, QPropertyAnimation, Qt, Slot
 from windows.ui_mainwindow import Ui_MainWindow
 from show_notes_window import ShowNotesWindow
 from create_text_note_window import CreateTextNote
+from create_voice_note_window import CreateVoiceNote
 
 import rc_icons
 
@@ -25,6 +26,7 @@ class MainWindow(QMainWindow):
         # Signal - Slots
         self.ui.showNotesButton.clicked.connect(self.show_notes)
         self.ui.createTextNoteButton.clicked.connect(self.create_text_note)
+        self.ui.createVoiceNoteButton.clicked.connect(self.create_voice_note)
         self.ui.closeApplicationButton.clicked.connect(lambda: self.close())
 
 
@@ -36,3 +38,7 @@ class MainWindow(QMainWindow):
     def create_text_note(self):
         createTextNoteWindow = CreateTextNote()
         createTextNoteWindow.exec()
+
+    def create_voice_note(self):
+        createVoiceNoteWindow = CreateVoiceNote()
+        createVoiceNoteWindow.exec()
