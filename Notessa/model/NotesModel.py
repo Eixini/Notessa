@@ -45,7 +45,6 @@ class NotesModel(QAbstractTableModel):
 
 
     def removeRows(self, position, rows, QModelIndex):
-        print('NotesModel.removeRow call!')
         if not len(self._data) == 0:
             dirChecker = DirectoryChecker()
             self.beginRemoveRows(QModelIndex, position, position+rows-1)
@@ -54,6 +53,10 @@ class NotesModel(QAbstractTableModel):
                 try:
                     if self._data[position][0] == 'txt':
                         fileName = f'{dirChecker.text_notes_directory()}{QDir.separator()}{self._data[position][1]}.txt'
+                        QFile(fileName).remove()
+                        print(f'File deleted: {fileName}')
+                    if self._data[position][0] == 'wav':
+                        fileName = f'{dirChecker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.wav'
                         QFile(fileName).remove()
                         print(f'File deleted: {fileName}')
                 except Exception as err:
