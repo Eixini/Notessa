@@ -36,12 +36,6 @@ class CreateVoiceNote(QDialog):
         self.ui.stopButton.setIcon(QIcon(':/resource/icons/stop.png'))
         self.ui.backButtun.setIcon(QIcon(':/resource/icons/back.png'))
 
-        # Timer
-        # self.timer = QTimer()
-        # self.timer.setInterval(100)  # msecs 100 = 1/10th sec
-        # self.timer.timeout.connect(self.ui.durationLabel.setText())
-        # self.timer.start()
-
         # For data input
         self.data = QByteArray()
 
