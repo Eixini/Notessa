@@ -5,6 +5,7 @@ from windows.ui_mainwindow import Ui_MainWindow
 from show_notes_window import ShowNotesWindow
 from create_text_note_window import CreateTextNote
 from create_voice_note_window import CreateVoiceNote
+from create_video_note_window import CreateVideoNote
 
 import rc_icons
 
@@ -27,14 +28,12 @@ class MainWindow(QMainWindow):
         self.ui.showNotesButton.clicked.connect(self.show_notes)
         self.ui.createTextNoteButton.clicked.connect(self.create_text_note)
         self.ui.createVoiceNoteButton.clicked.connect(self.create_voice_note)
+        self.ui.createVideoNoteButton.clicked.connect(self.create_video_note)
         self.ui.closeApplicationButton.clicked.connect(lambda: self.close())
-
-
 
     def show_notes(self):
         showNotes = ShowNotesWindow()
         showNotes.exec()
-
 
     def create_text_note(self):
         createTextNoteWindow = CreateTextNote()
@@ -43,3 +42,7 @@ class MainWindow(QMainWindow):
     def create_voice_note(self):
         createVoiceNoteWindow = CreateVoiceNote()
         createVoiceNoteWindow.exec()
+
+    def create_video_note(self):
+        createVideoNoteWindow = CreateVideoNote()
+        createVideoNoteWindow.exec()
