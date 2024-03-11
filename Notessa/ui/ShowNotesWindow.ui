@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>674</height>
+    <width>871</width>
+    <height>569</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,37 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="filterLabel">
+         <property name="text">
+          <string>Show specific types of notes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="filterList">
+         <property name="placeholderText">
+          <string>Show note types</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
      <item>
       <widget class="QTableView" name="notesTableView">
        <property name="frameShape">
@@ -44,6 +75,29 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
+        <widget class="QPushButton" name="deleteNoteButton">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+         <property name="text">
+          <string>Delete note</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QPushButton" name="showNoteButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -53,13 +107,6 @@
          </property>
          <property name="text">
           <string>Show note</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="deleteNoteButton">
-         <property name="text">
-          <string>Delete note</string>
          </property>
         </widget>
        </item>
