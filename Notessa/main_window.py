@@ -35,6 +35,7 @@ class MainWindow(QMainWindow):
         showNotes = ShowNotesWindow()
         showNotes.exec()
 
+
     def create_text_note(self):
         createTextNoteWindow = CreateTextNote()
         createTextNoteWindow.exec()

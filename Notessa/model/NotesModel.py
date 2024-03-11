@@ -45,29 +45,23 @@ class NotesModel(QAbstractTableModel):
 
 
     def removeRows(self, position, rows, QModelIndex):
-        if not len(self._data) == 0:
-            dirChecker = DirectoryChecker()
-            self.beginRemoveRows(QModelIndex, position, position+rows-1)
-            for i in range(rows):
+        dirChecker = DirectoryChecker()
+        self.layoutAboutToBeChanged.emit()
+        self.beginRemoveRows(QModelIndex, position, position+rows-1)
+        for i in range(rows):
+            if self._data[position][0] == 'txt':
+                fileName = f'{dirChecker.text_notes_directory()}{QDir.separator()}{self._data[position][1]}.txt'
+                QFile(fileName).remove()
+                print(f'File deleted: {fileName}')
+            if self._data[position][0] == 'wav':
+                fileName = f'{dirChecker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.wav'
+                QFile(fileName).remove()
+                print(f'File deleted: {fileName}')
+            del (self._data[position])
 
-                try:
-                    if self._data[position][0] == 'txt':
-                        fileName = f'{dirChecker.text_notes_directory()}{QDir.separator()}{self._data[position][1]}.txt'
-                        QFile(fileName).remove()
-                        print(f'File deleted: {fileName}')
-                    if self._data[position][0] == 'wav':
-                        fileName = f'{dirChecker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.wav'
-                        QFile(fileName).remove()
-                        print(f'File deleted: {fileName}')
-                except Exception as err:
-                    print(str(err))
-                del (self._data[position])
-
-            self.endRemoveRows()
-            self.layoutChanged.emit()
-            return True
-
-
+        self.endRemoveRows()
+        self.layoutChanged.emit()
+        return True
 
     def initialData(self):
 
