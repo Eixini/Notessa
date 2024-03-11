@@ -129,5 +129,4 @@ class CreateVoiceNote(QDialog):
         if sec >= 60:
             result['min'] = int(sec / 60)
             result['sec'] = sec % 60
-        print(result)
         return result
