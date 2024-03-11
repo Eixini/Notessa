@@ -6,6 +6,7 @@ from Notessa.model.NotesModel import NotesModel
 from Notessa.settings.directory_checker import DirectoryChecker
 from Notessa.NoteItemDelegate import NoteItemDelegate
 from Notessa.note_windows.ShowTextNoteWindow import ShowTextNoteWindow
+from Notessa.note_windows.ShowVoiceNoteWindow import ShowVoiceNoteWindow
 from Notessa import rc_icons
 
 
@@ -52,4 +53,5 @@ class ShowNotesWindow(QDialog):
             textNoteWindow = ShowTextNoteWindow(data)
             textNoteWindow.exec()
         elif noteType == 'wav':
-            pass
+            voiceNoteWindow = ShowVoiceNoteWindow(data)
+            voiceNoteWindow.exec()
