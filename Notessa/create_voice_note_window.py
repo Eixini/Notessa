@@ -66,9 +66,13 @@ class CreateVoiceNote(QDialog):
         # Signal - Slot
         self.ui.recordButton.clicked.connect(self.record_voice_note)
         self.ui.stopButton.clicked.connect(self.stop_voice_note)
-        self.ui.backButtun.clicked.connect(lambda: self.reject())
+        self.ui.backButtun.clicked.connect(self.back)
         self.ui.pauseButton.clicked.connect(self.pause_voice_note)
 
+    def back(self):
+        if self.recorder.recorderState() == 'RecorderState.RecordingState':
+            self.recorder.stop()
+        self.accept()
 
     def record_voice_note(self):
         if (not self.ui.voiceNoteName.text() == '' and
@@ -112,5 +116,18 @@ class CreateVoiceNote(QDialog):
         self.accept()
 
     def changeLabel(self):
-        timeDuratin = self.recorder.duration()
-        self.ui.durationLabel.setText(f'{timeDuratin/1000}')
+        timeDuratin = self.msec_convert(self.recorder.duration())
+        if(len(timeDuratin) == 3):
+            self.ui.durationLabel.setText(f'{timeDuratin['min']}:{timeDuratin['sec']}.{timeDuratin['msec']}')
+
+    def msec_convert(self, ms):
+        result = {'min': 0, 'sec': 0, 'msec': 0}
+        sec = int(ms/1000)
+        msec = ms % 1000
+        result['sec'] = sec
+        result['msec'] = msec
+        if sec >= 60:
+            result['min'] = int(sec / 60)
+            result['sec'] = sec % 60
+        print(result)
+        return result
