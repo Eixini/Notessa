@@ -58,6 +58,11 @@ class CreateVideoNote(QDialog):
         #
         self.ui.videoNoteName.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_]){255}'))
 
+        # Alternative to QMediaRecorder.duration()
+        self._duration = 0
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self.update_duration)
+
         # Signal - Slot
         self.ui.recordButton.clicked.connect(self.record)
         self.ui.pauseButton.clicked.connect(self.pause)
@@ -106,8 +111,11 @@ class CreateVideoNote(QDialog):
 
             self._media_recorder.record()
             self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/recording.png').scaledToWidth(50).scaledToHeight(50))
+
+            self._timer.start(1000)
         elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState:
             self._media_recorder.record()
+            self._timer.start(1000)
         else:
             msgBox = QMessageBox()
             msgBox.setText('Please, enter note name.')
@@ -116,26 +124,30 @@ class CreateVideoNote(QDialog):
     def pause(self):
         self._media_recorder.pause()
         self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/pause.png').scaledToWidth(50).scaledToHeight(50))
+        #
+        self._timer.stop()
 
     def stop(self):
         self._media_recorder.stop()
         self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/video_off.png').scaledToWidth(50).scaledToHeight(50))
-
+        # Reset duration
+        self._timer.stop()
+        self._duration = 0
 
     def back(self):
         self.reject()
 
     def changeLabel(self):
-        timeDuratin = self.msec_convert(self._media_recorder.duration())
-        if(len(timeDuratin) == 3):
-            self.ui.durationLabel.setText(f'{timeDuratin['min']}:{timeDuratin['sec']}.{timeDuratin['msec']}')
+        timeDuratin = self.sec_convert(self._duration)
+        self.ui.durationLabel.setText(f'{timeDuratin['min']}:{timeDuratin['sec']}')
 
-    def msec_convert(self, ms):
-        result = {'min': 0, 'sec': 0, 'msec': 0}
-        sec = int(ms/1000)
-        msec = ms % 1000
+    def update_duration(self):
+        self._duration += 1
+        print(f'Duration: {self._duration}')
+
+    def sec_convert(self, sec):
+        result = {'min': 0, 'sec': 0}
         result['sec'] = sec
-        result['msec'] = msec
         if sec >= 60:
             result['min'] = int(sec / 60)
             result['sec'] = sec % 60
