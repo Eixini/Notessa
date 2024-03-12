@@ -57,6 +57,10 @@ class NotesModel(QAbstractTableModel):
                 fileName = f'{dirChecker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.wav'
                 QFile(fileName).remove()
                 print(f'File deleted: {fileName}')
+            if self._data[position][0] == 'mp4':
+                fileName = f'{dirChecker.video_notes_directory()}{QDir.separator()}{self._data[position][1]}.mp4'
+                QFile(fileName).remove()
+                print(f'File deleted: {fileName}')
             del (self._data[position])
 
         self.endRemoveRows()
@@ -89,9 +93,17 @@ class NotesModel(QAbstractTableModel):
             if '.wav' in fileInfo:
                 dict = []
                 fInfo = QFileInfo(f'{voiceNotesFolder}{QDir.separator()}{fileInfo}')
-                #dict['type'] = fInfo.suffix()
-                #dict['name'] = fInfo.baseName()
-                #dict['date'] = fInfo.birthTime().toString()
+                dict.append(fInfo.suffix())
+                dict.append(fInfo.baseName())
+                dict.append(fInfo.birthTime().toString())
+
+                fileInfoList.append(dict)
+
+        videoNotesFolder = dirChecker.video_notes_directory()
+        for fileInfo in os.listdir(videoNotesFolder):
+            if '.mp4' in fileInfo:
+                dict = []
+                fInfo = QFileInfo(f'{videoNotesFolder}{QDir.separator()}{fileInfo}')
                 dict.append(fInfo.suffix())
                 dict.append(fInfo.baseName())
                 dict.append(fInfo.birthTime().toString())
