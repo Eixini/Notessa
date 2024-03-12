@@ -1,0 +1,8 @@
+PyQt6==6.6.1
+PyQt6-Qt6==6.6.2
+PyQt6-sip==13.6.0
+PySide6==6.6.2
+PySide6_Addons==6.6.2
+PySide6_Essentials==6.6.2
+qt6-applications==6.5.0.2.3
+qt6-tools==6.5.0.1.3
