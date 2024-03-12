@@ -55,7 +55,6 @@ class ShowNotesWindow(QDialog):
     def delete_note(self):
         index = self.ui.notesTableView.currentIndex()
         proxy_index = self._proxy_model.mapToSource(index)
-        print(f'index: {index}, proxi index: {proxy_index}')
         self._note_model.removeRows(proxy_index.row(), 1, proxy_index)
         self._note_model.submit()
 
@@ -88,6 +87,7 @@ class ShowNotesWindow(QDialog):
             self._proxy_model.setFilterRegularExpression(QRegularExpression('wav'))
             self._proxy_model.setFilterKeyColumn(0)
         elif index == 3:
-            pass
+            self._proxy_model.setFilterRegularExpression(QRegularExpression('mp4'))
+            self._proxy_model.setFilterKeyColumn(0)
         elif index == 4:
             pass
