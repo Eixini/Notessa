@@ -15,6 +15,10 @@ from Notessa.windows.ui_createvoicenote import Ui_CreateVoiceNote
 from  Notessa.settings.directory_checker import DirectoryChecker
 from Notessa import rc_icons
 
+"""
+Mark:
+- check device availability before recording;
+"""
 
 class CreateVoiceNote(QDialog):
     def __init__(self):
@@ -28,16 +32,10 @@ class CreateVoiceNote(QDialog):
         self.ui.voiceNoteName.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_]){255}'))
 
         # Buttons settings
-        self.ui.pauseButton.setVisible(False)
-        self.ui.stopButton.setEnabled(False)
-        self.ui.recordButton.setEnabled(True)
         self.ui.recordButton.setIcon(QIcon(':/resource/icons/play.png'))
         self.ui.pauseButton.setIcon(QIcon(':/resource/icons/pause.png'))
         self.ui.stopButton.setIcon(QIcon(':/resource/icons/stop.png'))
         self.ui.backButtun.setIcon(QIcon(':/resource/icons/back.png'))
-
-        # For data input
-        self.data = QByteArray()
 
         # Inputs devices
         self.input_devices = QMediaDevices.audioInputs()
@@ -46,16 +44,13 @@ class CreateVoiceNote(QDialog):
         # Audio settings
         self.session = QMediaCaptureSession()
         self.session.setAudioInput(self.audioInput)
-        self.recorder = QMediaRecorder()
-        self.recorder.setQuality(QMediaRecorder.VeryHighQuality)
+        self._media_recorder = QMediaRecorder()
+        self._media_recorder.setQuality(QMediaRecorder.Quality.VeryHighQuality)
         self._media_format = QMediaFormat()
         self._media_format.setFileFormat(QMediaFormat.FileFormat.Wave)
         self._media_format.setAudioCodec(QMediaFormat.AudioCodec.Wave)
-        self.recorder.setMediaFormat(self._media_format)
-        self.session.setRecorder(self.recorder)
-
-        # ???????
-        self.recorder.durationChanged.connect(self.changeLabel)
+        self._media_recorder.setMediaFormat(self._media_format)
+        self.session.setRecorder(self._media_recorder)
 
         # Signal - Slot
         self.ui.recordButton.clicked.connect(self.record_voice_note)
@@ -63,38 +58,51 @@ class CreateVoiceNote(QDialog):
         self.ui.backButtun.clicked.connect(self.back)
         self.ui.pauseButton.clicked.connect(self.pause_voice_note)
 
+        self._media_recorder.durationChanged.connect(self.changeLabel)
+        self._media_recorder.recorderStateChanged.connect(self.update_record_state)
+
+    def update_record_state(self, state):
+        print(f'Record state: {self._media_recorder.recorderState()}')
+        if self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState:
+            self.ui.recordButton.setEnabled(False)
+            self.ui.pauseButton.setEnabled(True)
+            self.ui.stopButton.setEnabled(True)
+        elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState:
+            self.ui.recordButton.setEnabled(True)
+            self.ui.pauseButton.setEnabled(False)
+            self.ui.stopButton.setEnabled(True)
+        elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.StoppedState:
+            self.ui.recordButton.setEnabled(True)
+            self.ui.pauseButton.setEnabled(False)
+            self.ui.stopButton.setEnabled(False)
+
+
     def back(self):
-        if self.recorder.recorderState() == 'RecorderState.RecordingState':
-            self.recorder.stop()
+        if self._media_recorder.recorderState() == 'RecorderState.RecordingState':
+            self._media_recorder.stop()
         self.accept()
 
     def record_voice_note(self):
         if (not self.ui.voiceNoteName.text() == '' and
-                not self.recorder.recorderState() == 'RecorderState.PausedState'):
-
-            self.ui.stopButton.setEnabled(True)
-            # self.ui.recordButton.setEnabled(False)
-
+                not self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState):
             # Avoid name change
             self.ui.voiceNoteName.setReadOnly(True)
 
-            self.ui.pauseButton.setVisible(True)
-            print(self.recorder.recorderState())
             dirChecker = DirectoryChecker()
             file = f'{dirChecker.voice_notes_directory()}{QDir.separator()}{self.ui.voiceNoteName.text()}'
             url = f'{QDir.toNativeSeparators(file)}'
-            self.recorder.setOutputLocation(QUrl.fromLocalFile(url))
+            self._media_recorder.setOutputLocation(QUrl.fromLocalFile(url))
 
-            self.recorder.record()
-        elif self.recorder.recorderState() == 'RecorderState.PausedState':
-            self.recorder.record()
+            self._media_recorder.record()
+        elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState:
+            self._media_recorder.record()
         else:
             msgBox = QMessageBox()
             msgBox.setText('Please, enter note name.')
             msgBox.exec()
 
     def pause_voice_note(self):
-        self.recorder.pause()
+        self._media_recorder.pause()
 
     def stop_voice_note(self):
         self.ui.stopButton.setEnabled(False)
@@ -102,15 +110,15 @@ class CreateVoiceNote(QDialog):
         self.ui.pauseButton.setVisible(False)
         self.ui.voiceNoteName.setReadOnly(False)
 
-        self.recorder.stop()
+        self._media_recorder.stop()
 
     def closeEvent(self, *args):
-        if self.recorder is not None:
-            self.recorder.stop()
+        if self._media_recorder is not None:
+            self._media_recorder.stop()
         self.accept()
 
     def changeLabel(self):
-        timeDuratin = self.msec_convert(self.recorder.duration())
+        timeDuratin = self.msec_convert(self._media_recorder.duration())
         if(len(timeDuratin) == 3):
             self.ui.durationLabel.setText(f'{timeDuratin['min']}:{timeDuratin['sec']}.{timeDuratin['msec']}')
 
