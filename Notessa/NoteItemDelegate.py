@@ -26,3 +26,5 @@ class NoteItemDelegate(QStyledItemDelegate):
             painter.drawPixmap(rect, QPixmap(icons['text']))
         if noteType == 'wav':
             painter.drawPixmap(rect, QPixmap(icons['voice']))
+        if noteType == 'mp4':
+            painter.drawPixmap(rect, QPixmap(icons['video']))
