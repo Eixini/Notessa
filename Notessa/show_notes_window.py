@@ -8,6 +8,7 @@ from Notessa.settings.directory_checker import DirectoryChecker
 from Notessa.NoteItemDelegate import NoteItemDelegate
 from Notessa.note_windows.ShowTextNoteWindow import ShowTextNoteWindow
 from Notessa.note_windows.ShowVoiceNoteWindow import ShowVoiceNoteWindow
+from Notessa.note_windows.ShowVideoNoteWindow import ShowVideoNoteWindow
 from Notessa import rc_icons
 
 
@@ -74,6 +75,9 @@ class ShowNotesWindow(QDialog):
         elif sort_note_type == 'wav':
             voiceNoteWindow = ShowVoiceNoteWindow(data)
             voiceNoteWindow.exec()
+        elif sort_note_type == 'mp4':
+            videoNoteWindow = ShowVideoNoteWindow(data)
+            videoNoteWindow.exec()
 
     def filter_notes(self):
         index = self.ui.filterList.currentIndex()
