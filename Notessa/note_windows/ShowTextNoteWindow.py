@@ -4,7 +4,7 @@ from PySide6.QtCore import QEasingCurve, QPropertyAnimation, Qt, Slot, QFile, QD
 from Notessa.windows.ui_shownoteswindow import Ui_ShowNotesWindow
 from Notessa.settings.directory_checker import DirectoryChecker
 from Notessa.windows.ui_showtextnotewindow import Ui_ShowTextNoteWindow
-import Notessa.rc_icons
+from Notessa import rc_icons
 
 class ShowTextNoteWindow(QDialog):
     def __init__(self, noteData: list):

@@ -1,13 +1,13 @@
 from PySide6.QtWidgets import QMainWindow, QWidget
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtCore import QEasingCurve, QPropertyAnimation, Qt, Slot
-from windows.ui_mainwindow import Ui_MainWindow
-from show_notes_window import ShowNotesWindow
-from create_text_note_window import CreateTextNote
-from create_voice_note_window import CreateVoiceNote
-from create_video_note_window import CreateVideoNote
+from Notessa.windows.ui_mainwindow import Ui_MainWindow
+from Notessa.show_notes_window import ShowNotesWindow
+from Notessa.create_text_note_window import CreateTextNote
+from Notessa.create_voice_note_window import CreateVoiceNote
+from Notessa.create_video_note_window import CreateVideoNote
 
-import rc_icons
+from Notessa import rc_icons
 
 class MainWindow(QMainWindow):
     def __init__(self):

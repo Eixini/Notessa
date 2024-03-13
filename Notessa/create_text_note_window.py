@@ -1,9 +1,9 @@
 from PySide6.QtWidgets import QDialog, QWidget
 from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
 from PySide6.QtCore import QEasingCurve, QPropertyAnimation, Qt, Slot, QFile, QDateTime, QDir
-from windows.ui_createtextnote import Ui_CreateTextNoteWindow
-from settings.directory_checker import DirectoryChecker
-import rc_icons
+from Notessa.windows.ui_createtextnote import Ui_CreateTextNoteWindow
+from Notessa.settings.directory_checker import DirectoryChecker
+from Notessa import rc_icons
 
 class CreateTextNote(QDialog):
     def __init__(self):

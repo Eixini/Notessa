@@ -12,7 +12,7 @@ from PySide6.QtMultimedia import (QAudioFormat, QAudioSource, QMediaDevices,
     QAudioSink, QAudioDevice, QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput)
 from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis
 from Notessa.windows.ui_createvoicenote import Ui_CreateVoiceNote
-from  Notessa.settings.directory_checker import DirectoryChecker
+from Notessa.settings.directory_checker import DirectoryChecker
 from Notessa import rc_icons
 
 """
