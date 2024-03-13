@@ -139,7 +139,7 @@ class CreateVideoNote(QDialog):
 
     def changeLabel(self):
         timeDuratin = self.sec_convert(self._duration)
-        self.ui.durationLabel.setText(f'{timeDuratin['min']}:{timeDuratin['sec']}')
+        self.ui.durationLabel.setText(f'{timeDuratin["min"]}:{timeDuratin["sec"]}')
 
     def update_duration(self):
         self._duration += 1

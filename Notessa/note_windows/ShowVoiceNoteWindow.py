@@ -57,7 +57,7 @@ class ShowVoiceNoteWindow(QDialog):
 
         # Set the maximum slider value based on the final length of the audio file (msec)
         duration = self.msec_convert(self._media_player.duration())
-        self.ui.durationLabel.setText(f'{duration['min']}:{duration['sec']}')
+        self.ui.durationLabel.setText(f'{duration["min"]}:{duration["sec"]}')
         # Changing the position of the slider depending on the current moment of playback (msec)
         self.ui.positionSlider.setMaximum(self._media_player.duration())
 
@@ -79,7 +79,7 @@ class ShowVoiceNoteWindow(QDialog):
 
     def on_position_changed(self):
         position = self.msec_convert(self._media_player.position())
-        self.ui.currentPositionLabel.setText(f'{position['min']}:{position['sec']}')
+        self.ui.currentPositionLabel.setText(f'{position["min"]}:{position["sec"]}')
         self.ui.positionSlider.setValue(self._media_player.position())
 
     def change_duration_slider(self):

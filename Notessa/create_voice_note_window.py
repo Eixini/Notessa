@@ -120,7 +120,7 @@ class CreateVoiceNote(QDialog):
     def changeLabel(self):
         timeDuratin = self.msec_convert(self._media_recorder.duration())
         if(len(timeDuratin) == 3):
-            self.ui.durationLabel.setText(f'{timeDuratin['min']}:{timeDuratin['sec']}.{timeDuratin['msec']}')
+            self.ui.durationLabel.setText(f'{timeDuratin["min"]}:{timeDuratin["sec"]}.{timeDuratin["msec"]}')
 
     def msec_convert(self, ms):
         result = {'min': 0, 'sec': 0, 'msec': 0}
