@@ -27,7 +27,7 @@ class CreateVideoNote(QDialog):
         self.ui.setupUi(self)
 
         # Icon set
-        self.setWindowIcon(QIcon(':/resources/icons/video.png'))
+        self.setWindowIcon(QIcon(':/resource/icons/video.png'))
         self.ui.recordButton.setIcon(QIcon(':/resource/icons/play.png'))
         self.ui.pauseButton.setIcon(QIcon(':/resource/icons/pause.png'))
         self.ui.stopButton.setIcon(QIcon(':/resource/icons/stop.png'))
