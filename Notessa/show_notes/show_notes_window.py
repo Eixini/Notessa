@@ -1,15 +1,15 @@
-from PySide6.QtWidgets import QDialog, QWidget, QHeaderView, QAbstractItemView
-from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtCore import (QEasingCurve, QPropertyAnimation, Qt, Slot, QFile,
-                            QDateTime, QDir, QModelIndex, QSortFilterProxyModel, QRegularExpression)
-from Notessa.windows.ui_shownoteswindow import Ui_ShowNotesWindow
+from PySide6.QtWidgets import QDialog, QHeaderView, QAbstractItemView
+from PySide6.QtGui import QIcon
+from PySide6.QtCore import QSortFilterProxyModel, QRegularExpression
+from Notessa.show_notes.ui_shownoteswindow import Ui_ShowNotesWindow
+
 from Notessa.model.NotesModel import NotesModel
-from Notessa.settings.directory_checker import DirectoryChecker
-from Notessa.NoteItemDelegate import NoteItemDelegate
-from Notessa.note_windows.ShowTextNoteWindow import ShowTextNoteWindow
-from Notessa.note_windows.ShowVoiceNoteWindow import ShowVoiceNoteWindow
-from Notessa.note_windows.ShowVideoNoteWindow import ShowVideoNoteWindow
-from Notessa import rc_icons
+from Notessa.model.NoteItemDelegate import NoteItemDelegate
+from Notessa.text_note.ShowTextNoteWindow import ShowTextNoteWindow
+from Notessa.voice_note.ShowVoiceNoteWindow import ShowVoiceNoteWindow
+from Notessa.video_note.ShowVideoNoteWindow import ShowVideoNoteWindow
+from Notessa.paint_note.show_paint_note_window import ShowPaintNoteWindow
+from Notessa.resource import rc_icons
 
 
 class ShowNotesWindow(QDialog):
@@ -78,6 +78,9 @@ class ShowNotesWindow(QDialog):
         elif sort_note_type == 'mp4':
             videoNoteWindow = ShowVideoNoteWindow(data)
             videoNoteWindow.exec()
+        elif sort_note_type == 'png':
+            paintNoteWindow = ShowPaintNoteWindow(data)
+            paintNoteWindow.exec()
 
     def filter_notes(self):
         index = self.ui.filterList.currentIndex()
@@ -94,4 +97,5 @@ class ShowNotesWindow(QDialog):
             self._proxy_model.setFilterRegularExpression(QRegularExpression('mp4'))
             self._proxy_model.setFilterKeyColumn(0)
         elif index == 4:
-            pass
+            self._proxy_model.setFilterRegularExpression(QRegularExpression('png'))
+            self._proxy_model.setFilterKeyColumn(0)
