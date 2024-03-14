@@ -30,3 +30,4 @@ python3 -m Notessa.app
 
 ## Known Issues
 - There is no check for a connected microphone and webcam
+- When recording a video note, if you pause it, the recording will behave incorrectly
