@@ -1,12 +1,5 @@
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QGridLayout, QPushButton,
-    QSizePolicy, QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtCore import QCoreApplication, QMetaObject, Qt
+from PySide6.QtWidgets import QGridLayout, QPushButton, QSizePolicy, QTextEdit, QVBoxLayout
 
 class Ui_ShowTextNoteWindow(object):
     def setupUi(self, ShowTextNoteWindow):
