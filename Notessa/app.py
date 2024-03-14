@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtWidgets import QApplication
 from Notessa.main_window.main_window import MainWindow
 from Notessa.common_modules.directory_checker import DirectoryChecker
 

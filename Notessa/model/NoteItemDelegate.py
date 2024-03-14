@@ -1,7 +1,6 @@
-import PyQt6.QtWidgets
-from PySide6.QtWidgets import QStyledItemDelegate, QStyleOptionViewItem, QItemDelegate, QStyle
-from PySide6.QtCore import QModelIndex, QPoint, QRect, QModelRoleData, Qt
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtWidgets import QStyledItemDelegate, QStyleOptionViewItem
+from PySide6.QtCore import QPoint, QRect, Qt
+from PySide6.QtGui import QPixmap
 from Notessa.resource import rc_icons
 
 class NoteItemDelegate(QStyledItemDelegate):

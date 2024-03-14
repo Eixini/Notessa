@@ -1,7 +1,5 @@
-from PySide6.QtWidgets import QDialog, QWidget, QHeaderView, QAbstractItemView
-from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtCore import QEasingCurve, QPropertyAnimation, Qt, Slot, QFile, QDateTime, QDir, QModelIndex
-from Notessa.show_notes.ui_shownoteswindow import Ui_ShowNotesWindow
+from PySide6.QtWidgets import QDialog
+from PySide6.QtCore import QDir
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.text_note.ui_showtextnotewindow import Ui_ShowTextNoteWindow
 from Notessa.resource import rc_icons
