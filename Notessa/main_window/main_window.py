@@ -1,13 +1,13 @@
-from PySide6.QtWidgets import QMainWindow, QWidget
+from PySide6.QtWidgets import QMainWindow
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtCore import QEasingCurve, QPropertyAnimation, Qt, Slot
-from Notessa.windows.ui_mainwindow import Ui_MainWindow
-from Notessa.show_notes_window import ShowNotesWindow
-from Notessa.create_text_note_window import CreateTextNote
-from Notessa.create_voice_note_window import CreateVoiceNote
-from Notessa.create_video_note_window import CreateVideoNote
+from Notessa.main_window.ui_mainwindow import Ui_MainWindow
+from Notessa.show_notes.show_notes_window import ShowNotesWindow
+from Notessa.text_note.create_text_note_window import CreateTextNote
+from Notessa.voice_note.create_voice_note_window import CreateVoiceNote
+from Notessa.video_note.create_video_note_window import CreateVideoNote
+from Notessa.paint_note.create_paint_note_window import CreatePaintNote
 
-from Notessa import rc_icons
+from Notessa.resource import rc_icons
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -29,6 +29,7 @@ class MainWindow(QMainWindow):
         self.ui.createTextNoteButton.clicked.connect(self.create_text_note)
         self.ui.createVoiceNoteButton.clicked.connect(self.create_voice_note)
         self.ui.createVideoNoteButton.clicked.connect(self.create_video_note)
+        self.ui.createPaintNoteButton.clicked.connect(self.create_paint_note)
         self.ui.closeApplicationButton.clicked.connect(lambda: self.close())
 
     def show_notes(self):
@@ -46,3 +47,7 @@ class MainWindow(QMainWindow):
     def create_video_note(self):
         createVideoNoteWindow = CreateVideoNote()
         createVideoNoteWindow.exec()
+
+    def create_paint_note(self):
+        createPaintNoteWindow = CreatePaintNote()
+        createPaintNoteWindow.exec()
