@@ -2,7 +2,7 @@ import PyQt6.QtWidgets
 from PySide6.QtWidgets import QStyledItemDelegate, QStyleOptionViewItem, QItemDelegate, QStyle
 from PySide6.QtCore import QModelIndex, QPoint, QRect, QModelRoleData, Qt
 from PySide6.QtGui import QIcon, QPixmap
-from Notessa import rc_icons
+from Notessa.resource import rc_icons
 
 class NoteItemDelegate(QStyledItemDelegate):
 
@@ -28,3 +28,5 @@ class NoteItemDelegate(QStyledItemDelegate):
             painter.drawPixmap(rect, QPixmap(icons['voice']))
         if noteType == 'mp4':
             painter.drawPixmap(rect, QPixmap(icons['video']))
+        if noteType == 'png':
+            painter.drawPixmap(rect, QPixmap(icons['paint']))
