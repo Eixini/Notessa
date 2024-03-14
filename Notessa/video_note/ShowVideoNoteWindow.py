@@ -1,18 +1,10 @@
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-                            QMetaObject, QObject, QPoint, QRect, QTimer,
-                            QSize, QTime, QUrl, Qt, QByteArray, QIODevice, QDir, QRegularExpression, Slot)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform, QRegularExpressionValidator)
-from PySide6.QtWidgets import (QApplication, QDialog, QGridLayout, QLabel,
-    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
-    QWidget, QMessageBox,)
-from PySide6.QtMultimedia import (QAudioFormat, QAudioSource, QMediaDevices,
-    QAudioSink, QAudioDevice, QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput, QMediaPlayer, QAudioOutput)
-from Notessa.windows.ui_showvideonotewindow import Ui_ShowVideoNoteWindow
-from Notessa.settings.directory_checker import DirectoryChecker
-from Notessa import rc_icons
+from PySide6.QtCore import QUrl, QDir
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QDialog
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
+from Notessa.video_note.ui_showvideonotewindow import Ui_ShowVideoNoteWindow
+from Notessa.common_modules.directory_checker import DirectoryChecker
+from Notessa.resource import rc_icons
 
 
 class ShowVideoNoteWindow(QDialog):
