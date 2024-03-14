@@ -1,19 +1,10 @@
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect, QTimer,
-    QSize, QTime, QUrl, Qt, QByteArray, QIODevice, QDir, QRegularExpression)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform, QRegularExpressionValidator)
-from PySide6.QtWidgets import (QApplication, QDialog, QGridLayout, QLabel,
-    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
-    QWidget, QMessageBox,)
-from PySide6.QtMultimedia import (QAudioFormat, QAudioSource, QMediaDevices,
-    QAudioSink, QAudioDevice, QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput)
-from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis
-from Notessa.windows.ui_createvoicenote import Ui_CreateVoiceNote
-from Notessa.settings.directory_checker import DirectoryChecker
-from Notessa import rc_icons
+from PySide6.QtCore import QUrl, QDir
+from PySide6.QtGui import QIcon, QRegularExpressionValidator
+from PySide6.QtWidgets import QDialog, QMessageBox
+from PySide6.QtMultimedia import QMediaDevices, QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput
+from Notessa.voice_note.ui_createvoicenote import Ui_CreateVoiceNote
+from Notessa.common_modules.directory_checker import DirectoryChecker
+from Notessa.resource import rc_icons
 
 """
 Mark:
