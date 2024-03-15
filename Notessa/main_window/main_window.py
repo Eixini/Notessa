@@ -6,6 +6,7 @@ from Notessa.text_note.create_text_note_window import CreateTextNote
 from Notessa.voice_note.create_voice_note_window import CreateVoiceNote
 from Notessa.video_note.create_video_note_window import CreateVideoNote
 from Notessa.paint_note.create_paint_note_window import CreatePaintNote
+from Notessa.paint_note.create_canvas_window import CreateCanvasWindow
 
 from Notessa.resource import rc_icons
 
@@ -49,5 +50,12 @@ class MainWindow(QMainWindow):
         createVideoNoteWindow.exec()
 
     def create_paint_note(self):
-        createPaintNoteWindow = CreatePaintNote()
-        createPaintNoteWindow.exec()
+        result, canvas_size = self.set_size()
+        if not (canvas_size.width() == 0 or canvas_size.height() == 0) or not result == 0:
+            createPaintNoteWindow = CreatePaintNote(canvas_size)
+            createPaintNoteWindow.exec()
+
+    def set_size(self):
+        create_canvas = CreateCanvasWindow()
+        result, size = create_canvas.exec()
+        return result, size
