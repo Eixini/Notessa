@@ -7,7 +7,6 @@ from Notessa.common_modules.directory_checker import DirectoryChecker
 def main():
     app = QApplication(sys.argv)
     app.setApplicationName('Notessa')
-    app.setApplicationVersion('0.1')
 
     window = MainWindow()
     window.show()
