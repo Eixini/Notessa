@@ -10,8 +10,8 @@ from Notessa.paint_note.create_canvas_window import CreateCanvasWindow
 from Notessa.resource import rc_icons
 
 class CreatePaintNote(QDialog):
-    def __init__(self, canvas_size):
-        super().__init__()
+    def __init__(self, parent, canvas_size):
+        super().__init__(parent)
 
         self.ui = Ui_CreatePaintNote()
         self.ui.setupUi(self)

@@ -13,8 +13,8 @@ from Notessa.resource import rc_icons
 
 
 class ShowNotesWindow(QDialog):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
         self.ui = Ui_ShowNotesWindow()
         self.ui.setupUi(self)
 
@@ -70,16 +70,16 @@ class ShowNotesWindow(QDialog):
 
         data = self._note_model.getCurrentData(sort_index)
         if sort_note_type == 'txt':
-            textNoteWindow = ShowTextNoteWindow(data)
+            textNoteWindow = ShowTextNoteWindow(self, data)
             textNoteWindow.exec()
         elif sort_note_type == 'wav':
-            voiceNoteWindow = ShowVoiceNoteWindow(data)
+            voiceNoteWindow = ShowVoiceNoteWindow(self, data)
             voiceNoteWindow.exec()
         elif sort_note_type == 'mp4':
-            videoNoteWindow = ShowVideoNoteWindow(data)
+            videoNoteWindow = ShowVideoNoteWindow(self, data)
             videoNoteWindow.exec()
         elif sort_note_type == 'png':
-            paintNoteWindow = ShowPaintNoteWindow(data)
+            paintNoteWindow = ShowPaintNoteWindow(self, data)
             paintNoteWindow.exec()
 
     def filter_notes(self):

@@ -6,8 +6,8 @@ from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.resource import rc_icons
 
 class CreateTextNote(QDialog):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
         self.ui = Ui_CreateTextNoteWindow()
         self.ui.setupUi(self)
 

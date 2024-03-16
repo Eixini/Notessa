@@ -8,8 +8,8 @@ from Notessa.resource import rc_icons
 
 
 class ShowVoiceNoteWindow(QDialog):
-    def __init__(self, noteData: list):
-        super().__init__()
+    def __init__(self, parent, noteData: list):
+        super().__init__(parent)
         self.ui = Ui_ShowVoiceNoteWindow()
         self.ui.setupUi(self)
 

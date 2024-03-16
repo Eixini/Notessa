@@ -8,7 +8,7 @@ from Notessa.resource import rc_icons
 
 
 class ShowVideoNoteWindow(QDialog):
-    def __init__(self,  noteData: list):
+    def __init__(self, parent, noteData: list):
         super().__init__()
         self.ui = Ui_ShowVideoNoteWindow()
         self.ui.setupUi(self)

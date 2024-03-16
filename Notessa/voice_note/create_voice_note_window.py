@@ -12,8 +12,8 @@ Mark:
 """
 
 class CreateVoiceNote(QDialog):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
         self.ui = Ui_CreateVoiceNote()
         self.ui.setupUi(self)
 
@@ -31,9 +31,9 @@ class CreateVoiceNote(QDialog):
 
         # Audio settings
         self._input_devices = None
-        self._audio_input = QAudioInput()
-        self._session = QMediaCaptureSession()
-        self._media_recorder = QMediaRecorder()
+        self._audio_input = QAudioInput(self)
+        self._session = QMediaCaptureSession(self)
+        self._media_recorder = QMediaRecorder(self)
         self._media_format = QMediaFormat()
 
         self.microphone_initialization()
@@ -94,7 +94,7 @@ class CreateVoiceNote(QDialog):
         print(f'Current index: {index}, value: {self._input_devices[index].description()}')
         self._audio_input = QAudioInput(self._input_devices[index])
         # print(f'{self._audio_input}')
-        # self._session.setAudioInput(self._audio_input)
+        self._session.setAudioInput(self._audio_input)
         # self._session.audioInputChanged.connect(self.audio_input_changed)
 
     def audio_input_changed(self):
@@ -142,7 +142,8 @@ class CreateVoiceNote(QDialog):
         self._media_recorder.stop()
 
     def closeEvent(self, *args):
-        if self._media_recorder is not None:
+        if (self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState or
+                self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState):
             self._media_recorder.stop()
         self.accept()
 
@@ -161,3 +162,16 @@ class CreateVoiceNote(QDialog):
             result['min'] = int(sec / 60)
             result['sec'] = sec % 60
         return result
+
+    def __del__(self):
+        # Signal - Slot
+        self.ui.recordButton.clicked.connect(self.record_voice_note)
+        self.ui.stopButton.clicked.connect(self.stop_voice_note)
+        self.ui.pauseButton.clicked.connect(self.pause_voice_note)
+
+        self._media_recorder.durationChanged.connect(self.changeLabel)
+        self._media_recorder.recorderStateChanged.connect(self.update_record_state)
+        self.ui.availableDevicesList.currentIndexChanged.connect(self.microphone_selection_changed)
+
+        # Signal - Slot
+        self.ui.backButtun.clicked.connect(self.back)

@@ -5,7 +5,7 @@ from Notessa.text_note.ui_showtextnotewindow import Ui_ShowTextNoteWindow
 from Notessa.resource import rc_icons
 
 class ShowTextNoteWindow(QDialog):
-    def __init__(self, noteData: list):
+    def __init__(self, parent, noteData: list):
         super().__init__()
         self.ui = Ui_ShowTextNoteWindow()
         self.ui.setupUi(self)

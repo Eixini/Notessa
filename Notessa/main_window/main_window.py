@@ -34,25 +34,25 @@ class MainWindow(QMainWindow):
         self.ui.closeApplicationButton.clicked.connect(lambda: self.close())
 
     def show_notes(self):
-        showNotes = ShowNotesWindow()
+        showNotes = ShowNotesWindow(self)
         showNotes.exec()
 
     def create_text_note(self):
-        createTextNoteWindow = CreateTextNote()
+        createTextNoteWindow = CreateTextNote(self)
         createTextNoteWindow.exec()
 
     def create_voice_note(self):
-        createVoiceNoteWindow = CreateVoiceNote()
+        createVoiceNoteWindow = CreateVoiceNote(self)
         createVoiceNoteWindow.exec()
 
     def create_video_note(self):
-        createVideoNoteWindow = CreateVideoNote()
+        createVideoNoteWindow = CreateVideoNote(self)
         createVideoNoteWindow.exec()
 
     def create_paint_note(self):
         result, canvas_size = self.set_size()
         if not (canvas_size.width() == 0 or canvas_size.height() == 0) or not result == 0:
-            createPaintNoteWindow = CreatePaintNote(canvas_size)
+            createPaintNoteWindow = CreatePaintNote(self, canvas_size)
             createPaintNoteWindow.exec()
 
     def set_size(self):

@@ -5,8 +5,8 @@ from Notessa.paint_note.ui_showpaintnotewindow import Ui_ShowPaintNoteWindow
 from Notessa.common_modules.directory_checker import DirectoryChecker
 
 class ShowPaintNoteWindow(QDialog):
-    def __init__(self, noteData: list):
-        super().__init__()
+    def __init__(self, parent, noteData: list):
+        super().__init__(parent)
         self.ui = Ui_ShowPaintNoteWindow()
         self.ui.setupUi(self)
 
