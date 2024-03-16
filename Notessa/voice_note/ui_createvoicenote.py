@@ -1,17 +1,48 @@
-from PySide6.QtCore import QCoreApplication, QMetaObject, Qt
-from PySide6.QtGui import QBrush, QColor, QFont, QPalette
-from PySide6.QtWidgets import QGridLayout, QLabel, QLineEdit, QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'CreateVoiceNote.ui'
+##
+## Created by: Qt User Interface Compiler version 6.6.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QSpacerItem, QVBoxLayout, QWidget)
 
 class Ui_CreateVoiceNote(object):
     def setupUi(self, CreateVoiceNote):
         if not CreateVoiceNote.objectName():
             CreateVoiceNote.setObjectName(u"CreateVoiceNote")
-        CreateVoiceNote.resize(370, 324)
+        CreateVoiceNote.resize(326, 368)
         CreateVoiceNote.setModal(True)
         self.gridLayout = QGridLayout(CreateVoiceNote)
         self.gridLayout.setObjectName(u"gridLayout")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.availableDevicesLabel = QLabel(CreateVoiceNote)
+        self.availableDevicesLabel.setObjectName(u"availableDevicesLabel")
+
+        self.verticalLayout.addWidget(self.availableDevicesLabel)
+
+        self.availableDevicesList = QComboBox(CreateVoiceNote)
+        self.availableDevicesList.setObjectName(u"availableDevicesList")
+
+        self.verticalLayout.addWidget(self.availableDevicesList)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer_2)
+
         self.voiceNoteName = QLineEdit(CreateVoiceNote)
         self.voiceNoteName.setObjectName(u"voiceNoteName")
         self.voiceNoteName.setFrame(True)
@@ -147,6 +178,7 @@ class Ui_CreateVoiceNote(object):
 
     def retranslateUi(self, CreateVoiceNote):
         CreateVoiceNote.setWindowTitle(QCoreApplication.translate("CreateVoiceNote", u"Create voice note", None))
+        self.availableDevicesLabel.setText(QCoreApplication.translate("CreateVoiceNote", u"Available devices", None))
         self.voiceNoteName.setPlaceholderText(QCoreApplication.translate("CreateVoiceNote", u"Enter note name...", None))
         self.durationLabel.setText(QCoreApplication.translate("CreateVoiceNote", u"0:00", None))
         self.pauseButton.setText(QCoreApplication.translate("CreateVoiceNote", u"Pause", None))

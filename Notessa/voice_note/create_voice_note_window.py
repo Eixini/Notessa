@@ -19,6 +19,7 @@ class CreateVoiceNote(QDialog):
 
         self.setWindowIcon(QIcon(':/resource/icons/microphone.png'))
         self.ui.voiceNoteName.setReadOnly(False)
+        self.ui.pauseButton.setEnabled(False)
 
         self.ui.voiceNoteName.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_]){255}'))
 
@@ -28,32 +29,32 @@ class CreateVoiceNote(QDialog):
         self.ui.stopButton.setIcon(QIcon(':/resource/icons/stop.png'))
         self.ui.backButtun.setIcon(QIcon(':/resource/icons/back.png'))
 
-        # Inputs devices
-        self.input_devices = QMediaDevices.audioInputs()
-        self.audioInput = QAudioInput(self.input_devices[0])
-
         # Audio settings
-        self.session = QMediaCaptureSession()
-        self.session.setAudioInput(self.audioInput)
+        self._input_devices = None
+        self._audio_input = QAudioInput()
+        self._session = QMediaCaptureSession()
         self._media_recorder = QMediaRecorder()
-        self._media_recorder.setQuality(QMediaRecorder.Quality.VeryHighQuality)
         self._media_format = QMediaFormat()
-        self._media_format.setFileFormat(QMediaFormat.FileFormat.Wave)
-        self._media_format.setAudioCodec(QMediaFormat.AudioCodec.Wave)
-        self._media_recorder.setMediaFormat(self._media_format)
-        self.session.setRecorder(self._media_recorder)
+
+        self.microphone_initialization()
 
         # Signal - Slot
         self.ui.recordButton.clicked.connect(self.record_voice_note)
         self.ui.stopButton.clicked.connect(self.stop_voice_note)
-        self.ui.backButtun.clicked.connect(self.back)
         self.ui.pauseButton.clicked.connect(self.pause_voice_note)
 
         self._media_recorder.durationChanged.connect(self.changeLabel)
         self._media_recorder.recorderStateChanged.connect(self.update_record_state)
+        self.ui.availableDevicesList.currentIndexChanged.connect(self.microphone_selection_changed)
 
-    def update_record_state(self, state):
-        print(f'Record state: {self._media_recorder.recorderState()}')
+        # Signal - Slot
+        self.ui.backButtun.clicked.connect(self.back)
+
+    def update_record_state(self):
+        """
+        Method for checking the status of a record.
+        The state determines which buttons are available to press.
+        """
         if self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState:
             self.ui.recordButton.setEnabled(False)
             self.ui.pauseButton.setEnabled(True)
@@ -67,6 +68,43 @@ class CreateVoiceNote(QDialog):
             self.ui.pauseButton.setEnabled(False)
             self.ui.stopButton.setEnabled(False)
 
+    def microphone_initialization(self):
+        """ Method for initializing the list of available microphones """
+        self._input_devices = QMediaDevices.audioInputs()
+        if len(self._input_devices) > 0:
+            for aud_inp in self._input_devices:
+                self.ui.availableDevicesList.addItem(aud_inp.description())
+            self._audio_input = QAudioInput(self._input_devices[0])
+
+            self._session.setAudioInput(self._audio_input)
+            self._media_recorder.setQuality(QMediaRecorder.Quality.VeryHighQuality)
+
+            self._media_format.setFileFormat(QMediaFormat.FileFormat.Wave)
+            self._media_format.setAudioCodec(QMediaFormat.AudioCodec.Wave)
+            self._media_recorder.setMediaFormat(self._media_format)
+            self._session.setRecorder(self._media_recorder)
+        else:
+            msg = QMessageBox()
+            msg.setText('No microphones available')
+            msg.setIcon(QIcon(':/resource/icons/microphone_off.png'))
+
+    def microphone_selection_changed(self):
+        """ The method is called when the microphone selection has been changed """
+        index = self.ui.availableDevicesList.currentIndex()
+        print(f'Current index: {index}, value: {self._input_devices[index].description()}')
+        self._audio_input = QAudioInput(self._input_devices[index])
+        # print(f'{self._audio_input}')
+        # self._session.setAudioInput(self._audio_input)
+        # self._session.audioInputChanged.connect(self.audio_input_changed)
+
+    def audio_input_changed(self):
+        print('Audio input changed')
+        self._media_recorder.setQuality(QMediaRecorder.Quality.VeryHighQuality)
+
+        self._media_format.setFileFormat(QMediaFormat.FileFormat.Wave)
+        self._media_format.setAudioCodec(QMediaFormat.AudioCodec.Wave)
+        self._media_recorder.setMediaFormat(self._media_format)
+        self._session.setRecorder(self._media_recorder)
 
     def back(self):
         if self._media_recorder.recorderState() == 'RecorderState.RecordingState':
@@ -98,7 +136,7 @@ class CreateVoiceNote(QDialog):
     def stop_voice_note(self):
         self.ui.stopButton.setEnabled(False)
         self.ui.recordButton.setEnabled(True)
-        self.ui.pauseButton.setVisible(False)
+        self.ui.pauseButton.setEnabled(False)
         self.ui.voiceNoteName.setReadOnly(False)
 
         self._media_recorder.stop()
