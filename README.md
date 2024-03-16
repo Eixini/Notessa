@@ -31,3 +31,7 @@ python3 -m Notessa.app
 ## Known Issues
 - There is no check for a connected microphone and webcam
 - When recording a video note, if you pause it, the recording will behave incorrectly
+- If you open and close VoiceNote and VideoNote several times in a row to create notes, 
+the application will crash with the error `Process finished with exit code -1073741819 (0xC0000005)`
+- If you select a microphone several times in a row,
+the program crashes with the error `Process finished with exit code -1073741819 (0xC0000005)`
