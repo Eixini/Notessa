@@ -93,9 +93,7 @@ class CreateVoiceNote(QDialog):
         index = self.ui.availableDevicesList.currentIndex()
         print(f'Current index: {index}, value: {self._input_devices[index].description()}')
         self._audio_input = QAudioInput(self._input_devices[index])
-        # print(f'{self._audio_input}')
         self._session.setAudioInput(self._audio_input)
-        # self._session.audioInputChanged.connect(self.audio_input_changed)
 
     def audio_input_changed(self):
         print('Audio input changed')
