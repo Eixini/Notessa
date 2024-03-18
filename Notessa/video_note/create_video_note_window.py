@@ -1,7 +1,7 @@
 from PySide6.QtCore import QTimer, QDir, QUrl
 from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
 from PySide6.QtWidgets import QDialog, QMessageBox
-from PySide6.QtMultimedia import QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput, QCamera, QVideoSink
+from PySide6.QtMultimedia import QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput, QCamera, QMediaDevices
 from Notessa.video_note.ui_createvideonote import Ui_CreateVideoNoteWindow
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.resource import rc_icons
@@ -18,36 +18,28 @@ class CreateVideoNote(QDialog):
         self.ui = Ui_CreateVideoNoteWindow()
         self.ui.setupUi(self)
 
+        # Media devices input
+        self._microphones = None
+        self._cameras = None
+
+        # Media settings
+        self._capture_session = QMediaCaptureSession(self)
+        self._camera = QCamera(self)
+        self._media_recorder = QMediaRecorder(self)
+        self._audio_input = QAudioInput(self)
+        self._media_format = QMediaFormat()
+
+        # Initializing media devices
+        self.media_devices_initialization()
+
         # Icon set
         self.setWindowIcon(QIcon(':/resource/icons/video.png'))
         self.ui.recordButton.setIcon(QIcon(':/resource/icons/play.png'))
-        self.ui.pauseButton.setIcon(QIcon(':/resource/icons/pause.png'))
         self.ui.stopButton.setIcon(QIcon(':/resource/icons/stop.png'))
         self.ui.backButton.setIcon(QIcon(':/resource/icons/back.png'))
-
         self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/video_off.png').scaledToWidth(50).scaledToHeight(50))
 
-        # Media settings
-        self._capture_session = QMediaCaptureSession()
-        self._camera = QCamera()
-        self._capture_session.setCamera(self._camera)
-        self._media_recorder = QMediaRecorder()
-        self._audio_input = QAudioInput()
-        self._capture_session.setRecorder(self._media_recorder)
-        self._capture_session.setAudioInput(self._audio_input)
-        self._media_recorder.setQuality(QMediaRecorder.Quality.VeryHighQuality)
-
-        self._video_sink = QVideoSink()
-        self._capture_session.setVideoOutput(self._video_sink)
-
-        self._camera.start()
-
-        self._media_format = QMediaFormat(QMediaFormat.FileFormat.MPEG4)
-        self._media_format.setVideoCodec(QMediaFormat.VideoCodec.MPEG4)
-        self._media_format.setAudioCodec(QMediaFormat.AudioCodec.Wave)
-        self._media_recorder.setMediaFormat(self._media_format)
-
-        #
+        # Setting the note title entry format
         self.ui.videoNoteName.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_]){255}'))
 
         # Alternative to QMediaRecorder.duration()
@@ -57,32 +49,62 @@ class CreateVideoNote(QDialog):
 
         # Signal - Slot
         self.ui.recordButton.clicked.connect(self.record)
-        self.ui.pauseButton.clicked.connect(self.pause)
         self.ui.stopButton.clicked.connect(self.stop)
         self.ui.backButton.clicked.connect(self.back)
         self.ui.muteButton.clicked.connect(self.mute)
-
         self._media_recorder.durationChanged.connect(self.changeLabel)
         self._media_recorder.recorderStateChanged.connect(self.update_record_state)
+        self.ui.microphoneList.currentIndexChanged.connect(self.microphone_selection_changed)
 
-        self._video_sink.videoFrameChanged.connect(self.video_frame_changed)
+    def media_devices_initialization(self):
+        """ Method for initializing media devices such as microphone and camera """
+        # Initializing the microphone
+        self._microphones = QMediaDevices.audioInputs()
+        if len(self._microphones) > 0:
+            for mic in self._microphones:
+                self.ui.microphoneList.addItem(mic.description())
+            self._audio_input = QAudioInput(self._microphones[0])
 
-    def video_frame_changed(self):
-        self.ui.videoLabel.setPixmap(QPixmap(self._video_sink.videoFrame().toImage()))
+        # Initializing the camera
+        self._cameras = QMediaDevices.videoInputs()
+        if len(self._cameras) > 0:
+            for camera in self._cameras:
+                self.ui.cameraList.addItem(camera.description())
+            self._camera = QCamera(self._cameras[0])
+
+        if self._camera.isAvailable():
+            self._media_format.setFileFormat(QMediaFormat.FileFormat.AVI)
+            self._media_format.setVideoCodec(QMediaFormat.VideoCodec.MPEG1)
+            self._media_format.setAudioCodec(QMediaFormat.AudioCodec.WMA)
+            self._media_recorder.setMediaFormat(self._media_format)
+            self._capture_session.setRecorder(self._media_recorder)
+            self._capture_session.setAudioInput(self._audio_input)
+            self._media_recorder.setQuality(QMediaRecorder.Quality.VeryHighQuality)
+            self._capture_session.setVideoOutput(self.ui.videoDisplay)
+            self._capture_session.setCamera(self._camera)
+            self.ui.videoDisplay.show()
+
+            self._camera.start()
+
+    def microphone_selection_changed(self):
+        """ The method is called when the microphone selection has been changed """
+        index = self.ui.microphoneList.currentIndex()
+        self._audio_input = QAudioInput(self._microphones[index])
+        self._capture_session.setAudioInput(self._audio_input)
+
+    def camera_selection_changed(self):
+        """ The method is called when the camera selection has been changed """
+        index = self.ui.cameraList.currentIndex()
+        self._camera = QCamera(self._cameras[index])
+        self._capture_session.setCamera(self._camera)
 
     def update_record_state(self, state):
         print(f'Record state: {self._media_recorder.recorderState()}')
         if self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState:
             self.ui.recordButton.setEnabled(False)
-            self.ui.pauseButton.setEnabled(True)
-            self.ui.stopButton.setEnabled(True)
-        elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState:
-            self.ui.recordButton.setEnabled(True)
-            self.ui.pauseButton.setEnabled(False)
             self.ui.stopButton.setEnabled(True)
         elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.StoppedState:
             self.ui.recordButton.setEnabled(True)
-            self.ui.pauseButton.setEnabled(False)
             self.ui.stopButton.setEnabled(False)
 
     def mute(self):
@@ -94,8 +116,7 @@ class CreateVideoNote(QDialog):
             self.ui.muteButton.setText(u'Unmute')
 
     def record(self):
-        if (not self.ui.videoNoteName.text() == '' and
-                not self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState):
+        if not self.ui.videoNoteName.text() == '':
             dirChecker = DirectoryChecker()
             file = f'{dirChecker.video_notes_directory()}{QDir.separator()}{self.ui.videoNoteName.text()}'
             url = f'{QDir.toNativeSeparators(file)}'
@@ -105,19 +126,11 @@ class CreateVideoNote(QDialog):
             self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/recording.png').scaledToWidth(50).scaledToHeight(50))
 
             self._timer.start(1000)
-        elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState:
-            self._media_recorder.record()
-            self._timer.start(1000)
         else:
             msgBox = QMessageBox()
             msgBox.setText('Please, enter note name.')
             msgBox.exec()
 
-    def pause(self):
-        self._media_recorder.pause()
-        self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/pause.png').scaledToWidth(50).scaledToHeight(50))
-        #
-        self._timer.stop()
 
     def stop(self):
         self._media_recorder.stop()
@@ -135,7 +148,6 @@ class CreateVideoNote(QDialog):
 
     def update_duration(self):
         self._duration += 1
-        print(f'Duration: {self._duration}')
 
     def sec_convert(self, sec):
         result = {'min': 0, 'sec': 0}
