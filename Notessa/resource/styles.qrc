@@ -1,0 +1,6 @@
+<RCC>
+  <qresource>
+    <file>styles/kilimanjaro.qss</file>
+    <file>styles/morningstar.qss</file>
+  </qresource>
+</RCC>
