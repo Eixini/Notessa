@@ -1,15 +1,15 @@
 from PySide6.QtWidgets import QWidget
-from PySide6.QtGui import QPixmap, QPainter, QColor, QPaintEvent, QMouseEvent, QPen, QCursor
+from PySide6.QtGui import QPixmap, QPainter, QColor, QPaintEvent, QMouseEvent, QPen
 from PySide6.QtCore import Qt, QSize
 
 
 class PainterWidget(QWidget):
 
-    def __init__(self, size: QSize, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.setFixedSize(size)
-        self._pixmap = QPixmap(size)
-        self._pixmap.fill(QColor('white'))
+
+        self._pixmap = QPixmap()
+
 
         self._previous_pos = None
         self._painter = QPainter()
@@ -18,6 +18,12 @@ class PainterWidget(QWidget):
         self._pen.setJoinStyle(Qt.RoundJoin)
         self.setCursor(Qt.CursorShape.CrossCursor)
 
+    def set_pixmap(self, size: QSize):
+        self._pixmap = QPixmap(size)
+        print(f'Painter widget size: {self.size()}')
+        print(f'Pixmap size: {self._pixmap.size()}')
+        self._pixmap.fill(QColor('white'))
+
     def set_pen_width(self, value: float):
         """ Setting pen width """
         self._pen.setWidthF(value)
@@ -25,10 +31,6 @@ class PainterWidget(QWidget):
     def set_pen_color(self, color):
         """ Setting the pen color """
         self._pen.setColor(color)
-
-    def set_size(self, size: QSize):
-        self.resize(size)
-        self.update()
 
     def paintEvent(self, event: QPaintEvent):
         """ Paint the Pixmap into the widget """
@@ -66,16 +68,7 @@ class PainterWidget(QWidget):
     def load(self, filename: str):
         """ Load pixmap from filename """
         self._pixmap.load(filename)
-        """ 
-            The recommended minimum window width is 250 px, since there are buttons in the panel.
-        """
-        if self._pixmap.size().width() > QSize(250, 250).width():
-            # If the size of the uploaded image is larger than the specified minimum
-            self._pixmap = self._pixmap.scaled(self._pixmap.size(), Qt.AspectRatioMode.KeepAspectRatioByExpanding)
-        else:
-            # Otherwise stretch the image
-            self._pixmap = self._pixmap.scaled(self.size(), Qt.AspectRatioMode.KeepAspectRatio)
-
+        self._pixmap = self._pixmap.scaled(self.size(), Qt.AspectRatioMode.KeepAspectRatio)
         self.update()
 
         # Resize widget

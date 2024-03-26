@@ -1,22 +1,20 @@
-from PySide6.QtCore import QTimer, QDir, QUrl
+from PySide6.QtCore import QTimer, QDir, QUrl, Qt
 from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
-from PySide6.QtWidgets import QDialog, QMessageBox
+from PySide6.QtWidgets import QWidget
 from PySide6.QtMultimedia import QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput, QCamera, QMediaDevices
-from Notessa.video_note.ui_createvideonote import Ui_CreateVideoNoteWindow
+from Notessa.video_note.ui_gen.ui_create_videonote_widget import Ui_CreateVideoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
-from Notessa.resource import rc_icons
-
-"""
-Mark:
-- check device availability before recording;
-"""
+from Notessa.resource import icons_rc
 
 
-class CreateVideoNote(QDialog):
+class CreateVideoNoteWidget(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
-        self.ui = Ui_CreateVideoNoteWindow()
+        self.ui = Ui_CreateVideoNoteWidget()
         self.ui.setupUi(self)
+
+        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.installEventFilter(self.parent())
 
         # Media devices input
         self._microphones = None
@@ -33,14 +31,10 @@ class CreateVideoNote(QDialog):
         self.media_devices_initialization()
 
         # Icon set
-        self.setWindowIcon(QIcon(':/resource/icons/video.png'))
-        self.ui.recordButton.setIcon(QIcon(':/resource/icons/play.png'))
-        self.ui.stopButton.setIcon(QIcon(':/resource/icons/stop.png'))
-        self.ui.backButton.setIcon(QIcon(':/resource/icons/back.png'))
-        self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/video_off.png').scaledToWidth(50).scaledToHeight(50))
+        self.ui.state_label.setPixmap(QPixmap(':/icons/video_off.png').scaledToWidth(50).scaledToHeight(50))
 
         # Setting the note title entry format
-        self.ui.videoNoteName.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_]){255}'))
+        self.ui.videonote_name_lineedit.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_ ]){255}'))
 
         # Alternative to QMediaRecorder.duration()
         self._duration = 0
@@ -48,13 +42,13 @@ class CreateVideoNote(QDialog):
         self._timer.timeout.connect(self.update_duration)
 
         # Signal - Slot
-        self.ui.recordButton.clicked.connect(self.record)
-        self.ui.stopButton.clicked.connect(self.stop)
-        self.ui.backButton.clicked.connect(self.back)
-        self.ui.muteButton.clicked.connect(self.mute)
-        self._media_recorder.durationChanged.connect(self.changeLabel)
+        self.ui.record_button.clicked.connect(self.record)
+        self.ui.stop_button.clicked.connect(self.stop)
+        self.ui.close_button.clicked.connect(self.close_note)
+        self.ui.mute_button.clicked.connect(self.mute)
+        self._media_recorder.durationChanged.connect(self.change_label)
         self._media_recorder.recorderStateChanged.connect(self.update_record_state)
-        self.ui.microphoneList.currentIndexChanged.connect(self.microphone_selection_changed)
+        self.ui.microphones_combobox.currentIndexChanged.connect(self.microphone_selection_changed)
 
     def media_devices_initialization(self):
         """ Method for initializing media devices such as microphone and camera """
@@ -62,14 +56,14 @@ class CreateVideoNote(QDialog):
         self._microphones = QMediaDevices.audioInputs()
         if len(self._microphones) > 0:
             for mic in self._microphones:
-                self.ui.microphoneList.addItem(mic.description())
+                self.ui.microphones_combobox.addItem(mic.description())
             self._audio_input = QAudioInput(self._microphones[0])
 
         # Initializing the camera
         self._cameras = QMediaDevices.videoInputs()
         if len(self._cameras) > 0:
             for camera in self._cameras:
-                self.ui.cameraList.addItem(camera.description())
+                self.ui.cameras_combobox.addItem(camera.description())
             self._camera = QCamera(self._cameras[0])
 
         if self._camera.isAvailable():
@@ -80,71 +74,66 @@ class CreateVideoNote(QDialog):
             self._capture_session.setRecorder(self._media_recorder)
             self._capture_session.setAudioInput(self._audio_input)
             self._media_recorder.setQuality(QMediaRecorder.Quality.VeryHighQuality)
-            self._capture_session.setVideoOutput(self.ui.videoDisplay)
+            self._capture_session.setVideoOutput(self.ui.video_display)
             self._capture_session.setCamera(self._camera)
-            self.ui.videoDisplay.show()
+            self.ui.video_display.show()
 
             self._camera.start()
 
     def microphone_selection_changed(self):
         """ The method is called when the microphone selection has been changed """
-        index = self.ui.microphoneList.currentIndex()
+        index = self.ui.microphones_combobox.currentIndex()
         self._audio_input = QAudioInput(self._microphones[index])
         self._capture_session.setAudioInput(self._audio_input)
 
     def camera_selection_changed(self):
         """ The method is called when the camera selection has been changed """
-        index = self.ui.cameraList.currentIndex()
+        index = self.ui.cameras_combobox.currentIndex()
         self._camera = QCamera(self._cameras[index])
         self._capture_session.setCamera(self._camera)
 
     def update_record_state(self, state):
         print(f'Record state: {self._media_recorder.recorderState()}')
         if self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState:
-            self.ui.recordButton.setEnabled(False)
-            self.ui.stopButton.setEnabled(True)
+            self.ui.record_button.setEnabled(False)
+            self.ui.stop_button.setEnabled(True)
         elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.StoppedState:
-            self.ui.recordButton.setEnabled(True)
-            self.ui.stopButton.setEnabled(False)
+            self.ui.record_button.setEnabled(True)
+            self.ui.stop_button.setEnabled(False)
 
     def mute(self):
         if self._audio_input.isMuted():
             self._audio_input.setMuted(False)
-            self.ui.muteButton.setText(u'Mute')
+            self.ui.mute_button.setIcon(QIcon(':/icons/microphone_off.png'))
         else:
             self._audio_input.setMuted(True)
-            self.ui.muteButton.setText(u'Unmute')
+            self.ui.mute_button.setIcon(QIcon(':/icons/microphone.png'))
 
     def record(self):
-        if not self.ui.videoNoteName.text() == '':
-            dirChecker = DirectoryChecker()
-            file = f'{dirChecker.video_notes_directory()}{QDir.separator()}{self.ui.videoNoteName.text()}'
+        if not self.ui.videonote_name_lineedit.text() == '':
+            dir_checker = DirectoryChecker()
+            file = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self.ui.videonote_name_lineedit.text()}'
             url = f'{QDir.toNativeSeparators(file)}'
             self._media_recorder.setOutputLocation(QUrl.fromLocalFile(url))
 
             self._media_recorder.record()
-            self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/recording.png').scaledToWidth(50).scaledToHeight(50))
+            self.ui.state_label.setPixmap(QPixmap(':/icons/recording.png').scaledToWidth(50).scaledToHeight(50))
 
             self._timer.start(1000)
-        else:
-            msgBox = QMessageBox()
-            msgBox.setText('Please, enter note name.')
-            msgBox.exec()
-
 
     def stop(self):
         self._media_recorder.stop()
-        self.ui.stateLabel.setPixmap(QPixmap(':/resource/icons/video_off.png').scaledToWidth(50).scaledToHeight(50))
+        self.ui.state_label.setPixmap(QPixmap(':/icons/video_off.png').scaledToWidth(50).scaledToHeight(50))
         # Reset duration
         self._timer.stop()
         self._duration = 0
 
-    def back(self):
-        self.reject()
+    def close_note(self):
+        self.close()
 
-    def changeLabel(self):
-        timeDuratin = self.sec_convert(self._duration)
-        self.ui.durationLabel.setText(f'{timeDuratin["min"]}:{timeDuratin["sec"]}')
+    def change_label(self):
+        time_duration = self.sec_convert(self._duration)
+        self.ui.duration_label.setText(f'{time_duration["min"]}:{time_duration["sec"]}')
 
     def update_duration(self):
         self._duration += 1
@@ -156,3 +145,19 @@ class CreateVideoNote(QDialog):
             result['min'] = int(sec / 60)
             result['sec'] = sec % 60
         return result
+
+    def __del__(self):
+        self._camera.deleteLater()
+        self._media_recorder.deleteLater()
+        self._audio_input.deleteLater()
+        self._capture_session.deleteLater()
+
+        # Disconnect Signal - Slot
+        self._timer.timeout.disconnect(self.update_duration)
+        self.ui.record_button.clicked.disconnect(self.record)
+        self.ui.stop_button.clicked.disconnect(self.stop)
+        self.ui.close_button.clicked.disconnect(self.close_note)
+        self.ui.mute_button.clicked.disconnect(self.mute)
+        self._media_recorder.durationChanged.disconnect(self.change_label)
+        self._media_recorder.recorderStateChanged.disconnect(self.update_record_state)
+        self.ui.microphones_combobox.currentIndexChanged.disconnect(self.microphone_selection_changed)
