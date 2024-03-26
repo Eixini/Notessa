@@ -1,0 +1,499 @@
+/* ===================================== MainWindow ===================================== */
+QMainWindow#MainWindow {
+	background-color: transparent;
+}
+
+QMainWindow#MainWindow QStatusBar#status_bar {
+	background-color: rgb(38, 50, 56);
+	border-radius: 10px;
+	border-width: 10px;
+	border-color: #35bfa2;
+}
+
+/* Central Widget */
+QWidget#centralwidget {
+	background-color: #35bfa2;
+	border-radius: 10px;
+}
+
+/* For the panel when folded */
+QWidget#folded_sidebar {
+	background-color: rgb(38, 50, 56);
+	border-radius: 10px;
+}
+
+QWidget#folded_sidebar QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+}
+
+QWidget#folded_sidebar QPushButton:hover {
+	background-color: rgb(134, 223, 203);
+}
+
+
+QWidget#folded_sidebar {
+	background-color: #263238;
+}
+
+QWidget#folded_sidebar QPushButton {
+	background-color: rgb(53, 191, 162);
+	border-radius: 10px;
+	height: 35px;
+	text-align: left;
+	padding-left: 10px;
+}
+
+QWidget#folded_sidebar QPushButton:hover {
+	background-color: #86dfcb;
+	border-radius: 10px;
+}
+
+/* For the panel in the unfolded state */
+QWidget#expanded_sidebar {
+	background-color: #263238;
+	border-radius: 10px;
+}
+
+QWidget#expanded_sidebar QPushButton {
+	background-color: rgb(53, 191, 162);
+	border-radius: 10px;
+	height: 35px;
+	text-align: left;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#expanded_sidebar QPushButton:hover {
+	background-color: rgb(134, 223, 203);
+}
+
+/* Setting widget styles for content placement */
+QWidget#content_area {
+	background-color: #263238;
+	border-radius: 10px;
+}
+
+/* ===================================== CreateTextNoteWidget ===================================== */
+
+/* Setting up styles for the text note widget */
+QWidget#CreateTextNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#CreateTextNoteWidget QLineEdit#textnote_name_lineedit {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: rgb(53, 191, 162);
+}
+
+QWidget#CreateTextNoteWidget QLabel#textnote_name_label {
+	color: #86dfcb;
+}
+
+QWidget#CreateTextNoteWidget QTextEdit#textnote_contents {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: rgb(53, 191, 162);
+}
+
+/* ===================================== CreateVoiceNoteWidget ===================================== */
+
+/* Setting up styles for the text note widget */
+QWidget#CreateVoiceNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#CreateVoiceNoteWidget QLineEdit#voicenote_name_lineedit {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: rgb(53, 191, 162);
+}
+
+QWidget#CreateVoiceNoteWidget QLabel#available_devices_label {
+	color: #86dfcb;
+}
+
+QWidget#CreateVoiceNoteWidget QLabel#duration_label {
+	color: #86dfcb;
+	font-size: 48px;
+}
+
+/* ===================================== CreateVideoNoteWidget ===================================== */
+
+QWidget#CreateVideoNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#CreateVideoNoteWidget QLineEdit#videonote_name_lineedit {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: rgb(53, 191, 162);
+}
+
+QWidget#CreateVideoNoteWidget QLabel {
+	color: #86dfcb;
+}
+
+/* ===================================== CreatePaintNoteWidget ===================================== */
+
+QWidget#CreatePaintNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#CreatePaintNoteWidget QLineEdit#paintnote_name_lineedit {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: rgb(53, 191, 162);
+}
+
+QWidget#CreatePaintNoteWidget QLabel {
+	color: #86dfcb;
+	margin: 10px;
+}
+
+/* ===================================== CreateTodoNoteWidget ===================================== */
+
+QWidget#CreateTodoNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#CreateTodoNoteWidget QLabel {
+	color: #86dfcb;
+}
+
+QWidget#CreateTodoNoteWidget QLineEdit {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: #35bfa2;
+}
+
+QWidget#CreateTodoNoteWidget QListWidget {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: #35bfa2;
+}
+
+QWidget#CreateTodoNoteWidget QListWidget::item {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	color: #263238;
+	border-color: rgb(53, 191, 162);
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+/* ===================================== SettingsWidget ===================================== */
+
+QWidget#SettingsWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#SettingsWidget QLabel {
+	color: #86dfcb;
+}
+
+/* ===================================== ShowNotesWidget ===================================== */
+
+QWidget#ShowNotesWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#ShowNotesWidget QLabel {
+	color: #86dfcb;
+}
+
+QTableView#notes_tableview {
+	background-color: #263238;
+	color: #86dfcb;
+}
+
+QTableView::item:alternate#notes_tableview {
+    background: #86dfcb;
+	color: #263238;
+}
+
+QTableView::item:selected#notes_tableview {
+    border: 1px solid #86dfcb;
+	background: #35bfa2;
+	color: #263238;
+}
+
+QHeaderView::section {
+    background-color: #86dfcb;
+    color: #263238;
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+}
+
+/* ===================================== ShowTextNoteWidget ===================================== */
+
+QWidget#ShowTextNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#ShowTextNoteWidget QLabel {
+	color: #86dfcb;
+}
+
+QWidget#ShowTextNoteWidget QTextEdit {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: #35bfa2;
+}
+
+/* ===================================== ShowVoiceNoteWidget ===================================== */
+
+QWidget#ShowVoiceNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#ShowVoiceNoteWidget QLabel {
+	color: #86dfcb;
+}
+
+QWidget#ShowVoiceNoteWidget QSlider::groove:horizontal {
+    border: 1px solid #86dfcb;
+    height: 20px;
+    background: #35bfa2;
+    margin: 2px 0;
+	border-radius: 3px;
+}
+
+QWidget#ShowVoiceNoteWidget QSlider::handle:horizontal {
+    background: #263238;
+    border: 3px solid #86dfcb;
+    width: 30px;
+    margin: -2px 0;
+    border-radius: 3px;
+}
+
+/* ===================================== ShowVideoNoteWidget ===================================== */
+
+QWidget#ShowVideoNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#ShowVideoNoteWidget QLabel {
+	color: #86dfcb;
+}
+
+QWidget#ShowVideoNoteWidget QSlider::groove:horizontal {
+    border: 1px solid #86dfcb;
+    height: 20px;
+    background: #35bfa2;
+    margin: 2px 0;
+	border-radius: 3px;
+}
+
+QWidget#ShowVideoNoteWidget QSlider::handle:horizontal {
+    background: #263238;
+    border: 3px solid #86dfcb;
+    width: 30px;
+    margin: -2px 0;
+    border-radius: 3px;
+}
+
+/* ===================================== ShowPaitNoteWidget ===================================== */
+
+/* ===================================== ShowTodoNoteWidget ===================================== */
+
+QWidget#ShowTodoNoteWidget QPushButton {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	height: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+QWidget#ShowTodoNoteWidget QLabel {
+	color: #86dfcb;
+}
+
+QWidget#ShowTodoNoteWidget QListView {
+	background-color: #263238;
+	border-radius: 10px;
+	color: #86dfcb;
+	border-color: #35bfa2;
+}
+
+QWidget#ShowTodoNoteWidget QListView::item {
+	background-color: #35bfa2;
+	border-radius: 10px;
+	color: #263238;
+	border-color: #35bfa2;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+QListView::item:selected {
+    border: 1px solid #86dfcb;
+	background: #35bfa2;
+	color: #263238;
+}
+
+/* ===================================== Common ===================================== */
+/* --------- ComboBox --------- */
+QComboBox {
+	border: 1px solid #35bfa2;
+	border-radius: 5px;
+}
+
+QComboBox::!editable {
+	background-color: #86dfcb; 
+}
+
+QComboBox::drop-down:!editable {
+	background-color: rgb(102, 170, 154); 
+}
+
+QComboBox:!editable:on {
+	border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+QComboBox QAbstractItemView {
+	color: #35bfa2;
+	border: 1px solid #35bfa2;
+	background-color: #263238;
+	border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+QComboBox QAbstractItemView::item::selected {
+	background-color: #35bfa2;
+	color: #263238;
+}
+
+/* --------- SpinBox --------- */
+QDoubleSpinBox {
+	background-color: #86dfcb;
+	color: #263238;
+	border-radius: 10px;
+	height: 40px;
+	width: 100px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+QDoubleSpinBox::up-button {
+	background-color: #35bfa2;
+    subcontrol-position: center right;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 20px;
+	height: 40px;
+}
+
+QDoubleSpinBox::down-button {
+	background-color: #35bfa2;
+    subcontrol-position: center left;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    width: 20px;
+	height: 40px;
+}
+
+
+QDoubleSpinBox::up-button:hover, QDoubleSpinBox::down-button:hover {
+	background-color: #46fad3;
+}
+
+QDoubleSpinBox::up-button:pressed, QDoubleSpinBox::down-button:pressed {
+	background-color: #207361;
+}
+
+QDoubleSpinBox::up-arrow, QDoubleSpinBox::down-arrow {
+    subcontrol-origin: content;
+    width: 20px;
+    height: 20px;
+}
+
+QDoubleSpinBox::up-arrow{
+    image: url(:/icons/forward.png);
+}
+
+QDoubleSpinBox::down-arrow{
+    image: url(:/icons/back.png);
+}
+
+/* --------- ScrollBar --------- */
+
+QScrollBar:vertical {
+    width: 15px;
+	background-color: transparent;
+}
+
+QScrollBar::handle:vertical {
+    background: #35bfa2;
+	border: 1px solid #263238;
+    min-height: 0px;
+	border-radius: 5px;
+	margin-left: 1px;
+	margin-right: 1px;
+}
+
+QScrollBar::add-line:vertical {
+	background-color: transparent;
+}
+
+QScrollBar::sub-line:vertical {
+	background-color: transparent;
+}
+
+QScrollBar::sub-page:vertical {
+	background-color: transparent;
+}
+
+QScrollBar::add-page:vertical {
+	background-color: transparent;
+}
