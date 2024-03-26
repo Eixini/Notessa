@@ -1,0 +1,32 @@
+<RCC>
+  <qresource>
+    <file>icons/notessa_logo.png</file>
+    <file>icons/back.png</file>
+    <file>icons/brush.png</file>
+    <file>icons/down.png</file>
+    <file>icons/exit.png</file>
+    <file>icons/forward.png</file>
+    <file>icons/info.png</file>
+    <file>icons/list.png</file>
+    <file>icons/microphone.png</file>
+    <file>icons/microphone_off.png</file>
+    <file>icons/pause.png</file>
+    <file>icons/play.png</file>
+    <file>icons/sound_off.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/text.png</file>
+    <file>icons/todo.png</file>
+    <file>icons/up.png</file>
+    <file>icons/video.png</file>
+    <file>icons/save.png</file>
+    <file>icons/video_off.png</file>
+    <file>icons/recording.png</file>
+    <file>icons/garbage.png</file>
+    <file>icons/drawing.png</file>
+    <file>icons/gear.png</file>
+    <file>icons/canvas.png</file>
+    <file>icons/colors.png</file>
+    <file>icons/open_folder.png</file>
+    <file>icons/plus.png</file>
+  </qresource>
+</RCC>
