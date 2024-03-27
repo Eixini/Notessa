@@ -1,3 +1,10 @@
+# 2.0.1 (27.03.2024)
+## Features
+- Add new style
+
+## Bug Fixes
+- Fixed an issue with paths in the Todo note display
+
 # 2.0.0 (26.03.2024)
 ## Features
 - Added creation and viewing of a new type of note - Todo note
