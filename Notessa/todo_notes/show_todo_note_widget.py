@@ -21,7 +21,7 @@ class ShowTodoNoteWidget(QWidget):
         self.ui.todo_note_name_label.setText(self._note_data[1])
 
         self._dir_checker = DirectoryChecker()
-        self._file_path = QUrl.fromLocalFile(f'{self._dir_checker.todo_notes_directory()}{QDir.separator()}{self._note_data[1]}.{self._note_data[0]}').toString().replace('file:///', '')
+        self._file_path = f'{self._dir_checker.todo_notes_directory()}{QDir.separator()}{self._note_data[1]}.{self._note_data[0]}'
 
         self._todos = None
         self.load_data()
