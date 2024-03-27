@@ -5,7 +5,7 @@ from Notessa.main_window.ui_gen.ui_main_window import Ui_MainWindow
 from Notessa.show_notes.show_notes_window import ShowNotesWidget
 from Notessa.text_note.create_textnote_widget import CreateTextNoteWidget
 from Notessa.voice_note.create_voice_note_widget import CreateVoiceNoteWidget
-from Notessa.video_note.create_video_note_window import CreateVideoNoteWidget
+from Notessa.video_note.create_video_note_widget import CreateVideoNoteWidget
 from Notessa.paint_note.create_paint_note_widget import CreatePaintNoteWidget
 from Notessa.todo_notes.create_todo_note_widget import CreateTodoNoteWidget
 from Notessa.settings.settings_widget import SettingsWidget
