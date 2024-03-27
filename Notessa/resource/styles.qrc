@@ -2,5 +2,6 @@
   <qresource>
     <file>styles/kilimanjaro.qss</file>
     <file>styles/morningstar.qss</file>
+    <file>styles/default_white.qss</file>
   </qresource>
 </RCC>
