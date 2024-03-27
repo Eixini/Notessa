@@ -33,6 +33,7 @@ class SettingsWidget(QWidget):
         # Style
         self.ui.style_combo_box.addItem('Kilimanjaro', ':/styles/kilimanjaro.qss')
         self.ui.style_combo_box.addItem('MorningStar', ':/styles/morningstar.qss')
+        self.ui.style_combo_box.addItem('Default white', ':/styles/default_white.qss')
 
         self.ui.language_combo_box.view().window().setWindowFlags(Qt.Popup | Qt.FramelessWindowHint | Qt.NoDropShadowWindowHint)
         self.ui.language_combo_box.view().window().setAttribute(Qt.WA_TranslucentBackground)
