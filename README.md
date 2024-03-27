@@ -83,8 +83,15 @@ This is because there is an issue with `PaintNote` canvas being sized correctly.
 In addition, at the moment it is not clear how to correctly resize the `PaintNote` canvas 
 (not scaling, but the size, as in the `Paint` graphic editor in `Windows`).
 - The application window can be moved in `Windows`,
-but it does not work in `Linux` (tested only in `Ubuntu 22.04`). The reason is not clear.
+but it doesn't work in `Linux` (tested only in `Ubuntu 22.04`).
+This is due to a `Qt` issue (`Wayland` relocation issue).
+In `X11` (tested in `Manjaro KDE` kernel 6.1.31-2-Manjaro DE Plasma 5.27.5),
+the ability to move the window is available,
+but it does not work correctly (jerks, super-fast movement).
 - In the `new version` of the application (applies to `Linux`, tested on `Ubuntu 22.04`),
 it is not possible to get a preview from the webcam or record video,
 although sound is recorded. In `Windows 10`, recording and display occurs correctly.
+The triggering of the Webcam is also not clear,
+either this is due to the camera taking a long time to load,
+or a problem with the media classes.
 - There is no message about the need to manually restart the application after changing the language.
