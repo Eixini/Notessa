@@ -1,7 +1,8 @@
 import sys
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtCore import QTranslator, QFile, QSettings
 from Notessa.main_window.main_window import MainWindow
+from Notessa.shortcut_notes.shortcut_notes_widget import ShortcutNotesWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.resource import styles_rc
 from Notessa.resource import translations_rc
@@ -45,6 +46,10 @@ def main():
 
     main_window = MainWindow()
     main_window.show()
+
+    shortcut_notes_widget = ShortcutNotesWidget()
+    shortcut_notes_widget.show()
+
     app.exec()
 
 if __name__ == '__main__':
