@@ -1,3 +1,7 @@
+# 2.1.0 (27.04.2024)
+## Features
+- Add widget for viewing existing notes
+
 # 2.0.1 (27.03.2024)
 ## Features
 - Add new style
