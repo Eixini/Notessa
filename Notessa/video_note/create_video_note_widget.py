@@ -21,8 +21,8 @@ class CreateVideoNoteWidget(QWidget):
         self._cameras = None
 
         # Media settings
-        self._capture_session = QMediaCaptureSession(self)
         self._camera = QCamera(self)
+        self._capture_session = QMediaCaptureSession(self)
         self._media_recorder = QMediaRecorder(self)
         self._audio_input = QAudioInput(self)
         self._media_format = QMediaFormat()
@@ -77,6 +77,8 @@ class CreateVideoNoteWidget(QWidget):
             self._capture_session.setVideoOutput(self.ui.video_display)
             self._capture_session.setCamera(self._camera)
             self.ui.video_display.show()
+        # else:
+        #     self.close()
 
             self._camera.start()
 
