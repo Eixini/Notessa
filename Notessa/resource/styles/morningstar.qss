@@ -216,3 +216,32 @@ QMainWindow#MainWindow {
 QWidget#centralwidget {
 	background-color: #5e60ab;
 }
+
+/* ===================================== Shortcut Notes Widget ===================================== */
+
+QWidget#ShortcutNotesWidget {
+	background-color: #5e60ab;
+}
+
+QWidget#ShortcutNotesWidget QPushButton {
+	background-color: #fd9d37;
+    color: #263238;
+	border-radius: 3px;
+}
+
+QTreeView {
+	background-color: transparent;
+    border-color: transparent;
+	color: #f4a958;
+}
+
+QTreeView::item:alternate {
+    background: #f5b878;
+	color: #263238;
+}
+
+QTreeView::item:selected {
+	background: #f4a958;
+	color: #263238;
+}
+
