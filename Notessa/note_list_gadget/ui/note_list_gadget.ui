@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>397</width>
-    <height>505</height>
+    <width>557</width>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,6 +18,12 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="create_note_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <family>Ubuntu</family>
@@ -26,7 +32,17 @@
         </font>
        </property>
        <property name="text">
-        <string>+</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/icons/button/button_icons.qrc">
+         <normaloff>:/button/add.png</normaloff>:/button/add.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -44,16 +60,48 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="view_mode_button">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/icons/button/button_icons.qrc">
+         <normaloff>:/button/table_view.png</normaloff>:/button/table_view.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pin_gadget_button">
        <property name="font">
         <font>
          <family>Ubuntu</family>
-         <pointsize>14</pointsize>
-         <bold>true</bold>
+         <pointsize>11</pointsize>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
-        <string>P</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/icons/button/button_icons.qrc">
+         <normaloff>:/button/pin.png</normaloff>:/button/pin.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -67,17 +115,32 @@
         </font>
        </property>
        <property name="text">
-        <string>x</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/icons/button/button_icons.qrc">
+         <normaloff>:/button/close.png</normaloff>:/button/close.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QTableView" name="tableView"/>
+    <widget class="QTreeView" name="tree_view"/>
+   </item>
+   <item>
+    <widget class="QTableView" name="table_view"/>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/icons/button/button_icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

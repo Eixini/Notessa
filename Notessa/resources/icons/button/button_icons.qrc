@@ -1,0 +1,10 @@
+<RCC>
+  <qresource>
+    <file>button/add.png</file>
+    <file>button/close.png</file>
+    <file>button/pin.png</file>
+    <file>button/unpin.png</file>
+    <file>button/table_view.png</file>
+    <file>button/tree_view.png</file>
+  </qresource>
+</RCC>

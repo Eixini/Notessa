@@ -1,0 +1,10 @@
+<RCC>
+    <qresource>
+      <file>note_type/text.png</file>
+      <file>note_type/voice.png</file>
+      <file>note_type/video.png</file>
+      <file>note_type/paint.png</file>
+      <file>note_type/todo.png</file>
+    </qresource>
+  </RCC>
+  
