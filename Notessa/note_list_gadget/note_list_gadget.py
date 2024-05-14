@@ -6,6 +6,11 @@ from Notessa.note_creation_menu.note_creation_menu_widget import NoteCreationMen
 from Notessa.model.notelist_tree_model.shortcut_notes_model import TreeModel
 from Notessa.model.notelist_table_model.notes_model import NotesModel
 from Notessa.model.notelist_table_model.note_item_delegate import NoteItemDelegate
+from Notessa.text_note.show_textnote_widget import ShowTextNoteWidget
+from Notessa.voice_note.show_voicenote_widget import ShowVoiceNoteWidget
+from Notessa.video_note.show_videonote_widget import ShowVideoNoteWidget
+from Notessa.paint_note.show_paint_note_widget import ShowPaintNoteWidget
+from Notessa.todo_notes.show_todo_note_widget import ShowTodoNoteWidget
 from Notessa.resources.icons.button import button_icons_rc
 
 
@@ -170,7 +175,21 @@ class NoteListGadget(QWidget):
 
             data = self.view_model.getCurrentData(sort_index)
 
-            print(data)
+            if sort_note_type == 'txt':
+                text_note_widget = ShowTextNoteWidget(self.parent(), data)
+                text_note_widget.setVisible(True)
+            elif sort_note_type == 'wav':
+                voice_note_widget = ShowVoiceNoteWidget(self, data)
+                voice_note_widget.show()
+            elif sort_note_type == 'mp4':
+                video_note_widget = ShowVideoNoteWidget(self, data)
+                video_note_widget.show()
+            elif sort_note_type == 'png':
+                paint_note_widget = ShowPaintNoteWidget(self, data)
+                paint_note_widget.show()
+            elif sort_note_type == 'json':
+                todo_note_widget = ShowTodoNoteWidget(self, data)
+                todo_note_widget.show()
 
     def gadget_close(self):
         self.close()
