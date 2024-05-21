@@ -15,21 +15,14 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-    QSizePolicy, QSpacerItem, QTextEdit, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QSizePolicy,
+    QTextEdit, QVBoxLayout, QWidget)
 
 class Ui_ShowTextNoteWidget(object):
     def setupUi(self, ShowTextNoteWidget):
         if not ShowTextNoteWidget.objectName():
             ShowTextNoteWidget.setObjectName(u"ShowTextNoteWidget")
-        ShowTextNoteWidget.setWindowModality(Qt.ApplicationModal)
-        ShowTextNoteWidget.resize(727, 544)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(ShowTextNoteWidget.sizePolicy().hasHeightForWidth())
-        ShowTextNoteWidget.setSizePolicy(sizePolicy)
+        ShowTextNoteWidget.resize(860, 582)
         self.verticalLayout = QVBoxLayout(ShowTextNoteWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.textnote_name_label = QLabel(ShowTextNoteWidget)
@@ -43,26 +36,6 @@ class Ui_ShowTextNoteWidget(object):
 
         self.verticalLayout.addWidget(self.show_textnote_field)
 
-        self.buttons_panel_horizontal_layout = QHBoxLayout()
-        self.buttons_panel_horizontal_layout.setObjectName(u"buttons_panel_horizontal_layout")
-        self.backButton = QPushButton(ShowTextNoteWidget)
-        self.backButton.setObjectName(u"backButton")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.backButton.sizePolicy().hasHeightForWidth())
-        self.backButton.setSizePolicy(sizePolicy1)
-        self.backButton.setIconSize(QSize(32, 32))
-
-        self.buttons_panel_horizontal_layout.addWidget(self.backButton)
-
-        self.horizontalSpacer = QSpacerItem(128, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.buttons_panel_horizontal_layout.addItem(self.horizontalSpacer)
-
-
-        self.verticalLayout.addLayout(self.buttons_panel_horizontal_layout)
-
 
         self.retranslateUi(ShowTextNoteWidget)
 
@@ -70,8 +43,7 @@ class Ui_ShowTextNoteWidget(object):
     # setupUi
 
     def retranslateUi(self, ShowTextNoteWidget):
-        ShowTextNoteWidget.setWindowTitle(QCoreApplication.translate("ShowTextNoteWidget", u"Form", None))
+        ShowTextNoteWidget.setWindowTitle(QCoreApplication.translate("ShowTextNoteWidget", u"Dialog", None))
         self.textnote_name_label.setText(QCoreApplication.translate("ShowTextNoteWidget", u"Note name", None))
-        self.backButton.setText(QCoreApplication.translate("ShowTextNoteWidget", u"Back", None))
     # retranslateUi
 

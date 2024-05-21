@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QHeaderView, QAbstractItemView, QMenu
+from PySide6.QtWidgets import QWidget, QHeaderView, QAbstractItemView, QMenu, QDialog
 from PySide6.QtCore import QSortFilterProxyModel, Qt, QEvent, QSettings, QPoint
 from PySide6.QtGui import QIcon, QPixmap, QMouseEvent, QAction, QCursor
 from Notessa.note_list_gadget.ui_gen.ui_note_list_gadget import Ui_NoteListGadget
@@ -177,13 +177,13 @@ class NoteListGadget(QWidget):
 
             if sort_note_type == 'txt':
                 text_note_widget = ShowTextNoteWidget(self.parent(), data)
-                text_note_widget.setVisible(True)
+                text_note_widget.exec()
             elif sort_note_type == 'wav':
                 voice_note_widget = ShowVoiceNoteWidget(self, data)
-                voice_note_widget.show()
+                voice_note_widget.exec()
             elif sort_note_type == 'mp4':
                 video_note_widget = ShowVideoNoteWidget(self, data)
-                video_note_widget.show()
+                video_note_widget.exec()
             elif sort_note_type == 'png':
                 paint_note_widget = ShowPaintNoteWidget(self, data)
                 paint_note_widget.show()

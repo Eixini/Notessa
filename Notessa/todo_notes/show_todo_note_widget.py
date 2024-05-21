@@ -1,5 +1,5 @@
 from PySide6.QtCore import QDir, Qt, QUrl, QFile
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QDialog
 from Notessa.todo_notes.ui_gen.ui_show_todo_note_widget import Ui_ShowTodoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.model.todo_note_model.todo_model import TodoModel
@@ -7,14 +7,14 @@ import json
 import os
 
 
-class ShowTodoNoteWidget(QWidget):
+class ShowTodoNoteWidget(QDialog):
     def __init__(self, parent, note_data: list):
         super().__init__(parent)
         self.ui = Ui_ShowTodoNoteWidget()
         self.ui.setupUi(self)
 
         self.setAttribute(Qt.WA_DeleteOnClose)
-        self.installEventFilter(self.parent())
+        # self.installEventFilter(self.parent())
 
         self._note_data = note_data
 
@@ -32,7 +32,6 @@ class ShowTodoNoteWidget(QWidget):
         self.ui.todo_items_list_view.setWordWrap(True)
 
         # Signal - Slot
-        self.ui.close_button.clicked.connect(self.close_note)
         self.ui.todo_items_list_view.clicked.connect(self.mark)
 
     def mark(self):
@@ -53,6 +52,3 @@ class ShowTodoNoteWidget(QWidget):
         dir_check = DirectoryChecker()
         with open(self._file_path, 'w') as file:
             json.dump(self._todo_model._todos, file, indent=4)
-
-    def close_note(self):
-        self.close()

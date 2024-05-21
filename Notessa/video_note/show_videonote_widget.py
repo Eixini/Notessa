@@ -1,18 +1,18 @@
 from PySide6.QtCore import QUrl, QDir, Qt
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QDialog
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from Notessa.video_note.ui_gen.ui_show_videonote_widget import Ui_ShowVideoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 
 
-class ShowVideoNoteWidget(QWidget):
+class ShowVideoNoteWidget(QDialog):
     def __init__(self, parent, note_data: list):
         super().__init__(parent)
         self.ui = Ui_ShowVideoNoteWidget()
         self.ui.setupUi(self)
 
         self.setAttribute(Qt.WA_DeleteOnClose)
-        self.installEventFilter(self.parent())
+        # self.installEventFilter(self.parent())
 
         self._note_data = note_data
 
@@ -38,7 +38,6 @@ class ShowVideoNoteWidget(QWidget):
         self.ui.play_button.clicked.connect(self.play)
         self.ui.stop_button.clicked.connect(self.stop)
         self.ui.pause_button.clicked.connect(self.pause)
-        self.ui.close_button.clicked.connect(self.close_note)
         self.ui.volume_slider.sliderMoved.connect(self.change_volume_slider)
         self._media_player.positionChanged.connect(self.on_position_changed)
         self.ui.duration_slider.sliderMoved.connect(self.change_duration_slider)
@@ -64,9 +63,6 @@ class ShowVideoNoteWidget(QWidget):
     def stop(self):
         if self._media_player.playbackState() != QMediaPlayer.PlaybackState.StoppedState:
             self._media_player.stop()
-
-    def close_note(self):
-        self.close()
 
     def on_position_changed(self):
         position = self.msec_convert(self._media_player.position())

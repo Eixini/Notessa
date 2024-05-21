@@ -1,22 +1,23 @@
 from PySide6.QtCore import QUrl, QDir, Qt
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QDialog
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from Notessa.voice_note.ui_gen.ui_show_voicenote_widget import Ui_ShowVoiceNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 
 
-class ShowVoiceNoteWidget(QWidget):
+class ShowVoiceNoteWidget(QDialog):
     def __init__(self, parent, note_data: list):
         super().__init__(parent)
         self.ui = Ui_ShowVoiceNoteWidget()
         self.ui.setupUi(self)
 
         self.setAttribute(Qt.WA_DeleteOnClose)
-        self.installEventFilter(self.parent())
+        # self.installEventFilter(self.parent())
 
         self._note_data = note_data
 
-        self.ui.voicenote_name_label.setText(self._note_data[1])
+        # self.ui.voicenote_name_label.setText(self._note_data[1])
+        self.setWindowTitle(self._note_data[1])
 
         _dir_checker = DirectoryChecker()
         self._file_path = f'{_dir_checker.voice_notes_directory()}{QDir.separator()}{self._note_data[1]}.{self._note_data[0]}'
@@ -34,16 +35,12 @@ class ShowVoiceNoteWidget(QWidget):
         self._media_player.setSource(QUrl.fromLocalFile(self._file_path))
 
         # Signal-Slot
-        self.ui.close_button.clicked.connect(self.close_note)
         self.ui.play_button.clicked.connect(self.play)
         self.ui.stop_button.clicked.connect(self.stop)
         self.ui.pause_button.clicked.connect(self.pause)
         self._media_player.positionChanged.connect(self.on_position_changed)
         self.ui.position_slider.sliderMoved.connect(self.change_duration_slider)
         self.ui.volume_slider.sliderMoved.connect(self.change_volume_slider)
-
-    def close_note(self):
-        self.close()
 
     def play(self):
 
