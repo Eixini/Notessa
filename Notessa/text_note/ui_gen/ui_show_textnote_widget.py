@@ -15,14 +15,19 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QSizePolicy,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QLabel, QSizePolicy, QTextEdit,
+    QVBoxLayout, QWidget)
 
 class Ui_ShowTextNoteWidget(object):
     def setupUi(self, ShowTextNoteWidget):
         if not ShowTextNoteWidget.objectName():
             ShowTextNoteWidget.setObjectName(u"ShowTextNoteWidget")
-        ShowTextNoteWidget.resize(860, 582)
+        ShowTextNoteWidget.resize(727, 544)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(ShowTextNoteWidget.sizePolicy().hasHeightForWidth())
+        ShowTextNoteWidget.setSizePolicy(sizePolicy)
         self.verticalLayout = QVBoxLayout(ShowTextNoteWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.textnote_name_label = QLabel(ShowTextNoteWidget)
@@ -43,7 +48,7 @@ class Ui_ShowTextNoteWidget(object):
     # setupUi
 
     def retranslateUi(self, ShowTextNoteWidget):
-        ShowTextNoteWidget.setWindowTitle(QCoreApplication.translate("ShowTextNoteWidget", u"Dialog", None))
+        ShowTextNoteWidget.setWindowTitle(QCoreApplication.translate("ShowTextNoteWidget", u"Form", None))
         self.textnote_name_label.setText(QCoreApplication.translate("ShowTextNoteWidget", u"Note name", None))
     # retranslateUi
 

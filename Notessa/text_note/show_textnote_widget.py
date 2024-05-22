@@ -1,17 +1,17 @@
-from PySide6.QtWidgets import QWidget, QDialog
+from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import QDir, Qt
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.text_note.ui_gen.ui_show_textnote_widget import Ui_ShowTextNoteWidget
 
 
-class ShowTextNoteWidget(QDialog):
+class ShowTextNoteWidget(QWidget):
     def __init__(self, parent, note_data: list):
         super().__init__(parent)
         self.ui = Ui_ShowTextNoteWidget()
         self.ui.setupUi(self)
 
         self.setAttribute(Qt.WA_DeleteOnClose)
-        # self.installEventFilter(self.parent())
+        self.installEventFilter(self.parent())
 
         self._note_data = note_data
 

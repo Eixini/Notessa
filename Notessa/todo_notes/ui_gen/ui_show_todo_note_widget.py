@@ -15,14 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QListView,
-    QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QLabel, QListView, QSizePolicy,
+    QVBoxLayout, QWidget)
+
 
 class Ui_ShowTodoNoteWidget(object):
     def setupUi(self, ShowTodoNoteWidget):
         if not ShowTodoNoteWidget.objectName():
             ShowTodoNoteWidget.setObjectName(u"ShowTodoNoteWidget")
-        ShowTodoNoteWidget.resize(841, 679)
+        ShowTodoNoteWidget.resize(772, 678)
         self.verticalLayout = QVBoxLayout(ShowTodoNoteWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.todo_note_name_label = QLabel(ShowTodoNoteWidget)
@@ -42,7 +43,7 @@ class Ui_ShowTodoNoteWidget(object):
     # setupUi
 
     def retranslateUi(self, ShowTodoNoteWidget):
-        ShowTodoNoteWidget.setWindowTitle(QCoreApplication.translate("ShowTodoNoteWidget", u"Dialog", None))
+        ShowTodoNoteWidget.setWindowTitle(QCoreApplication.translate("ShowTodoNoteWidget", u"Form", None))
         self.todo_note_name_label.setText(QCoreApplication.translate("ShowTodoNoteWidget", u"Todo note name", None))
     # retranslateUi
 

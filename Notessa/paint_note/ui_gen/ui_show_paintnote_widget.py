@@ -15,14 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QLabel, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
+
 
 class Ui_ShowPaintNoteWidget(object):
     def setupUi(self, ShowPaintNoteWidget):
         if not ShowPaintNoteWidget.objectName():
             ShowPaintNoteWidget.setObjectName(u"ShowPaintNoteWidget")
-        ShowPaintNoteWidget.resize(910, 680)
+        ShowPaintNoteWidget.resize(943, 648)
         self.verticalLayout = QVBoxLayout(ShowPaintNoteWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.paintnote_name_label = QLabel(ShowPaintNoteWidget)
@@ -30,19 +31,14 @@ class Ui_ShowPaintNoteWidget(object):
 
         self.verticalLayout.addWidget(self.paintnote_name_label)
 
-        self.show_paintnote_vertical_layout = QVBoxLayout()
-        self.show_paintnote_vertical_layout.setObjectName(u"show_paintnote_vertical_layout")
         self.paintnote_label = QLabel(ShowPaintNoteWidget)
         self.paintnote_label.setObjectName(u"paintnote_label")
 
-        self.show_paintnote_vertical_layout.addWidget(self.paintnote_label)
+        self.verticalLayout.addWidget(self.paintnote_label)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.show_paintnote_vertical_layout.addItem(self.verticalSpacer)
-
-
-        self.verticalLayout.addLayout(self.show_paintnote_vertical_layout)
+        self.verticalLayout.addItem(self.verticalSpacer)
 
 
         self.retranslateUi(ShowPaintNoteWidget)
@@ -51,7 +47,7 @@ class Ui_ShowPaintNoteWidget(object):
     # setupUi
 
     def retranslateUi(self, ShowPaintNoteWidget):
-        ShowPaintNoteWidget.setWindowTitle(QCoreApplication.translate("ShowPaintNoteWidget", u"Dialog", None))
+        ShowPaintNoteWidget.setWindowTitle(QCoreApplication.translate("ShowPaintNoteWidget", u"Form", None))
         self.paintnote_name_label.setText(QCoreApplication.translate("ShowPaintNoteWidget", u"Paint note label", None))
         self.paintnote_label.setText("")
     # retranslateUi

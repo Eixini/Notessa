@@ -16,15 +16,16 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtMultimediaWidgets import QVideoWidget
-from PySide6.QtWidgets import (QApplication, QDialog, QHBoxLayout, QLabel,
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
     QPushButton, QSizePolicy, QSlider, QSpacerItem,
     QVBoxLayout, QWidget)
+
 
 class Ui_ShowVideoNoteWidget(object):
     def setupUi(self, ShowVideoNoteWidget):
         if not ShowVideoNoteWidget.objectName():
             ShowVideoNoteWidget.setObjectName(u"ShowVideoNoteWidget")
-        ShowVideoNoteWidget.resize(1008, 772)
+        ShowVideoNoteWidget.resize(926, 596)
         self.verticalLayout = QVBoxLayout(ShowVideoNoteWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.videonote_name_label = QLabel(ShowVideoNoteWidget)
@@ -42,32 +43,32 @@ class Ui_ShowVideoNoteWidget(object):
 
         self.verticalLayout.addWidget(self.play_videonote_widget)
 
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.position_label = QLabel(ShowVideoNoteWidget)
         self.position_label.setObjectName(u"position_label")
 
-        self.horizontalLayout_3.addWidget(self.position_label)
+        self.horizontalLayout_4.addWidget(self.position_label)
 
         self.duration_slider = QSlider(ShowVideoNoteWidget)
         self.duration_slider.setObjectName(u"duration_slider")
         self.duration_slider.setOrientation(Qt.Horizontal)
 
-        self.horizontalLayout_3.addWidget(self.duration_slider)
+        self.horizontalLayout_4.addWidget(self.duration_slider)
 
         self.duration_label = QLabel(ShowVideoNoteWidget)
         self.duration_label.setObjectName(u"duration_label")
 
-        self.horizontalLayout_3.addWidget(self.duration_label)
+        self.horizontalLayout_4.addWidget(self.duration_label)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.verticalLayout.addLayout(self.horizontalLayout_4)
 
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_3)
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_3)
 
         self.play_button = QPushButton(ShowVideoNoteWidget)
         self.play_button.setObjectName(u"play_button")
@@ -76,7 +77,7 @@ class Ui_ShowVideoNoteWidget(object):
         self.play_button.setIcon(icon)
         self.play_button.setIconSize(QSize(32, 32))
 
-        self.horizontalLayout_2.addWidget(self.play_button)
+        self.horizontalLayout_5.addWidget(self.play_button)
 
         self.pause_button = QPushButton(ShowVideoNoteWidget)
         self.pause_button.setObjectName(u"pause_button")
@@ -85,7 +86,7 @@ class Ui_ShowVideoNoteWidget(object):
         self.pause_button.setIcon(icon1)
         self.pause_button.setIconSize(QSize(32, 32))
 
-        self.horizontalLayout_2.addWidget(self.pause_button)
+        self.horizontalLayout_5.addWidget(self.pause_button)
 
         self.stop_button = QPushButton(ShowVideoNoteWidget)
         self.stop_button.setObjectName(u"stop_button")
@@ -94,31 +95,32 @@ class Ui_ShowVideoNoteWidget(object):
         self.stop_button.setIcon(icon2)
         self.stop_button.setIconSize(QSize(32, 32))
 
-        self.horizontalLayout_2.addWidget(self.stop_button)
+        self.horizontalLayout_5.addWidget(self.stop_button)
 
         self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_4)
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_4)
 
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.volume_label = QLabel(ShowVideoNoteWidget)
         self.volume_label.setObjectName(u"volume_label")
 
-        self.horizontalLayout.addWidget(self.volume_label)
+        self.horizontalLayout_6.addWidget(self.volume_label)
 
         self.volume_slider = QSlider(ShowVideoNoteWidget)
         self.volume_slider.setObjectName(u"volume_slider")
         self.volume_slider.setMaximum(100)
         self.volume_slider.setOrientation(Qt.Horizontal)
 
-        self.horizontalLayout.addWidget(self.volume_slider)
+        self.horizontalLayout_6.addWidget(self.volume_slider)
 
 
-        self.horizontalLayout_2.addLayout(self.horizontalLayout)
+        self.horizontalLayout_5.addLayout(self.horizontalLayout_6)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.verticalLayout.addLayout(self.horizontalLayout_5)
 
 
         self.retranslateUi(ShowVideoNoteWidget)
@@ -127,7 +129,7 @@ class Ui_ShowVideoNoteWidget(object):
     # setupUi
 
     def retranslateUi(self, ShowVideoNoteWidget):
-        ShowVideoNoteWidget.setWindowTitle(QCoreApplication.translate("ShowVideoNoteWidget", u"Dialog", None))
+        ShowVideoNoteWidget.setWindowTitle(QCoreApplication.translate("ShowVideoNoteWidget", u"Form", None))
         self.videonote_name_label.setText(QCoreApplication.translate("ShowVideoNoteWidget", u"Video note name", None))
         self.position_label.setText(QCoreApplication.translate("ShowVideoNoteWidget", u"00:00", None))
         self.duration_label.setText(QCoreApplication.translate("ShowVideoNoteWidget", u"00:00", None))

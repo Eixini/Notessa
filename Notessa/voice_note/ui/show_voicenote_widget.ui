@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>ShowVoiceNoteWidget</class>
- <widget class="QDialog" name="ShowVoiceNoteWidget">
+ <widget class="QWidget" name="ShowVoiceNoteWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>738</width>
-    <height>552</height>
+    <width>877</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="voicenote_name_label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Voice note name</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
@@ -22,13 +35,13 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>213</height>
+       <height>40</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="current_position_label">
        <property name="text">
@@ -53,7 +66,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QLabel" name="volume_label">
        <property name="text">
@@ -74,7 +87,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
@@ -180,13 +193,15 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>213</height>
+       <height>40</height>
       </size>
      </property>
     </spacer>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resource/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
