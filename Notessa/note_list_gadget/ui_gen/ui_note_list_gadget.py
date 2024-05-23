@@ -15,10 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QPushButton,
-    QSizePolicy, QSpacerItem, QTableView, QTreeView,
+from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView,
+    QPushButton, QSizePolicy, QSpacerItem, QTableView,
     QVBoxLayout, QWidget)
-from Notessa.resources.icons.button import button_icons_rc
 
 class Ui_NoteListGadget(object):
     def setupUi(self, NoteListGadget):
@@ -52,28 +51,21 @@ class Ui_NoteListGadget(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.view_mode_button = QPushButton(NoteListGadget)
-        self.view_mode_button.setObjectName(u"view_mode_button")
-        font1 = QFont()
-        font1.setFamilies([u"Ubuntu"])
-        self.view_mode_button.setFont(font1)
-        icon1 = QIcon()
-        icon1.addFile(u":/button/table_view.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.view_mode_button.setIcon(icon1)
-        self.view_mode_button.setIconSize(QSize(25, 25))
+        self.filter_combobox = QComboBox(NoteListGadget)
+        self.filter_combobox.setObjectName(u"filter_combobox")
 
-        self.horizontalLayout.addWidget(self.view_mode_button)
+        self.horizontalLayout.addWidget(self.filter_combobox)
 
         self.pin_gadget_button = QPushButton(NoteListGadget)
         self.pin_gadget_button.setObjectName(u"pin_gadget_button")
-        font2 = QFont()
-        font2.setFamilies([u"Ubuntu"])
-        font2.setPointSize(11)
-        font2.setBold(False)
-        self.pin_gadget_button.setFont(font2)
-        icon2 = QIcon()
-        icon2.addFile(u":/button/pin.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pin_gadget_button.setIcon(icon2)
+        font1 = QFont()
+        font1.setFamilies([u"Ubuntu"])
+        font1.setPointSize(11)
+        font1.setBold(False)
+        self.pin_gadget_button.setFont(font1)
+        icon1 = QIcon()
+        icon1.addFile(u":/button/pin.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pin_gadget_button.setIcon(icon1)
         self.pin_gadget_button.setIconSize(QSize(25, 25))
 
         self.horizontalLayout.addWidget(self.pin_gadget_button)
@@ -81,20 +73,15 @@ class Ui_NoteListGadget(object):
         self.close_button = QPushButton(NoteListGadget)
         self.close_button.setObjectName(u"close_button")
         self.close_button.setFont(font)
-        icon3 = QIcon()
-        icon3.addFile(u":/button/close.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.close_button.setIcon(icon3)
+        icon2 = QIcon()
+        icon2.addFile(u":/button/close.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.close_button.setIcon(icon2)
         self.close_button.setIconSize(QSize(25, 25))
 
         self.horizontalLayout.addWidget(self.close_button)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
-
-        self.tree_view = QTreeView(NoteListGadget)
-        self.tree_view.setObjectName(u"tree_view")
-
-        self.verticalLayout.addWidget(self.tree_view)
 
         self.table_view = QTableView(NoteListGadget)
         self.table_view.setObjectName(u"table_view")
@@ -110,7 +97,7 @@ class Ui_NoteListGadget(object):
     def retranslateUi(self, NoteListGadget):
         NoteListGadget.setWindowTitle(QCoreApplication.translate("NoteListGadget", u"Form", None))
         self.create_note_button.setText("")
-        self.view_mode_button.setText("")
+        self.filter_combobox.setPlaceholderText(QCoreApplication.translate("NoteListGadget", u"Show note types", None))
         self.pin_gadget_button.setText("")
         self.close_button.setText("")
     # retranslateUi

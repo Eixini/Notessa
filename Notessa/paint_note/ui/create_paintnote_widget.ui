@@ -53,32 +53,6 @@
       <enum>QLayout::SetMinimumSize</enum>
      </property>
      <item>
-      <widget class="QPushButton" name="close_button">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>Back</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../resource/icons.qrc">
-         <normaloff>:/icons/back.png</normaloff>:/icons/back.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -97,7 +71,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../resource/icons.qrc">
+        <iconset>
          <normaloff>:/icons/colors.png</normaloff>:/icons/colors.png</iconset>
        </property>
        <property name="iconSize">
@@ -146,7 +120,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../resource/icons.qrc">
+        <iconset>
          <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
        </property>
        <property name="iconSize">

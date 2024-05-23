@@ -41,9 +41,6 @@ class CreateVoiceNoteWidget(QDialog):
         self._media_recorder.recorderStateChanged.connect(self.update_record_state)
         self.ui.available_devices_combobox.currentIndexChanged.connect(self.microphone_selection_changed)
 
-        # Signal - Slot
-        self.ui.close_button.clicked.connect(self.close_note)
-
     def update_record_state(self):
         """
         Method for checking the status of a record.
@@ -92,11 +89,6 @@ class CreateVoiceNoteWidget(QDialog):
         self._media_format.setAudioCodec(QMediaFormat.AudioCodec.Wave)
         self._media_recorder.setMediaFormat(self._media_format)
         self._session.setRecorder(self._media_recorder)
-
-    def close_note(self):
-        if self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState:
-            self._media_recorder.stop()
-        self.close()
 
     def record_voice_note(self):
         if (not self.ui.voicenote_name_lineedit.text() == '' and
@@ -154,4 +146,3 @@ class CreateVoiceNoteWidget(QDialog):
         self._media_recorder.durationChanged.disconnect(self.change_label)
         self._media_recorder.recorderStateChanged.disconnect(self.update_record_state)
         self.ui.available_devices_combobox.currentIndexChanged.disconnect(self.microphone_selection_changed)
-        self.ui.close_button.clicked.disconnect(self.close_note())

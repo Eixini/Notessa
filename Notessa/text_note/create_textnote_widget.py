@@ -4,6 +4,7 @@ from PySide6.QtCore import QFile, QDateTime, QDir, Qt
 from Notessa.text_note.ui_gen.ui_create_textnote_widget import Ui_CreateTextNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 
+
 class CreateTextNoteWidget(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
@@ -19,7 +20,6 @@ class CreateTextNoteWidget(QWidget):
         self.ui.textnote_contents.setVerticalScrollBar(self.vertical_scrollbar)
 
         # Signal - Slot
-        self.ui.back_button.clicked.connect(self.back)
         self.ui.save_button.clicked.connect(self.save_text_note)
 
     def save_text_note(self):
@@ -44,6 +44,3 @@ class CreateTextNoteWidget(QWidget):
 
             print('Text note create!')
             self.close()
-
-    def back(self):
-        self.close()

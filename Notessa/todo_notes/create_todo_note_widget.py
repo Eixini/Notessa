@@ -24,7 +24,6 @@ class CreateTodoNoteWidget(QWidget):
         self.ui.note_items_list_widget.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         # Signal - Slot
-        self.ui.close_button.clicked.connect(self.close_note)
         self.ui.add_item_button.clicked.connect(self.add_note_item)
         self.ui.delete_button.clicked.connect(self.delete_note_item)
         self.ui.save_button.clicked.connect(self.save_note)
@@ -51,6 +50,3 @@ class CreateTodoNoteWidget(QWidget):
             with open(file_name, 'w') as file:
                 json.dump(json_data, file, indent=4)
             self.close()
-
-    def close_note(self):
-        self.close()

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'create_textnote_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.2
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -18,7 +18,6 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
     QPushButton, QSizePolicy, QSpacerItem, QTextEdit,
     QVBoxLayout, QWidget)
-from Notessa.resource import icons_rc
 
 class Ui_CreateTextNoteWidget(object):
     def setupUi(self, CreateTextNoteWidget):
@@ -53,24 +52,15 @@ class Ui_CreateTextNoteWidget(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.back_button = QPushButton(CreateTextNoteWidget)
-        self.back_button.setObjectName(u"back_button")
-        icon = QIcon()
-        icon.addFile(u":/icons/back.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.back_button.setIcon(icon)
-        self.back_button.setIconSize(QSize(32, 32))
-
-        self.horizontalLayout.addWidget(self.back_button)
-
         self.horizontalSpacer = QSpacerItem(408, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
         self.save_button = QPushButton(CreateTextNoteWidget)
         self.save_button.setObjectName(u"save_button")
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/save.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.save_button.setIcon(icon1)
+        icon = QIcon()
+        icon.addFile(u":/icons/save.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.save_button.setIcon(icon)
         self.save_button.setIconSize(QSize(32, 32))
 
         self.horizontalLayout.addWidget(self.save_button)
@@ -89,7 +79,6 @@ class Ui_CreateTextNoteWidget(object):
         self.textnote_name_label.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Enter a note title", None))
         self.textnote_name_lineedit.setPlaceholderText(QCoreApplication.translate("CreateTextNoteWidget", u"Enter a note name...", None))
         self.textnote_contents.setPlaceholderText(QCoreApplication.translate("CreateTextNoteWidget", u"Here you can start writing your note...", None))
-        self.back_button.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Back", None))
         self.save_button.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Save", None))
     # retranslateUi
 

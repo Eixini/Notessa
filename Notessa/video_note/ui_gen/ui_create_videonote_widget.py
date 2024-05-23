@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'create_videonote_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.2
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -19,7 +19,7 @@ from PySide6.QtMultimediaWidgets import QVideoWidget
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
     QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
     QVBoxLayout, QWidget)
-from Notessa.resource import icons_rc
+
 
 class Ui_CreateVideoNoteWidget(object):
     def setupUi(self, CreateVideoNoteWidget):
@@ -131,29 +131,6 @@ class Ui_CreateVideoNoteWidget(object):
 
         self.verticalLayout.addLayout(self.media_buttons_horizontal_layout)
 
-        self.buttons_panel_horizontal_layout = QHBoxLayout()
-        self.buttons_panel_horizontal_layout.setObjectName(u"buttons_panel_horizontal_layout")
-        self.close_button = QPushButton(CreateVideoNoteWidget)
-        self.close_button.setObjectName(u"close_button")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.close_button.sizePolicy().hasHeightForWidth())
-        self.close_button.setSizePolicy(sizePolicy1)
-        icon3 = QIcon()
-        icon3.addFile(u":/icons/back.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.close_button.setIcon(icon3)
-        self.close_button.setIconSize(QSize(32, 32))
-
-        self.buttons_panel_horizontal_layout.addWidget(self.close_button)
-
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.buttons_panel_horizontal_layout.addItem(self.horizontalSpacer_2)
-
-
-        self.verticalLayout.addLayout(self.buttons_panel_horizontal_layout)
-
 
         self.retranslateUi(CreateVideoNoteWidget)
 
@@ -172,6 +149,5 @@ class Ui_CreateVideoNoteWidget(object):
         self.record_button.setText("")
         self.stop_button.setText("")
         self.mute_button.setText("")
-        self.close_button.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"Back", None))
     # retranslateUi
 

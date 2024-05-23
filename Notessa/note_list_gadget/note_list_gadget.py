@@ -1,9 +1,8 @@
 from PySide6.QtWidgets import QWidget, QHeaderView, QAbstractItemView, QMenu, QDialog
-from PySide6.QtCore import QSortFilterProxyModel, Qt, QEvent, QSettings, QPoint
+from PySide6.QtCore import QSortFilterProxyModel, Qt, QEvent, QSettings, QPoint, QRegularExpression
 from PySide6.QtGui import QIcon, QPixmap, QMouseEvent, QAction, QCursor
 from Notessa.note_list_gadget.ui_gen.ui_note_list_gadget import Ui_NoteListGadget
 from Notessa.note_creation_menu.note_creation_menu_widget import NoteCreationMenuWidget
-from Notessa.model.notelist_tree_model.shortcut_notes_model import TreeModel
 from Notessa.model.notelist_table_model.notes_model import NotesModel
 from Notessa.model.notelist_table_model.note_item_delegate import NoteItemDelegate
 from Notessa.window_container.window_container import WindowContainer
@@ -32,33 +31,6 @@ class NoteListGadget(QWidget):
             elif self.settings.value('PinState') == 'false':
                 self.gadget_pin = False
                 self.move(self.settings.value('GadgetPosition'))
-
-            # Setting View
-            if self.settings.value('ViewMode') == 'TreeView':
-                self.ui.tree_view.setVisible(True)
-                self.ui.table_view.setVisible(False)
-                self.view_model = TreeModel()
-                self.ui.tree_view.setModel(self.view_model)
-
-                self.ui.view_mode_button.setIcon(QPixmap(':/button/table_view.png').scaledToWidth(25).scaledToHeight(25))
-            elif self.settings.value('ViewMode') == 'TableView':
-                self.ui.table_view.setVisible(True)
-                self.ui.tree_view.setVisible(False)
-                self.view_model = NotesModel()
-                self.ui.table_view.setModel(self.view_model)
-
-                self.ui.view_mode_button.setIcon(QPixmap(':/button/tree_view.png').scaledToWidth(25).scaledToHeight(25))
-            else:
-                # Default
-                self.ui.tree_view.setVisible(True)
-                self.ui.table_view.setVisible(False)
-                self.view_model = TreeModel()
-                self.ui.tree_view.setModel(self.view_model)
-
-                self.settings.setValue('ViewMode', 'TreeView')
-
-                self.ui.view_mode_button.setIcon(QPixmap(':/button/table_view.png').scaledToWidth(25).scaledToHeight(25))
-
         except Exception as err:
             print(err)
 
@@ -67,6 +39,18 @@ class NoteListGadget(QWidget):
             self.ui.pin_gadget_button.setIcon(QPixmap(':/button/unpin.png').scaledToWidth(25).scaledToHeight(25))
         else:
             self.ui.pin_gadget_button.setIcon(QPixmap(':/button/pin.png').scaledToWidth(25).scaledToHeight(25))
+
+        # ComboBox
+        self.ui.filter_combobox.addItem('All notes')
+        self.ui.filter_combobox.addItem('Text notes')
+        self.ui.filter_combobox.addItem('Voice notes')
+        self.ui.filter_combobox.addItem('Video notes')
+        self.ui.filter_combobox.addItem('Paint notes')
+        self.ui.filter_combobox.addItem('Todo notes')
+
+        # Setting View
+        self.view_model = NotesModel()
+        self.ui.table_view.setModel(self.view_model)
 
         # Sorting
         self._proxy_model = QSortFilterProxyModel()
@@ -90,36 +74,13 @@ class NoteListGadget(QWidget):
 
         # Signal - Slot
         self.ui.create_note_button.clicked.connect(self.open_note_creation_menu)
-        self.ui.view_mode_button.clicked.connect(self.change_view_mode)
         self.ui.pin_gadget_button.clicked.connect(self.pin_widget_position)
         self.ui.close_button.clicked.connect(self.gadget_close)
         self.ui.table_view.customContextMenuRequested.connect(self.contex_menu)
+        self.ui.filter_combobox.currentIndexChanged.connect(self.filter_notes)
 
     def open_note_creation_menu(self):
         self.note_creation_menu.setVisible(True)
-
-    def change_view_mode(self):
-        if self.settings.value('ViewMode') == 'TableView':
-            self.ui.tree_view.setVisible(True)
-            self.ui.table_view.setVisible(False)
-            self.view_model = TreeModel()
-            self.ui.tree_view.setModel(self.view_model)
-
-            self.settings.remove('ViewMode')
-            self.settings.setValue('ViewMode', 'TreeView')
-
-            self.ui.view_mode_button.setIcon(QPixmap(':/button/table_view.png'))
-
-        elif self.settings.value('ViewMode') == 'TreeView':
-            self.ui.table_view.setVisible(True)
-            self.ui.tree_view.setVisible(False)
-            self.view_model = NotesModel()
-            self.ui.table_view.setModel(self.view_model)
-
-            self.settings.remove('ViewMode')
-            self.settings.setValue('ViewMode', 'TableView')
-
-            self.ui.view_mode_button.setIcon(QPixmap(':/button/tree_view.png'))
 
     def pin_widget_position(self):
         self.gadget_pin = not self.gadget_pin
@@ -172,20 +133,47 @@ class NoteListGadget(QWidget):
             data = self.view_model.getCurrentData(sort_index)
 
             if sort_note_type == 'txt':
-                show_note_window = WindowContainer('text', data)
+                show_note_window = WindowContainer()
+                show_note_window.show_note('text', data)
                 show_note_window.exec()
             elif sort_note_type == 'wav':
-                show_note_window = WindowContainer('voice', data)
+                show_note_window = WindowContainer()
+                show_note_window.show_note('voice', data)
                 show_note_window.exec()
             elif sort_note_type == 'mp4':
-                show_note_window = WindowContainer('video', data)
+                show_note_window = WindowContainer()
+                show_note_window.show_note('video', data)
                 show_note_window.exec()
             elif sort_note_type == 'png':
-                show_note_window = WindowContainer('paint', data)
+                show_note_window = WindowContainer()
+                show_note_window.show_note('paint', data)
                 show_note_window.exec()
             elif sort_note_type == 'json':
-                show_note_window = WindowContainer('todo', data)
+                show_note_window = WindowContainer()
+                show_note_window.show_note('todo', data)
                 show_note_window.exec()
+
+    def filter_notes(self):
+        """ Filter allows you to display notes of the selected type """
+        index = self.ui.filter_combobox.currentIndex()
+        if index == 0:
+            self._proxy_model.setFilterRegularExpression(QRegularExpression('\\w'))
+            self._proxy_model.setFilterKeyColumn(0)
+        elif index == 1:
+            self._proxy_model.setFilterRegularExpression(QRegularExpression('txt'))
+            self._proxy_model.setFilterKeyColumn(0)
+        elif index == 2:
+            self._proxy_model.setFilterRegularExpression(QRegularExpression('wav'))
+            self._proxy_model.setFilterKeyColumn(0)
+        elif index == 3:
+            self._proxy_model.setFilterRegularExpression(QRegularExpression('mp4'))
+            self._proxy_model.setFilterKeyColumn(0)
+        elif index == 4:
+            self._proxy_model.setFilterRegularExpression(QRegularExpression('png'))
+            self._proxy_model.setFilterKeyColumn(0)
+        elif index == 5:
+            self._proxy_model.setFilterRegularExpression(QRegularExpression('json'))
+            self._proxy_model.setFilterKeyColumn(0)
 
     def gadget_close(self):
         self.close()

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'create_todo_note_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.2
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
     QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
-from Notessa.resource import icons_rc
+
 
 class Ui_CreateTodoNoteWidget(object):
     def setupUi(self, CreateTodoNoteWidget):
@@ -75,24 +75,15 @@ class Ui_CreateTodoNoteWidget(object):
 
         self.buttons_panel_horizontal_layout = QHBoxLayout()
         self.buttons_panel_horizontal_layout.setObjectName(u"buttons_panel_horizontal_layout")
-        self.close_button = QPushButton(CreateTodoNoteWidget)
-        self.close_button.setObjectName(u"close_button")
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/back.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.close_button.setIcon(icon1)
-        self.close_button.setIconSize(QSize(32, 32))
-
-        self.buttons_panel_horizontal_layout.addWidget(self.close_button)
-
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.buttons_panel_horizontal_layout.addItem(self.horizontalSpacer_2)
 
         self.delete_button = QPushButton(CreateTodoNoteWidget)
         self.delete_button.setObjectName(u"delete_button")
-        icon2 = QIcon()
-        icon2.addFile(u":/icons/garbage.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.delete_button.setIcon(icon2)
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/garbage.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.delete_button.setIcon(icon1)
         self.delete_button.setIconSize(QSize(32, 32))
 
         self.buttons_panel_horizontal_layout.addWidget(self.delete_button)
@@ -103,9 +94,9 @@ class Ui_CreateTodoNoteWidget(object):
 
         self.save_button = QPushButton(CreateTodoNoteWidget)
         self.save_button.setObjectName(u"save_button")
-        icon3 = QIcon()
-        icon3.addFile(u":/icons/save.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.save_button.setIcon(icon3)
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/save.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.save_button.setIcon(icon2)
         self.save_button.setIconSize(QSize(32, 32))
 
         self.buttons_panel_horizontal_layout.addWidget(self.save_button)
@@ -126,7 +117,6 @@ class Ui_CreateTodoNoteWidget(object):
         self.note_item_label.setText(QCoreApplication.translate("CreateTodoNoteWidget", u"Enter note item", None))
         self.note_item_lineedit.setPlaceholderText(QCoreApplication.translate("CreateTodoNoteWidget", u"For example, \u201cOrder new food for the cat\u201d", None))
         self.add_item_button.setText("")
-        self.close_button.setText(QCoreApplication.translate("CreateTodoNoteWidget", u"Close", None))
         self.delete_button.setText("")
         self.save_button.setText("")
     # retranslateUi

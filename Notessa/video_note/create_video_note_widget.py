@@ -4,7 +4,6 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtMultimedia import QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput, QCamera, QMediaDevices
 from Notessa.video_note.ui_gen.ui_create_videonote_widget import Ui_CreateVideoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
-from Notessa.resource import icons_rc
 
 
 class CreateVideoNoteWidget(QWidget):
@@ -44,7 +43,6 @@ class CreateVideoNoteWidget(QWidget):
         # Signal - Slot
         self.ui.record_button.clicked.connect(self.record)
         self.ui.stop_button.clicked.connect(self.stop)
-        self.ui.close_button.clicked.connect(self.close_note)
         self.ui.mute_button.clicked.connect(self.mute)
         self._media_recorder.durationChanged.connect(self.change_label)
         self._media_recorder.recorderStateChanged.connect(self.update_record_state)
@@ -130,9 +128,6 @@ class CreateVideoNoteWidget(QWidget):
         self._timer.stop()
         self._duration = 0
 
-    def close_note(self):
-        self.close()
-
     def change_label(self):
         time_duration = self.sec_convert(self._duration)
         self.ui.duration_label.setText(f'{time_duration["min"]}:{time_duration["sec"]}')
@@ -158,7 +153,6 @@ class CreateVideoNoteWidget(QWidget):
         self._timer.timeout.disconnect(self.update_duration)
         self.ui.record_button.clicked.disconnect(self.record)
         self.ui.stop_button.clicked.disconnect(self.stop)
-        self.ui.close_button.clicked.disconnect(self.close_note)
         self.ui.mute_button.clicked.disconnect(self.mute)
         self._media_recorder.durationChanged.disconnect(self.change_label)
         self._media_recorder.recorderStateChanged.disconnect(self.update_record_state)

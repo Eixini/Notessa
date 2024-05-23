@@ -36,7 +36,6 @@ class CreatePaintNoteWidget(QWidget):
 
         # Signal - Slot
         self.ui.save_button.clicked.connect(self.save)
-        self.ui.close_button.clicked.connect(self.close_note)
         self.ui.pen_width_double_spinbox.valueChanged.connect(self.pen_width_change)
         self.ui.color_button.clicked.connect(self.select_color)
 
@@ -57,5 +56,3 @@ class CreatePaintNoteWidget(QWidget):
 
             self.ui.painter_widget.save(url)
             self.close()
-    def close_note(self):
-        self.close()

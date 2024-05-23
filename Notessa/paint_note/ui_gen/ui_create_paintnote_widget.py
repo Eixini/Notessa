@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'create_paintnote_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.2
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QDoubleSpinBox, QHBoxLayout, QLabel
     QSpacerItem, QVBoxLayout, QWidget)
 
 from Notessa.paint_note.painter_widget import PainterWidget
-from Notessa.resource import icons_rc
+
 
 class Ui_CreatePaintNoteWidget(object):
     def setupUi(self, CreatePaintNoteWidget):
@@ -60,30 +60,15 @@ class Ui_CreatePaintNoteWidget(object):
         self.panel_horizontal_layout.setSpacing(0)
         self.panel_horizontal_layout.setObjectName(u"panel_horizontal_layout")
         self.panel_horizontal_layout.setSizeConstraint(QLayout.SetMinimumSize)
-        self.close_button = QPushButton(CreatePaintNoteWidget)
-        self.close_button.setObjectName(u"close_button")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.close_button.sizePolicy().hasHeightForWidth())
-        self.close_button.setSizePolicy(sizePolicy1)
-        self.close_button.setAutoFillBackground(False)
-        icon = QIcon()
-        icon.addFile(u":/icons/back.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.close_button.setIcon(icon)
-        self.close_button.setIconSize(QSize(32, 32))
-
-        self.panel_horizontal_layout.addWidget(self.close_button)
-
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.panel_horizontal_layout.addItem(self.horizontalSpacer)
 
         self.color_button = QPushButton(CreatePaintNoteWidget)
         self.color_button.setObjectName(u"color_button")
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/colors.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.color_button.setIcon(icon1)
+        icon = QIcon()
+        icon.addFile(u":/icons/colors.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.color_button.setIcon(icon)
         self.color_button.setIconSize(QSize(32, 32))
 
         self.panel_horizontal_layout.addWidget(self.color_button)
@@ -104,11 +89,14 @@ class Ui_CreatePaintNoteWidget(object):
 
         self.save_button = QPushButton(CreatePaintNoteWidget)
         self.save_button.setObjectName(u"save_button")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.save_button.sizePolicy().hasHeightForWidth())
         self.save_button.setSizePolicy(sizePolicy1)
-        icon2 = QIcon()
-        icon2.addFile(u":/icons/save.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.save_button.setIcon(icon2)
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/save.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.save_button.setIcon(icon1)
         self.save_button.setIconSize(QSize(32, 32))
 
         self.panel_horizontal_layout.addWidget(self.save_button)
@@ -125,7 +113,6 @@ class Ui_CreatePaintNoteWidget(object):
     def retranslateUi(self, CreatePaintNoteWidget):
         CreatePaintNoteWidget.setWindowTitle(QCoreApplication.translate("CreatePaintNoteWidget", u"Form", None))
         self.paintnote_name_label.setText(QCoreApplication.translate("CreatePaintNoteWidget", u"Enter note name", None))
-        self.close_button.setText(QCoreApplication.translate("CreatePaintNoteWidget", u"Back", None))
         self.color_button.setText("")
         self.brush_widht_label.setText(QCoreApplication.translate("CreatePaintNoteWidget", u"Width", None))
         self.save_button.setText("")
