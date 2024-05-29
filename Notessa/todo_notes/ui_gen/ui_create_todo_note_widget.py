@@ -15,33 +15,58 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
-
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDateTimeEdit, QHBoxLayout,
+    QLabel, QLineEdit, QListWidget, QListWidgetItem,
+    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_CreateTodoNoteWidget(object):
     def setupUi(self, CreateTodoNoteWidget):
         if not CreateTodoNoteWidget.objectName():
             CreateTodoNoteWidget.setObjectName(u"CreateTodoNoteWidget")
-        CreateTodoNoteWidget.resize(778, 487)
+        CreateTodoNoteWidget.resize(906, 633)
         self.verticalLayout = QVBoxLayout(CreateTodoNoteWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.todonote_name_horizontal_layout = QHBoxLayout()
-        self.todonote_name_horizontal_layout.setObjectName(u"todonote_name_horizontal_layout")
-        self.todonote_name_horizontal_layout.setContentsMargins(-1, -1, -1, 20)
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.todo_note_name_label = QLabel(CreateTodoNoteWidget)
         self.todo_note_name_label.setObjectName(u"todo_note_name_label")
 
-        self.todonote_name_horizontal_layout.addWidget(self.todo_note_name_label)
+        self.horizontalLayout.addWidget(self.todo_note_name_label)
 
         self.todo_note_name_lineedit = QLineEdit(CreateTodoNoteWidget)
         self.todo_note_name_lineedit.setObjectName(u"todo_note_name_lineedit")
 
-        self.todonote_name_horizontal_layout.addWidget(self.todo_note_name_lineedit)
+        self.horizontalLayout.addWidget(self.todo_note_name_lineedit)
 
 
-        self.verticalLayout.addLayout(self.todonote_name_horizontal_layout)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_3)
+
+        self.indefinite_checkbox = QCheckBox(CreateTodoNoteWidget)
+        self.indefinite_checkbox.setObjectName(u"indefinite_checkbox")
+
+        self.horizontalLayout_2.addWidget(self.indefinite_checkbox)
+
+        self.note_deadline_label = QLabel(CreateTodoNoteWidget)
+        self.note_deadline_label.setObjectName(u"note_deadline_label")
+
+        self.horizontalLayout_2.addWidget(self.note_deadline_label)
+
+        self.note_date_time_edit = QDateTimeEdit(CreateTodoNoteWidget)
+        self.note_date_time_edit.setObjectName(u"note_date_time_edit")
+        self.note_date_time_edit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)))
+        self.note_date_time_edit.setCalendarPopup(False)
+
+        self.horizontalLayout_2.addWidget(self.note_date_time_edit)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.note_item_horizontal_layout = QHBoxLayout()
         self.note_item_horizontal_layout.setObjectName(u"note_item_horizontal_layout")
@@ -114,6 +139,8 @@ class Ui_CreateTodoNoteWidget(object):
         CreateTodoNoteWidget.setWindowTitle(QCoreApplication.translate("CreateTodoNoteWidget", u"Form", None))
         self.todo_note_name_label.setText(QCoreApplication.translate("CreateTodoNoteWidget", u"Enter note name", None))
         self.todo_note_name_lineedit.setPlaceholderText(QCoreApplication.translate("CreateTodoNoteWidget", u"For example, \u201cTo-do list for today\u201d", None))
+        self.indefinite_checkbox.setText(QCoreApplication.translate("CreateTodoNoteWidget", u"Indefinite", None))
+        self.note_deadline_label.setText(QCoreApplication.translate("CreateTodoNoteWidget", u"Note deadline", None))
         self.note_item_label.setText(QCoreApplication.translate("CreateTodoNoteWidget", u"Enter note item", None))
         self.note_item_lineedit.setPlaceholderText(QCoreApplication.translate("CreateTodoNoteWidget", u"For example, \u201cOrder new food for the cat\u201d", None))
         self.add_item_button.setText("")

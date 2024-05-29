@@ -45,6 +45,16 @@ class TrayMenu(QWidget):
         self.tray.show()
         self.tray.setContextMenu(self.menu)
 
+        self.settings = QSettings(self)
+
+        try:
+            if self.settings.value('AutoShowNoteListGadget') == 'True':
+                self.note_list_gadget.setVisible(True)
+            else:
+                self.note_list_gadget.setVisible(False)
+        except Exception as err:
+            print(err)
+
     def open_settings_widget(self):
         self.settings_widget.setVisible(True)
 

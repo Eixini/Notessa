@@ -6,5 +6,6 @@
     <file>button/unpin.png</file>
     <file>button/table_view.png</file>
     <file>button/tree_view.png</file>
+    <file>button/refresh.png</file>
   </qresource>
 </RCC>

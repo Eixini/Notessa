@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>697</width>
-    <height>598</height>
+    <height>585</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,18 +43,11 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="notelist_mode_label">
-       <property name="text">
-        <string>Note list display mode</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="notelist_mode_combobox"/>
-     </item>
-    </layout>
+    <widget class="QCheckBox" name="show_note_list_gadget_checkbox">
+     <property name="text">
+      <string>Show notes gadget when app launches</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="start_at_system_startup_checkbox">

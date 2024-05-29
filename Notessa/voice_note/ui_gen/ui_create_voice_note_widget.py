@@ -15,10 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
-
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
+    QHBoxLayout, QLabel, QLineEdit, QPushButton,
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 class Ui_CreateVoiceNoteWidget(object):
     def setupUi(self, CreateVoiceNoteWidget):
@@ -47,6 +46,32 @@ class Ui_CreateVoiceNoteWidget(object):
 
 
         self.verticalLayout.addLayout(self.up_horizontal_layout)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_6)
+
+        self.indefinite_checkbox = QCheckBox(CreateVoiceNoteWidget)
+        self.indefinite_checkbox.setObjectName(u"indefinite_checkbox")
+
+        self.horizontalLayout_2.addWidget(self.indefinite_checkbox)
+
+        self.note_deadline_label = QLabel(CreateVoiceNoteWidget)
+        self.note_deadline_label.setObjectName(u"note_deadline_label")
+
+        self.horizontalLayout_2.addWidget(self.note_deadline_label)
+
+        self.note_date_time_edit = QDateTimeEdit(CreateVoiceNoteWidget)
+        self.note_date_time_edit.setObjectName(u"note_date_time_edit")
+        self.note_date_time_edit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)))
+        self.note_date_time_edit.setCalendarPopup(False)
+
+        self.horizontalLayout_2.addWidget(self.note_date_time_edit)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.verticalSpacer_2 = QSpacerItem(20, 129, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -215,6 +240,8 @@ class Ui_CreateVoiceNoteWidget(object):
         CreateVoiceNoteWidget.setWindowTitle(QCoreApplication.translate("CreateVoiceNoteWidget", u"Form", None))
         self.voicenote_name_lineedit.setPlaceholderText(QCoreApplication.translate("CreateVoiceNoteWidget", u"Enter note name...", None))
         self.available_devices_label.setText(QCoreApplication.translate("CreateVoiceNoteWidget", u"Available devices", None))
+        self.indefinite_checkbox.setText(QCoreApplication.translate("CreateVoiceNoteWidget", u"Indefinite", None))
+        self.note_deadline_label.setText(QCoreApplication.translate("CreateVoiceNoteWidget", u"Note deadline", None))
         self.duration_label.setText(QCoreApplication.translate("CreateVoiceNoteWidget", u"0:00", None))
         self.pause_button.setText("")
         self.record_button.setText("")

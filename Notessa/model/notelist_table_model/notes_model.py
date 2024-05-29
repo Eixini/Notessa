@@ -1,6 +1,7 @@
 from PySide6.QtCore import QAbstractTableModel, Qt, QDir, QFile, QFileInfo, QModelIndex
 from Notessa.common_modules.directory_checker import DirectoryChecker
 import os
+import json
 # from Notessa.resource import icons_rc
 
 
@@ -27,7 +28,7 @@ class NotesModel(QAbstractTableModel):
                 return {
                     0: 'Type',
                     1: 'Name',
-                    2: 'Data changed'
+                    2: 'Deadline'
                 }.get(section)
 
     def removeRows(self, position: QModelIndex, rows: int, QModelIndex: QModelIndex):
@@ -36,25 +37,35 @@ class NotesModel(QAbstractTableModel):
         self.beginRemoveRows(QModelIndex, position, position+rows-1)
         for i in range(rows):
             if self._data[position][0] == 'txt':
-                file_name = f'{dir_checker.text_notes_directory()}{QDir.separator()}{self._data[position][1]}.txt'
-                QFile(file_name).remove()
-                print(f'File deleted: {file_name}')
+                note_file_name = f'{dir_checker.text_notes_directory()}{QDir.separator()}{self._data[position][1]}.txt'
+                meta_data_file_name = f'{dir_checker.text_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                QFile(note_file_name).remove()
+                QFile(meta_data_file_name).remove()
+
             if self._data[position][0] == 'wav':
-                file_name = f'{dir_checker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.wav'
-                QFile(file_name).remove()
-                print(f'File deleted: {file_name}')
+                note_file_name = f'{dir_checker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.wav'
+                meta_data_file_name = f'{dir_checker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                QFile(note_file_name).remove()
+                QFile(meta_data_file_name).remove()
+
             if self._data[position][0] == 'mp4':
-                file_name = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self._data[position][1]}.mp4'
-                QFile(file_name).remove()
-                print(f'File deleted: {file_name}')
+                note_file_name = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self._data[position][1]}.mp4'
+                meta_data_file_name = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                QFile(note_file_name).remove()
+                QFile(meta_data_file_name).remove()
+
             if self._data[position][0] == 'png':
-                file_name = f'{dir_checker.paint_notes_directory()}{QDir.separator()}{self._data[position][1]}.png'
-                QFile(file_name).remove()
-                print(f'File deleted: {file_name}')
+                note_file_name = f'{dir_checker.paint_notes_directory()}{QDir.separator()}{self._data[position][1]}.png'
+                meta_data_file_name = f'{dir_checker.paint_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                QFile(note_file_name).remove()
+                QFile(meta_data_file_name).remove()
+
             if self._data[position][0] == 'json':
-                file_name = f'{dir_checker.todo_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
-                QFile(file_name).remove()
-                print(f'File deleted: {file_name}')
+                note_file_name = f'{dir_checker.todo_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                meta_data_file_name = f'{dir_checker.todo_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                QFile(note_file_name).remove()
+                QFile(meta_data_file_name).remove()
+
             del (self._data[position])
 
         self.endRemoveRows()
@@ -72,10 +83,20 @@ class NotesModel(QAbstractTableModel):
         for fileInfo in os.listdir(text_notes_folder):
             if '.txt' in fileInfo:
                 dict = []
-                fInfo = QFileInfo(f'{text_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(fInfo.suffix())
-                dict.append(fInfo.baseName())
-                dict.append(fInfo.birthTime().toString())
+                file_info = QFileInfo(f'{text_notes_folder}{QDir.separator()}{fileInfo}')
+                dict.append(file_info.suffix())
+                dict.append(file_info.baseName())
+                # Reading metadata
+                note_meta_data_file = f'{text_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
+                meta_data = None
+                if QFile.exists(note_meta_data_file):
+                    with open(note_meta_data_file, 'r') as file:
+                        meta_data = json.load(file)
+                    dict.append(meta_data.get('deadline'))
+                else:
+                    dict.append(' ')
+
+                # dict.append(file_info.birthTime().toString())
 
                 file_info_list.append(dict)
 
@@ -83,10 +104,20 @@ class NotesModel(QAbstractTableModel):
         for fileInfo in os.listdir(voice_notes_folder):
             if '.wav' in fileInfo:
                 dict = []
-                fInfo = QFileInfo(f'{voice_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(fInfo.suffix())
-                dict.append(fInfo.baseName())
-                dict.append(fInfo.birthTime().toString())
+                file_info = QFileInfo(f'{voice_notes_folder}{QDir.separator()}{fileInfo}')
+                dict.append(file_info.suffix())
+                dict.append(file_info.baseName())
+                # Reading metadata
+                note_meta_data_file = f'{voice_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
+                meta_data = None
+                if QFile.exists(note_meta_data_file):
+                    with open(note_meta_data_file, 'r') as file:
+                        meta_data = json.load(file)
+                    dict.append(meta_data.get('deadline'))
+                else:
+                    dict.append(' ')
+
+                # dict.append(file_info.birthTime().toString())
 
                 file_info_list.append(dict)
 
@@ -94,10 +125,20 @@ class NotesModel(QAbstractTableModel):
         for fileInfo in os.listdir(video_notes_folder):
             if '.mp4' in fileInfo:
                 dict = []
-                fInfo = QFileInfo(f'{video_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(fInfo.suffix())
-                dict.append(fInfo.baseName())
-                dict.append(fInfo.birthTime().toString())
+                file_info = QFileInfo(f'{video_notes_folder}{QDir.separator()}{fileInfo}')
+                dict.append(file_info.suffix())
+                dict.append(file_info.baseName())
+                # Reading metadata
+                note_meta_data_file = f'{video_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
+                meta_data = None
+                if QFile.exists(note_meta_data_file):
+                    with open(note_meta_data_file, 'r') as file:
+                        meta_data = json.load(file)
+                    dict.append(meta_data.get('deadline'))
+                else:
+                    dict.append(' ')
+
+                # dict.append(file_info.birthTime().toString())
 
                 file_info_list.append(dict)
 
@@ -105,10 +146,20 @@ class NotesModel(QAbstractTableModel):
         for fileInfo in os.listdir(paint_notes_folder):
             if '.png' in fileInfo:
                 dict = []
-                fInfo = QFileInfo(f'{paint_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(fInfo.suffix())
-                dict.append(fInfo.baseName())
-                dict.append(fInfo.birthTime().toString())
+                file_info = QFileInfo(f'{paint_notes_folder}{QDir.separator()}{fileInfo}')
+                dict.append(file_info.suffix())
+                dict.append(file_info.baseName())
+                # Reading metadata
+                note_meta_data_file = f'{paint_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
+                meta_data = None
+                if QFile.exists(note_meta_data_file):
+                    with open(note_meta_data_file, 'r') as file:
+                        meta_data = json.load(file)
+                    dict.append(meta_data.get('deadline'))
+                else:
+                    dict.append(' ')
+
+                # dict.append(file_info.birthTime().toString())
 
                 file_info_list.append(dict)
 
@@ -116,10 +167,20 @@ class NotesModel(QAbstractTableModel):
         for fileInfo in os.listdir(todo_notes_folder):
             if '.json' in fileInfo:
                 dict = []
-                fInfo = QFileInfo(f'{todo_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(fInfo.suffix())
-                dict.append(fInfo.baseName())
-                dict.append(fInfo.birthTime().toString())
+                file_info = QFileInfo(f'{todo_notes_folder}{QDir.separator()}{fileInfo}')
+                dict.append(file_info.suffix())
+                dict.append(file_info.baseName())
+                # Reading metadata
+                note_meta_data_file = f'{todo_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
+                meta_data = None
+                if QFile.exists(note_meta_data_file):
+                    with open(note_meta_data_file, 'r') as file:
+                        meta_data = json.load(file)
+                    dict.append(meta_data.get('deadline'))
+                else:
+                    dict.append(' ')
+
+                # dict.append(file_info.birthTime().toString())
 
                 file_info_list.append(dict)
 

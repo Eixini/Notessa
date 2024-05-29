@@ -78,6 +78,30 @@ class NoteListGadget(QWidget):
         self.ui.close_button.clicked.connect(self.gadget_close)
         self.ui.table_view.customContextMenuRequested.connect(self.contex_menu)
         self.ui.filter_combobox.currentIndexChanged.connect(self.filter_notes)
+        self.ui.refresh_button.clicked.connect(self.update_view)
+
+    def update_view(self):
+
+        # Setting View
+        self.view_model = NotesModel()
+        self.ui.table_view.setModel(self.view_model)
+
+        # Sorting
+        self._proxy_model = QSortFilterProxyModel()
+        self._proxy_model.setDynamicSortFilter(False)
+        self._proxy_model.setSourceModel(self.view_model)
+
+        # TableView
+        self.ui.table_view.setModel(self._proxy_model)
+        self.ui.table_view.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        self.ui.table_view.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        self.ui.table_view.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        self.ui.table_view.setItemDelegateForColumn(0, NoteItemDelegate())
+        self.ui.table_view.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.ui.table_view.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.ui.table_view.setSortingEnabled(True)
+        self.ui.table_view.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.ui.table_view.verticalHeader().hide()
 
     def open_note_creation_menu(self):
         self.note_creation_menu.setVisible(True)
@@ -115,12 +139,15 @@ class NoteListGadget(QWidget):
     def contex_menu(self):
         print(f'Contex menu method called!')
         if self.ui.table_view.underMouse():
-            print(f'self.ui.table_view.underMouse(): called!')
             self.table_item_context_menu = QMenu(self)
+            # Open note
             open_note_action = QAction(u'Open', self)
-
             self.table_item_context_menu.addAction(open_note_action)
             open_note_action.triggered.connect(self.open_note)
+            # Delete note
+            delete_note_action = QAction(u'Delete', self)
+            self.table_item_context_menu.addAction(delete_note_action)
+            delete_note_action.triggered.connect(self.delete_note)
 
             self.table_item_context_menu.popup(QCursor.pos())
 
@@ -133,25 +160,31 @@ class NoteListGadget(QWidget):
             data = self.view_model.getCurrentData(sort_index)
 
             if sort_note_type == 'txt':
-                show_note_window = WindowContainer()
+                show_note_window = WindowContainer(self)
                 show_note_window.show_note('text', data)
                 show_note_window.exec()
             elif sort_note_type == 'wav':
-                show_note_window = WindowContainer()
+                show_note_window = WindowContainer(self)
                 show_note_window.show_note('voice', data)
                 show_note_window.exec()
             elif sort_note_type == 'mp4':
-                show_note_window = WindowContainer()
+                show_note_window = WindowContainer(self)
                 show_note_window.show_note('video', data)
                 show_note_window.exec()
             elif sort_note_type == 'png':
-                show_note_window = WindowContainer()
+                show_note_window = WindowContainer(self)
                 show_note_window.show_note('paint', data)
                 show_note_window.exec()
             elif sort_note_type == 'json':
-                show_note_window = WindowContainer()
+                show_note_window = WindowContainer(self)
                 show_note_window.show_note('todo', data)
                 show_note_window.exec()
+
+    def delete_note(self):
+        index = self.ui.table_view.currentIndex()
+        proxy_index = self._proxy_model.mapToSource(index)
+        self.view_model.removeRows(proxy_index.row(), 1, proxy_index)
+        self.view_model.submit()
 
     def filter_notes(self):
         """ Filter allows you to display notes of the selected type """

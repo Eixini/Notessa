@@ -15,12 +15,12 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDoubleSpinBox, QHBoxLayout, QLabel,
-    QLayout, QLineEdit, QPushButton, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDateTimeEdit, QDoubleSpinBox,
+    QHBoxLayout, QLabel, QLayout, QLineEdit,
+    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 from Notessa.paint_note.painter_widget import PainterWidget
-
 
 class Ui_CreatePaintNoteWidget(object):
     def setupUi(self, CreatePaintNoteWidget):
@@ -48,6 +48,32 @@ class Ui_CreatePaintNoteWidget(object):
 
 
         self.verticalLayout.addLayout(self.paintnote_name_horizontal_layout)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
+
+        self.indefinite_checkbox = QCheckBox(CreatePaintNoteWidget)
+        self.indefinite_checkbox.setObjectName(u"indefinite_checkbox")
+
+        self.horizontalLayout_2.addWidget(self.indefinite_checkbox)
+
+        self.note_deadline_label = QLabel(CreatePaintNoteWidget)
+        self.note_deadline_label.setObjectName(u"note_deadline_label")
+
+        self.horizontalLayout_2.addWidget(self.note_deadline_label)
+
+        self.note_date_time_edit = QDateTimeEdit(CreatePaintNoteWidget)
+        self.note_date_time_edit.setObjectName(u"note_date_time_edit")
+        self.note_date_time_edit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)))
+        self.note_date_time_edit.setCalendarPopup(False)
+
+        self.horizontalLayout_2.addWidget(self.note_date_time_edit)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.painter_widget = PainterWidget(CreatePaintNoteWidget)
         self.painter_widget.setObjectName(u"painter_widget")
@@ -113,6 +139,8 @@ class Ui_CreatePaintNoteWidget(object):
     def retranslateUi(self, CreatePaintNoteWidget):
         CreatePaintNoteWidget.setWindowTitle(QCoreApplication.translate("CreatePaintNoteWidget", u"Form", None))
         self.paintnote_name_label.setText(QCoreApplication.translate("CreatePaintNoteWidget", u"Enter note name", None))
+        self.indefinite_checkbox.setText(QCoreApplication.translate("CreatePaintNoteWidget", u"Indefinite", None))
+        self.note_deadline_label.setText(QCoreApplication.translate("CreatePaintNoteWidget", u"Note deadline", None))
         self.color_button.setText("")
         self.brush_widht_label.setText(QCoreApplication.translate("CreatePaintNoteWidget", u"Width", None))
         self.save_button.setText("")

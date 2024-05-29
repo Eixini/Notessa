@@ -23,7 +23,7 @@ class Ui_SettingsWidget(object):
     def setupUi(self, SettingsWidget):
         if not SettingsWidget.objectName():
             SettingsWidget.setObjectName(u"SettingsWidget")
-        SettingsWidget.resize(697, 598)
+        SettingsWidget.resize(697, 585)
         self.verticalLayout = QVBoxLayout(SettingsWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
@@ -56,20 +56,10 @@ class Ui_SettingsWidget(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.notelist_mode_label = QLabel(SettingsWidget)
-        self.notelist_mode_label.setObjectName(u"notelist_mode_label")
+        self.show_note_list_gadget_checkbox = QCheckBox(SettingsWidget)
+        self.show_note_list_gadget_checkbox.setObjectName(u"show_note_list_gadget_checkbox")
 
-        self.horizontalLayout_3.addWidget(self.notelist_mode_label)
-
-        self.notelist_mode_combobox = QComboBox(SettingsWidget)
-        self.notelist_mode_combobox.setObjectName(u"notelist_mode_combobox")
-
-        self.horizontalLayout_3.addWidget(self.notelist_mode_combobox)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.verticalLayout.addWidget(self.show_note_list_gadget_checkbox)
 
         self.start_at_system_startup_checkbox = QCheckBox(SettingsWidget)
         self.start_at_system_startup_checkbox.setObjectName(u"start_at_system_startup_checkbox")
@@ -95,7 +85,7 @@ class Ui_SettingsWidget(object):
         SettingsWidget.setWindowTitle(QCoreApplication.translate("SettingsWidget", u"Form", None))
         self.language_label.setText(QCoreApplication.translate("SettingsWidget", u"Language", None))
         self.style_label.setText(QCoreApplication.translate("SettingsWidget", u"Style", None))
-        self.notelist_mode_label.setText(QCoreApplication.translate("SettingsWidget", u"Note list display mode", None))
+        self.show_note_list_gadget_checkbox.setText(QCoreApplication.translate("SettingsWidget", u"Show notes gadget when app launches", None))
         self.start_at_system_startup_checkbox.setText(QCoreApplication.translate("SettingsWidget", u"Start at system startup", None))
         self.label.setText(QCoreApplication.translate("SettingsWidget", u"Eixini (Roman R\u04d3ximov)", None))
     # retranslateUi

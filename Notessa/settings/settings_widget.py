@@ -10,3 +10,24 @@ class SettingsWidget(QWidget):
 
         self.ui = Ui_SettingsWidget()
         self.ui.setupUi(self)
+
+        self.settings = QSettings(self)
+
+        try:
+            if self.settings.value('AutoShowNoteListGadget') == 'True':
+                self.ui.show_note_list_gadget_checkbox.setCheckState(Qt.CheckState.Checked)
+            else:
+                self.ui.show_note_list_gadget_checkbox.setCheckState(Qt.CheckState.Unchecked)
+        except Exception as err:
+            print(err)
+
+        # Signal - Slot
+        self.ui.show_note_list_gadget_checkbox.checkStateChanged.connect(self.show_note_list_gadget_change)
+
+    def show_note_list_gadget_change(self):
+        if self.ui.show_note_list_gadget_checkbox.isChecked():
+            self.settings.remove('AutoShowNoteListGadget')
+            self.settings.setValue('AutoShowNoteListGadget', 'True')
+        else:
+            self.settings.remove('AutoShowNoteListGadget')
+            self.settings.setValue('AutoShowNoteListGadget', 'False')

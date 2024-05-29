@@ -44,7 +44,7 @@ class DirectoryChecker():
 
         if not QDir(app_path).exists():
             note_dir.mkdir(app_path)
-            print(f'Directory create: {app_path}')
+        return app_path
 
     def notes_directory_checker(self):
         note_dir = QDir()

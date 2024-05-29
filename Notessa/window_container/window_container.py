@@ -17,10 +17,13 @@ from Notessa.todo_notes.create_todo_note_widget import CreateTodoNoteWidget
 
 
 class WindowContainer(QDialog):
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
         self.ui = Ui_WindowContainer()
         self.ui.setupUi(self)
+
+        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.installEventFilter(self.parent())
 
         # Signal - Slot
 

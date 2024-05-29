@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QWidget, QScrollBar
+import json
+from PySide6.QtWidgets import QWidget, QScrollBar, QMessageBox
 from PySide6.QtGui import QRegularExpressionValidator
 from PySide6.QtCore import QFile, QDateTime, QDir, Qt
 from Notessa.text_note.ui_gen.ui_create_textnote_widget import Ui_CreateTextNoteWidget
@@ -11,8 +12,19 @@ class CreateTextNoteWidget(QWidget):
         self.ui = Ui_CreateTextNoteWidget()
         self.ui.setupUi(self)
 
+        # Set a default note deadline -
+        self.note_deadline = ' '
+
         self.setAttribute(Qt.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
+
+        # Default value
+        self.ui.font_size_spinbox.setValue(14)
+        self.ui.indefinite_checkbox.setChecked(True)
+        self.ui.note_deadline_label.setDisabled(True)
+        self.ui.note_date_time_edit.setDisabled(True)
+
+        self.ui.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
 
         self.ui.textnote_name_lineedit.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_ ]){255}'))
 
@@ -21,26 +33,78 @@ class CreateTextNoteWidget(QWidget):
 
         # Signal - Slot
         self.ui.save_button.clicked.connect(self.save_text_note)
+        self.ui.note_date_time_edit.dateTimeChanged.connect(self.select_date_time_change)
+        self.ui.font_combobox.currentFontChanged.connect(self.font_change)
+        self.ui.font_size_spinbox.valueChanged.connect(self.font_size_change)
+        self.ui.indefinite_checkbox.checkStateChanged.connect(self.indefinite_change)
+
+    def font_change(self):
+        print(self.ui.font_combobox.currentFont())
+        self.ui.textnote_contents.setFont(self.ui.font_combobox.currentFont())
+
+    def font_size_change(self):
+        print(self.ui.font_size_spinbox.value())
+        self.ui.textnote_contents.setFontPointSize(self.ui.font_size_spinbox.value())
+
+    def indefinite_change(self):
+        if self.ui.indefinite_checkbox.isChecked():
+            self.note_deadline = ' '
+            self.ui.note_deadline_label.setDisabled(True)
+            self.ui.note_date_time_edit.setDisabled(True)
+        else:
+            self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
+            self.ui.note_deadline_label.setEnabled(True)
+            self.ui.note_date_time_edit.setEnabled(True)
+
+    def select_date_time_change(self):
+        self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
+        print(self.ui.note_date_time_edit.dateTime().toLocalTime())
 
     def save_text_note(self):
         dir_check = DirectoryChecker()
         dir_check.text_notes_directory_checker()
 
-        if not self.ui.textnote_name_lineedit.text() == '':
-            datetime = QDateTime.currentDateTime()
-            file_name = str()
+        if self.date_time_check() == 'Correct' or self.date_time_check() == 'None':
 
-            if QFile(f'{dir_check.text_notes_directory()}{QDir.separator()}{self.ui.textnote_name_lineedit.text()}.txt').exists():
-                print('A note with the same name already exists.')
-                file_name = str(f'{dir_check.text_notes_directory()}{QDir.separator()}{self.ui.textnote_name_lineedit.text()}_'
-                            f'{datetime.date().day()}-{datetime.date().month()}-{datetime.date().year()}_'
-                            f'{datetime.time().hour()}-{datetime.time().minute()}-{datetime.time().second()}-{datetime.time().msec()}.txt')
-            else:
+            if not self.ui.textnote_name_lineedit.text() == ' ':
                 file_name = str(f'{dir_check.text_notes_directory()}{QDir.separator()}{self.ui.textnote_name_lineedit.text()}.txt')
 
-            print(file_name)
-            with open(file_name, 'w') as fp:
-                fp.write(self.ui.textnote_contents.toPlainText())
+                if QFile(f'{dir_check.text_notes_directory()}{QDir.separator()}{self.ui.textnote_name_lineedit.text()}.txt').exists():
+                    msg_box = QMessageBox()
+                    msg_box.setText(u'A file with the same name already exists')
+                    msg_box.setWindowTitle(u'Warning')
+                    msg_box.exec()
+                    return
 
-            print('Text note create!')
-            self.close()
+                with open(file_name, 'w') as fp:
+                    fp.write(self.ui.textnote_contents.toPlainText())
+
+                # If the note file was created successfully
+                if QFile(file_name).exists():
+                    note_meta_data_file_name = str(f'{dir_check.text_notes_directory()}{QDir.separator()}{self.ui.textnote_name_lineedit.text()}.json')
+
+                    if not self.note_deadline == ' ':
+                        meta_data_content = {'deadline': self.note_deadline.toString()}
+                    else:
+                        meta_data_content = {'deadline': ' '}
+
+                    with open(note_meta_data_file_name, 'w', encoding='utf-8') as file:
+                        json.dump(meta_data_content, file)
+
+                self.close()
+        else:
+            msg_box = QMessageBox()
+            msg_box.setText(u"The note's deadline date and time cannot be less than the current one")
+            msg_box.setWindowTitle(u"Invalid value")
+            msg_box.exec()
+            return
+
+    def date_time_check(self):
+        """ To check the correctness of the note's deadline """
+        if not self.note_deadline == ' ':
+            if QDateTime.currentDateTime() < self.ui.note_date_time_edit.dateTime():
+                return 'Correct'
+            else:
+                return 'Incorrect'
+        else:
+            return 'None'

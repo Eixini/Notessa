@@ -16,10 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtMultimediaWidgets import QVideoWidget
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
-
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
+    QHBoxLayout, QLabel, QLineEdit, QPushButton,
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 class Ui_CreateVideoNoteWidget(object):
     def setupUi(self, CreateVideoNoteWidget):
@@ -80,6 +79,32 @@ class Ui_CreateVideoNoteWidget(object):
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_3)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
+
+        self.indefinite_checkbox = QCheckBox(CreateVideoNoteWidget)
+        self.indefinite_checkbox.setObjectName(u"indefinite_checkbox")
+
+        self.horizontalLayout_2.addWidget(self.indefinite_checkbox)
+
+        self.note_deadline_label = QLabel(CreateVideoNoteWidget)
+        self.note_deadline_label.setObjectName(u"note_deadline_label")
+
+        self.horizontalLayout_2.addWidget(self.note_deadline_label)
+
+        self.note_date_time_edit = QDateTimeEdit(CreateVideoNoteWidget)
+        self.note_date_time_edit.setObjectName(u"note_date_time_edit")
+        self.note_date_time_edit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)))
+        self.note_date_time_edit.setCalendarPopup(False)
+
+        self.horizontalLayout_2.addWidget(self.note_date_time_edit)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.video_display = QVideoWidget(CreateVideoNoteWidget)
         self.video_display.setObjectName(u"video_display")
@@ -146,6 +171,8 @@ class Ui_CreateVideoNoteWidget(object):
         self.state_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"STATE", None))
         self.duration_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"00:00", None))
         self.videonote_name_lineedit.setPlaceholderText(QCoreApplication.translate("CreateVideoNoteWidget", u"Enter video note name ...", None))
+        self.indefinite_checkbox.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"Indefinite", None))
+        self.note_deadline_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"Note deadline", None))
         self.record_button.setText("")
         self.stop_button.setText("")
         self.mute_button.setText("")
