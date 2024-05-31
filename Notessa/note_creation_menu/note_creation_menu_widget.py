@@ -11,7 +11,7 @@ class NoteCreationMenuWidget(QWidget):
         self.ui = Ui_NoteCreationMenuWidget()
         self.ui.setupUi(self)
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        # self.setAttribute(Qt.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         # Signal - Slot

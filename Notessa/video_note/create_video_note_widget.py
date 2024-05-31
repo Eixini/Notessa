@@ -1,9 +1,12 @@
-from PySide6.QtCore import QTimer, QDir, QUrl, Qt
-from PySide6.QtGui import QIcon, QPixmap, QRegularExpressionValidator
-from PySide6.QtWidgets import QWidget
+import json
+
+from PySide6.QtCore import QTimer, QDir, QUrl, Qt, QDateTime
+from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtWidgets import QWidget, QMessageBox
 from PySide6.QtMultimedia import QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput, QCamera, QMediaDevices
 from Notessa.video_note.ui_gen.ui_create_videonote_widget import Ui_CreateVideoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
+from Notessa.common_modules.forming_note_name import forming_note_file_name
 
 
 class CreateVideoNoteWidget(QWidget):
@@ -14,6 +17,15 @@ class CreateVideoNoteWidget(QWidget):
 
         self.setAttribute(Qt.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
+
+        # Set a default note deadline -
+        self.note_deadline = ' '
+
+        # Default value
+        self.ui.indefinite_checkbox.setChecked(True)
+        self.ui.note_deadline_label.setDisabled(True)
+        self.ui.note_date_time_edit.setDisabled(True)
+        self.ui.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
 
         # Media devices input
         self._microphones = None
@@ -32,9 +44,6 @@ class CreateVideoNoteWidget(QWidget):
         # Icon set
         self.ui.state_label.setPixmap(QPixmap(':/icons/video_off.png').scaledToWidth(50).scaledToHeight(50))
 
-        # Setting the note title entry format
-        self.ui.videonote_name_lineedit.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_ ]){255}'))
-
         # Alternative to QMediaRecorder.duration()
         self._duration = 0
         self._timer = QTimer(self)
@@ -47,6 +56,23 @@ class CreateVideoNoteWidget(QWidget):
         self._media_recorder.durationChanged.connect(self.change_label)
         self._media_recorder.recorderStateChanged.connect(self.update_record_state)
         self.ui.microphones_combobox.currentIndexChanged.connect(self.microphone_selection_changed)
+        self.ui.cameras_combobox.currentIndexChanged.connect(self.camera_selection_changed)
+        self.ui.note_date_time_edit.dateTimeChanged.connect(self.select_date_time_change)
+        self.ui.indefinite_checkbox.checkStateChanged.connect(self.indefinite_change)
+
+    def indefinite_change(self):
+        if self.ui.indefinite_checkbox.isChecked():
+            self.note_deadline = ' '
+            self.ui.note_deadline_label.setDisabled(True)
+            self.ui.note_date_time_edit.setDisabled(True)
+        else:
+            self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
+            self.ui.note_deadline_label.setEnabled(True)
+            self.ui.note_date_time_edit.setEnabled(True)
+
+    def select_date_time_change(self):
+        self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
+        print(self.ui.note_date_time_edit.dateTime().toLocalTime())
 
     def media_devices_initialization(self):
         """ Method for initializing media devices such as microphone and camera """
@@ -110,16 +136,37 @@ class CreateVideoNoteWidget(QWidget):
             self.ui.mute_button.setIcon(QIcon(':/icons/microphone.png'))
 
     def record(self):
-        if not self.ui.videonote_name_lineedit.text() == '':
+        if self.date_time_check() == 'Correct' or self.date_time_check() == 'None':
             dir_checker = DirectoryChecker()
-            file = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self.ui.videonote_name_lineedit.text()}'
-            url = f'{QDir.toNativeSeparators(file)}'
+
+            note_name = self.ui.videonote_name_lineedit.text()
+            file_name = forming_note_file_name('VideoNote')
+            file_path = str(f"{dir_checker.video_notes_directory()}{QDir.separator()}{file_name}")
+            meta_data_file_path = str(f'{dir_checker.video_notes_directory()}{QDir.separator()}{file_name}.json')
+
+            meta_data_content = {'note_name': note_name}
+
+            url = f'{QDir.toNativeSeparators(file_path)}'
             self._media_recorder.setOutputLocation(QUrl.fromLocalFile(url))
+
+            if not self.note_deadline == ' ':
+                meta_data_content.update({'deadline': self.note_deadline.toString()})
+            else:
+                meta_data_content.update({'deadline': ' '})
+
+            with open(meta_data_file_path, 'w') as file:
+                json.dump(meta_data_content, file, indent=4)
 
             self._media_recorder.record()
             self.ui.state_label.setPixmap(QPixmap(':/icons/recording.png').scaledToWidth(50).scaledToHeight(50))
 
             self._timer.start(1000)
+        else:
+            msg_box = QMessageBox()
+            msg_box.setText(u"The note's deadline date and time cannot be less than the current one")
+            msg_box.setWindowTitle(u"Invalid value")
+            msg_box.exec()
+            return
 
     def stop(self):
         self._media_recorder.stop()
@@ -142,6 +189,16 @@ class CreateVideoNoteWidget(QWidget):
             result['min'] = int(sec / 60)
             result['sec'] = sec % 60
         return result
+
+    def date_time_check(self):
+        """ To check the correctness of the note's deadline """
+        if not self.note_deadline == ' ':
+            if QDateTime.currentDateTime() < self.ui.note_date_time_edit.dateTime():
+                return 'Correct'
+            else:
+                return 'Incorrect'
+        else:
+            return 'None'
 
     def __del__(self):
         self._camera.deleteLater()

@@ -21,12 +21,17 @@ class ShowTodoNoteWidget(QWidget):
         self.ui.todo_note_name_label.setText(self._note_data[1])
 
         self._dir_checker = DirectoryChecker()
-        self._file_path = f'{self._dir_checker.todo_notes_directory()}{QDir.separator()}{self._note_data[1]}.{self._note_data[0]}'
+        self._file_path = f'{self._dir_checker.todo_notes_directory()}{QDir.separator()}{self._note_data[3]}.{self._note_data[0]}'
 
-        self._todos = None
+        self._json_data = dict()
         self.load_data()
 
+        self._todos = self._json_data.get('note_data')
+
+        # self._todos = [(k, v) for k, v in temp_data.items()]
+
         self._todo_model = TodoModel(self._todos)
+
         self.ui.todo_items_list_view.setModel(self._todo_model)
         self.ui.todo_items_list_view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.ui.todo_items_list_view.setWordWrap(True)
@@ -46,9 +51,9 @@ class ShowTodoNoteWidget(QWidget):
 
     def load_data(self):
         with open(self._file_path, 'r') as file:
-            self._todos = json.load(file)
+            self._json_data = json.load(file)
 
     def save_data(self):
-        dir_check = DirectoryChecker()
+        self._json_data.update({'note_data': self._todo_model._todos})
         with open(self._file_path, 'w') as file:
-            json.dump(self._todo_model._todos, file, indent=4)
+            json.dump(self._json_data, file, indent=4)

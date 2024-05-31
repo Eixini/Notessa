@@ -19,7 +19,7 @@ class ShowPaintNoteWidget(QWidget):
         self.ui.paintnote_name_label.setText(self._note_data[1])
 
         _dir_checker = DirectoryChecker()
-        self._file_path = f'{_dir_checker.paint_notes_directory()}{QDir.separator()}{self._note_data[1]}.{self._note_data[0]}'
+        self._file_path = f'{_dir_checker.paint_notes_directory()}{QDir.separator()}{self._note_data[3]}.{self._note_data[0]}'
         print(f'{self._file_path}: {QFile.exists(self._file_path)}')
 
         self._pixmap = QPixmap()

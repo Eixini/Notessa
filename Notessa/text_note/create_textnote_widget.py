@@ -1,9 +1,10 @@
 import json
 from PySide6.QtWidgets import QWidget, QScrollBar, QMessageBox
 from PySide6.QtGui import QRegularExpressionValidator
-from PySide6.QtCore import QFile, QDateTime, QDir, Qt
+from PySide6.QtCore import QFile, QDateTime, QDir, Qt, QIODevice
 from Notessa.text_note.ui_gen.ui_create_textnote_widget import Ui_CreateTextNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
+from Notessa.common_modules.forming_note_name import forming_note_file_name
 
 
 class CreateTextNoteWidget(QWidget):
@@ -25,8 +26,6 @@ class CreateTextNoteWidget(QWidget):
         self.ui.note_date_time_edit.setDisabled(True)
 
         self.ui.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
-
-        self.ui.textnote_name_lineedit.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_ ]){255}'))
 
         self.vertical_scrollbar = QScrollBar()
         self.ui.textnote_contents.setVerticalScrollBar(self.vertical_scrollbar)
@@ -67,31 +66,31 @@ class CreateTextNoteWidget(QWidget):
         if self.date_time_check() == 'Correct' or self.date_time_check() == 'None':
 
             if not self.ui.textnote_name_lineedit.text() == ' ':
-                file_name = str(f'{dir_check.text_notes_directory()}{QDir.separator()}{self.ui.textnote_name_lineedit.text()}.txt')
+                note_name = self.ui.textnote_name_lineedit.text()
+                file_name = forming_note_file_name('TextNote')
+                file_path = str(f"{dir_check.text_notes_directory()}{QDir.separator()}{file_name}.txt")
+                meta_data_file_path = str(f'{dir_check.text_notes_directory()}{QDir.separator()}{file_name}.json')
 
-                if QFile(f'{dir_check.text_notes_directory()}{QDir.separator()}{self.ui.textnote_name_lineedit.text()}.txt').exists():
-                    msg_box = QMessageBox()
-                    msg_box.setText(u'A file with the same name already exists')
-                    msg_box.setWindowTitle(u'Warning')
-                    msg_box.exec()
-                    return
+                meta_data_content = {'note_name': note_name}
 
-                with open(file_name, 'w') as fp:
+                with open(file_path, 'w', encoding='utf-8') as fp:
                     fp.write(self.ui.textnote_contents.toPlainText())
 
-                # If the note file was created successfully
-                if QFile(file_name).exists():
-                    note_meta_data_file_name = str(f'{dir_check.text_notes_directory()}{QDir.separator()}{self.ui.textnote_name_lineedit.text()}.json')
+                # file = QFile(file_path)
+                # file.open(QIODevice.OpenModeFlag.WriteOnly)
+                # file.write(self.ui.textnote_contents.toPlainText())
+                # file.close()
 
-                    if not self.note_deadline == ' ':
-                        meta_data_content = {'deadline': self.note_deadline.toString()}
-                    else:
-                        meta_data_content = {'deadline': ' '}
+                if not self.note_deadline == ' ':
+                    meta_data_content.update({'deadline': self.note_deadline.toString()})
+                else:
+                    meta_data_content.update({'deadline': ' '})
 
-                    with open(note_meta_data_file_name, 'w', encoding='utf-8') as file:
-                        json.dump(meta_data_content, file)
+                with open(meta_data_file_path, 'w', encoding='utf-8') as file:
+                    json.dump(meta_data_content, file)
 
                 self.close()
+                self.parent().close()
         else:
             msg_box = QMessageBox()
             msg_box.setText(u"The note's deadline date and time cannot be less than the current one")

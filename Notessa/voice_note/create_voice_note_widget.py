@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QWidget, QMessageBox
 from PySide6.QtMultimedia import QMediaDevices, QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput
 from Notessa.voice_note.ui_gen.ui_create_voice_note_widget import Ui_CreateVoiceNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
+from Notessa.common_modules.forming_note_name import forming_note_file_name
 
 
 class CreateVoiceNoteWidget(QWidget):
@@ -21,7 +22,6 @@ class CreateVoiceNoteWidget(QWidget):
         self.ui.indefinite_checkbox.setChecked(True)
         self.ui.note_deadline_label.setDisabled(True)
         self.ui.note_date_time_edit.setDisabled(True)
-
         self.ui.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
 
         self.setAttribute(Qt.WA_DeleteOnClose)
@@ -33,7 +33,7 @@ class CreateVoiceNoteWidget(QWidget):
         # self.ui.available_devices_combobox.view().window().setWindowFlags(Qt.Popup | Qt.FramelessWindowHint | Qt.NoDropShadowWindowHint)
         # self.ui.available_devices_combobox.view().window().setAttribute(Qt.WA_TranslucentBackground)
 
-        self.ui.voicenote_name_lineedit.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_ ]){255}'))
+        # self.ui.voicenote_name_lineedit.setValidator(QRegularExpressionValidator('([a-zA-Zа-яА-Я0-9-_ ]){255}'))
 
         # Audio settings
         self._input_devices = None
@@ -135,28 +135,26 @@ class CreateVoiceNoteWidget(QWidget):
                 self.ui.voicenote_name_lineedit.setReadOnly(True)
 
                 dir_checker = DirectoryChecker()
-                file = f'{dir_checker.voice_notes_directory()}{QDir.separator()}{self.ui.voicenote_name_lineedit.text()}'
-                url = f'{QDir.toNativeSeparators(file)}'
+
+                note_name = self.ui.voicenote_name_lineedit.text()
+                file_name = forming_note_file_name('VoiceNote')
+                file_path = str(f"{dir_checker.voice_notes_directory()}{QDir.separator()}{file_name}")
+                meta_data_file_path = str(f'{dir_checker.voice_notes_directory()}{QDir.separator()}{file_name}.json')
+
+                meta_data_content = {'note_name': note_name}
+
+                url = f'{QDir.toNativeSeparators(file_path)}'
                 self._media_recorder.setOutputLocation(QUrl.fromLocalFile(url))
 
+                if not self.note_deadline == ' ':
+                    meta_data_content.update({'deadline': self.note_deadline.toString()})
+                else:
+                    meta_data_content.update({'deadline': ' '})
+
+                with open(meta_data_file_path, 'w') as file:
+                    json.dump(meta_data_content, file, indent=4)
+
                 self._media_recorder.record()
-
-                # If the note file was created successfully
-                dir_check = DirectoryChecker()
-                file_name = f'{file}.wav'
-                print(file_name)
-                if QFile(file_name).exists():
-                    note_meta_data_file_name = str(f'{dir_check.voice_notes_directory()}{QDir.separator()}{self.ui.voicenote_name_lineedit.text()}.json')
-
-                    if not self.note_deadline == ' ':
-                        meta_data_content = {'deadline': self.note_deadline.toString()}
-                    else:
-                        meta_data_content = {'deadline': ' '}
-
-                    print(f'Note deadline: {meta_data_content}')
-
-                    with open(note_meta_data_file_name, 'w') as file:
-                        json.dump(meta_data_content, file, indent=4)
 
             elif self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState:
                 self._media_recorder.record()
@@ -185,6 +183,7 @@ class CreateVoiceNoteWidget(QWidget):
                 self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState):
             self._media_recorder.stop()
         self.accept()
+        self.parent().close()
 
     def change_label(self):
         time_duration = self.msec_convert(self._media_recorder.duration())
