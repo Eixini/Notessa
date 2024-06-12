@@ -1,4 +1,4 @@
-import json
+import json, uuid
 from PySide6.QtWidgets import QWidget, QScrollBar, QMessageBox
 from PySide6.QtGui import QRegularExpressionValidator
 from PySide6.QtCore import QFile, QDateTime, QDir, Qt, QIODevice
@@ -16,11 +16,10 @@ class CreateTextNoteWidget(QWidget):
         # Set a default note deadline -
         self.note_deadline = ' '
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         # Default value
-        self.ui.font_size_spinbox.setValue(14)
         self.ui.indefinite_checkbox.setChecked(True)
         self.ui.note_deadline_label.setDisabled(True)
         self.ui.note_date_time_edit.setDisabled(True)
@@ -33,17 +32,7 @@ class CreateTextNoteWidget(QWidget):
         # Signal - Slot
         self.ui.save_button.clicked.connect(self.save_text_note)
         self.ui.note_date_time_edit.dateTimeChanged.connect(self.select_date_time_change)
-        self.ui.font_combobox.currentFontChanged.connect(self.font_change)
-        self.ui.font_size_spinbox.valueChanged.connect(self.font_size_change)
         self.ui.indefinite_checkbox.checkStateChanged.connect(self.indefinite_change)
-
-    def font_change(self):
-        print(self.ui.font_combobox.currentFont())
-        self.ui.textnote_contents.setFont(self.ui.font_combobox.currentFont())
-
-    def font_size_change(self):
-        print(self.ui.font_size_spinbox.value())
-        self.ui.textnote_contents.setFontPointSize(self.ui.font_size_spinbox.value())
 
     def indefinite_change(self):
         if self.ui.indefinite_checkbox.isChecked():
@@ -76,18 +65,16 @@ class CreateTextNoteWidget(QWidget):
                 with open(file_path, 'w', encoding='utf-8') as fp:
                     fp.write(self.ui.textnote_contents.toPlainText())
 
-                # file = QFile(file_path)
-                # file.open(QIODevice.OpenModeFlag.WriteOnly)
-                # file.write(self.ui.textnote_contents.toPlainText())
-                # file.close()
-
                 if not self.note_deadline == ' ':
                     meta_data_content.update({'deadline': self.note_deadline.toString()})
                 else:
                     meta_data_content.update({'deadline': ' '})
 
+                note_uuid = uuid.uuid1()
+                meta_data_content.update({'uuid': f'{note_uuid}'})
+
                 with open(meta_data_file_path, 'w', encoding='utf-8') as file:
-                    json.dump(meta_data_content, file)
+                    json.dump(meta_data_content, file, indent=4)
 
                 self.close()
                 self.parent().close()

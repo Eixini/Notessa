@@ -18,21 +18,21 @@ class DirectoryChecker():
             data_dir.mkdir(self.applicationDataLocation)
             print(f'Directory create: {self.applicationDataLocation}')
 
-    def style_directory_checker(self):
-        data_dir = QDir()
-        style_path = f'{self.applicationDataLocation}{QDir.separator()}styles'
-        if not QDir(style_path).exists():
-            data_dir.mkdir(style_path)
-            print(f'Directory create: {style_path}')
-        return style_path
-
-    def translate_directory_checker(self):
-        data_dir = QDir()
-        translate_path = f'{self.applicationDataLocation}{QDir.separator()}translations'
-        if not QDir(translate_path).exists():
-            data_dir.mkdir(translate_path)
-            print(f'Directory create: {translate_path}')
-        return translate_path
+    # def style_directory_checker(self):
+    #     data_dir = QDir()
+    #     style_path = f'{self.applicationDataLocation}{QDir.separator()}styles'
+    #     if not QDir(style_path).exists():
+    #         data_dir.mkdir(style_path)
+    #         print(f'Directory create: {style_path}')
+    #     return style_path
+    #
+    # def translate_directory_checker(self):
+    #     data_dir = QDir()
+    #     translate_path = f'{self.applicationDataLocation}{QDir.separator()}translations'
+    #     if not QDir(translate_path).exists():
+    #         data_dir.mkdir(translate_path)
+    #         print(f'Directory create: {translate_path}')
+    #     return translate_path
 
 # Part of the code responsible for checking and working with the directory for storing notes
     def notes_location_directory_checker(self):

@@ -22,7 +22,7 @@ class WindowContainer(QDialog):
         self.ui = Ui_WindowContainer()
         self.ui.setupUi(self)
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         # Signal - Slot

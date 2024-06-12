@@ -15,15 +15,14 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QListView, QSizePolicy,
-    QVBoxLayout, QWidget)
-
+from PySide6.QtWidgets import (QApplication, QLabel, QListView, QProgressBar,
+    QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_ShowTodoNoteWidget(object):
     def setupUi(self, ShowTodoNoteWidget):
         if not ShowTodoNoteWidget.objectName():
             ShowTodoNoteWidget.setObjectName(u"ShowTodoNoteWidget")
-        ShowTodoNoteWidget.resize(772, 678)
+        ShowTodoNoteWidget.resize(668, 607)
         self.verticalLayout = QVBoxLayout(ShowTodoNoteWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.todo_note_name_label = QLabel(ShowTodoNoteWidget)
@@ -35,6 +34,12 @@ class Ui_ShowTodoNoteWidget(object):
         self.todo_items_list_view.setObjectName(u"todo_items_list_view")
 
         self.verticalLayout.addWidget(self.todo_items_list_view)
+
+        self.todo_progressbar = QProgressBar(ShowTodoNoteWidget)
+        self.todo_progressbar.setObjectName(u"todo_progressbar")
+        self.todo_progressbar.setValue(24)
+
+        self.verticalLayout.addWidget(self.todo_progressbar)
 
 
         self.retranslateUi(ShowTodoNoteWidget)

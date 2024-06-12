@@ -1,10 +1,10 @@
-from PySide6.QtCore import QDir, Qt, QUrl, QFile
+import json
+
+from PySide6.QtCore import QDir, Qt
 from PySide6.QtWidgets import QWidget
 from Notessa.todo_notes.ui_gen.ui_show_todo_note_widget import Ui_ShowTodoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.model.todo_note_model.todo_model import TodoModel
-import json
-import os
 
 
 class ShowTodoNoteWidget(QWidget):
@@ -13,7 +13,7 @@ class ShowTodoNoteWidget(QWidget):
         self.ui = Ui_ShowTodoNoteWidget()
         self.ui.setupUi(self)
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         self._note_data = note_data
@@ -36,18 +36,45 @@ class ShowTodoNoteWidget(QWidget):
         self.ui.todo_items_list_view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.ui.todo_items_list_view.setWordWrap(True)
 
+        self.update_progress()
+
         # Signal - Slot
         self.ui.todo_items_list_view.clicked.connect(self.mark)
+
+    def update_progress(self):
+        """
+        The method is needed to update the progressbar depending on the marks.
+        """
+        true_count = 0
+        false_count = 0
+        for item in self._todo_model._todos:
+            if item[1]:
+                true_count += 1
+            else:
+                false_count += 1
+
+        print(f'True: {true_count} |  False: {false_count}')
+
+        if (true_count + false_count) == 0:
+            self.ui.todo_progressbar.setValue(0)
+        elif false_count == 0:
+            self.ui.todo_progressbar.setValue(100)
+        elif true_count == 0:
+            self.ui.todo_progressbar.setValue(0)
+        else:
+            percent = (true_count / (true_count + false_count)) * 100
+            self.ui.todo_progressbar.setValue(percent)
 
     def mark(self):
         current_index = self.ui.todo_items_list_view.currentIndex()
         current_index_row = current_index.row()
         if not current_index == None:
-            print(f'Clicked in ListView: {current_index_row}')
             text, status = self._todo_model._todos[current_index_row]
             self._todo_model._todos[current_index_row] = (text, not status)
             self._todo_model.dataChanged.emit(current_index, current_index)
             self.save_data()
+
+            self.update_progress()
 
     def load_data(self):
         with open(self._file_path, 'r') as file:

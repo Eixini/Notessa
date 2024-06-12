@@ -11,7 +11,7 @@ class ShowVideoNoteWidget(QWidget):
         self.ui = Ui_ShowVideoNoteWidget()
         self.ui.setupUi(self)
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         self._note_data = note_data

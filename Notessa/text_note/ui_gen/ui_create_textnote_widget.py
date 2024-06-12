@@ -15,10 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QDateTimeEdit, QFontComboBox,
-    QHBoxLayout, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QSpacerItem, QSpinBox, QTextEdit,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDateTimeEdit, QHBoxLayout,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QSpacerItem, QTextEdit, QVBoxLayout, QWidget)
 
 class Ui_CreateTextNoteWidget(object):
     def setupUi(self, CreateTextNoteWidget):
@@ -71,48 +70,9 @@ class Ui_CreateTextNoteWidget(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
-        self.horizontalLayout_5 = QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_4)
-
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.font_size_label = QLabel(CreateTextNoteWidget)
-        self.font_size_label.setObjectName(u"font_size_label")
-
-        self.horizontalLayout_3.addWidget(self.font_size_label)
-
-        self.font_size_spinbox = QSpinBox(CreateTextNoteWidget)
-        self.font_size_spinbox.setObjectName(u"font_size_spinbox")
-
-        self.horizontalLayout_3.addWidget(self.font_size_spinbox)
-
-
-        self.horizontalLayout_5.addLayout(self.horizontalLayout_3)
-
-        self.horizontalLayout_4 = QHBoxLayout()
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.font_label = QLabel(CreateTextNoteWidget)
-        self.font_label.setObjectName(u"font_label")
-
-        self.horizontalLayout_4.addWidget(self.font_label)
-
-        self.font_combobox = QFontComboBox(CreateTextNoteWidget)
-        self.font_combobox.setObjectName(u"font_combobox")
-
-        self.horizontalLayout_4.addWidget(self.font_combobox)
-
-
-        self.horizontalLayout_5.addLayout(self.horizontalLayout_4)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_5)
-
         self.textnote_contents = QTextEdit(CreateTextNoteWidget)
         self.textnote_contents.setObjectName(u"textnote_contents")
-        self.textnote_contents.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.textnote_contents.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.verticalLayout.addWidget(self.textnote_contents)
 
@@ -150,8 +110,6 @@ class Ui_CreateTextNoteWidget(object):
         self.textnote_name_lineedit.setPlaceholderText(QCoreApplication.translate("CreateTextNoteWidget", u"Enter a note name...", None))
         self.indefinite_checkbox.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Indefinite", None))
         self.note_deadline_label.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Note deadline", None))
-        self.font_size_label.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Font size", None))
-        self.font_label.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Font", None))
         self.textnote_contents.setPlaceholderText(QCoreApplication.translate("CreateTextNoteWidget", u"Here you can start writing your note...", None))
         self.save_button.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Save", None))
     # retranslateUi

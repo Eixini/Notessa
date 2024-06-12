@@ -36,33 +36,33 @@ class NotesModel(QAbstractTableModel):
         self.layoutAboutToBeChanged.emit()
         self.beginRemoveRows(QModelIndex, position, position+rows-1)
         for i in range(rows):
-            if self._data[position][0] == 'rtf':
+            if self._data[position][0] == 'txt':
                 note_file_name = f'{dir_checker.text_notes_directory()}{QDir.separator()}{self._data[position][3]}.txt'
                 meta_data_file_name = f'{dir_checker.text_notes_directory()}{QDir.separator()}{self._data[position][3]}.json'
                 QFile(note_file_name).remove()
                 QFile(meta_data_file_name).remove()
 
             if self._data[position][0] == 'wav':
-                note_file_name = f'{dir_checker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.wav'
-                meta_data_file_name = f'{dir_checker.voice_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                note_file_name = f'{dir_checker.voice_notes_directory()}{QDir.separator()}{self._data[position][3]}.wav'
+                meta_data_file_name = f'{dir_checker.voice_notes_directory()}{QDir.separator()}{self._data[position][3]}.json'
                 QFile(note_file_name).remove()
                 QFile(meta_data_file_name).remove()
 
             if self._data[position][0] == 'mp4':
-                note_file_name = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self._data[position][1]}.mp4'
-                meta_data_file_name = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                note_file_name = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self._data[position][3]}.mp4'
+                meta_data_file_name = f'{dir_checker.video_notes_directory()}{QDir.separator()}{self._data[position][3]}.json'
                 QFile(note_file_name).remove()
                 QFile(meta_data_file_name).remove()
 
             if self._data[position][0] == 'png':
-                note_file_name = f'{dir_checker.paint_notes_directory()}{QDir.separator()}{self._data[position][1]}.png'
-                meta_data_file_name = f'{dir_checker.paint_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                note_file_name = f'{dir_checker.paint_notes_directory()}{QDir.separator()}{self._data[position][3]}.png'
+                meta_data_file_name = f'{dir_checker.paint_notes_directory()}{QDir.separator()}{self._data[position][3]}.json'
                 QFile(note_file_name).remove()
                 QFile(meta_data_file_name).remove()
 
             if self._data[position][0] == 'json':
-                note_file_name = f'{dir_checker.todo_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
-                meta_data_file_name = f'{dir_checker.todo_notes_directory()}{QDir.separator()}{self._data[position][1]}.json'
+                note_file_name = f'{dir_checker.todo_notes_directory()}{QDir.separator()}{self._data[position][3]}.json'
+                meta_data_file_name = f'{dir_checker.todo_notes_directory()}{QDir.separator()}{self._data[position][3]}.json'
                 QFile(note_file_name).remove()
                 QFile(meta_data_file_name).remove()
 
@@ -73,6 +73,11 @@ class NotesModel(QAbstractTableModel):
         return True
 
     def initialData(self):
+        """
+        In this method, data for the model is initialized.
+        Data is taken when reading note directories.
+        Data will only be added to the model if the note has a metadata file.
+        """
 
         dir_checker = DirectoryChecker()
         # Getting a list of files
@@ -82,115 +87,113 @@ class NotesModel(QAbstractTableModel):
         text_notes_folder = dir_checker.text_notes_directory()
         for fileInfo in os.listdir(text_notes_folder):
             if '.txt' in fileInfo:
-                dict = []
+                model_elements = []
                 file_info = QFileInfo(f'{text_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(file_info.suffix())                 # 0
-                # Reading metadata
                 note_meta_data_file = f'{text_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
-                meta_data = None
+
                 if QFile.exists(note_meta_data_file):
+                    meta_data = None
                     with open(note_meta_data_file, 'r') as file:
                         meta_data = json.load(file)
-                    dict.append(meta_data.get('note_name'))     # 1
-                    dict.append(meta_data.get('deadline'))      # 2
+                    model_elements.append(file_info.suffix())                   # 0
+                    model_elements.append(meta_data.get('note_name'))           # 1
+                    model_elements.append(meta_data.get('deadline'))            # 2
+                    model_elements.append(file_info.baseName())                 # 3
+                    model_elements.append(file_info.birthTime().toString())     # 4
                 else:
-                    dict.append('No name TextNote')
-                    dict.append(' ')
-                dict.append(file_info.baseName())               # 3
-                dict.append(file_info.birthTime().toString())   # 4
+                    break
 
-                file_info_list.append(dict)
+                file_info_list.append(model_elements)
 
+        # VOICE NOTES
         voice_notes_folder = dir_checker.voice_notes_directory()
         for fileInfo in os.listdir(voice_notes_folder):
             if '.wav' in fileInfo:
-                dict = []
+                model_elements = []
                 file_info = QFileInfo(f'{voice_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(file_info.suffix())             # 0
-                # Reading metadata
                 note_meta_data_file = f'{voice_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
-                meta_data = None
+
                 if QFile.exists(note_meta_data_file):
+                    meta_data = None
                     with open(note_meta_data_file, 'r') as file:
                         meta_data = json.load(file)
-                    dict.append(meta_data.get('note_name'))  # 1
-                    dict.append(meta_data.get('deadline'))   # 2
+                    model_elements.append(file_info.suffix())                   # 0
+                    model_elements.append(meta_data.get('note_name'))           # 1
+                    model_elements.append(meta_data.get('deadline'))            # 2
+                    model_elements.append(file_info.baseName())                 # 3
+                    model_elements.append(file_info.birthTime().toString())     # 4
                 else:
-                    dict.append('No name TextNote')
-                    dict.append(' ')
-                dict.append(file_info.baseName())               # 3
-                dict.append(file_info.birthTime().toString())   # 4
+                    break
 
-                file_info_list.append(dict)
+                file_info_list.append(model_elements)
 
+        # VIDEO NOTES
         video_notes_folder = dir_checker.video_notes_directory()
         for fileInfo in os.listdir(video_notes_folder):
             if '.mp4' in fileInfo:
-                dict = []
+                model_elements = []
                 file_info = QFileInfo(f'{video_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(file_info.suffix())             # 0
-                # Reading metadata
                 note_meta_data_file = f'{video_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
-                meta_data = None
+
                 if QFile.exists(note_meta_data_file):
+                    meta_data = None
                     with open(note_meta_data_file, 'r') as file:
                         meta_data = json.load(file)
-                    dict.append(meta_data.get('note_name'))  # 1
-                    dict.append(meta_data.get('deadline'))   # 2
+                    model_elements.append(file_info.suffix())                   # 0
+                    model_elements.append(meta_data.get('note_name'))           # 1
+                    model_elements.append(meta_data.get('deadline'))            # 2
+                    model_elements.append(file_info.baseName())                 # 3
+                    model_elements.append(file_info.birthTime().toString())     # 4
                 else:
-                    dict.append('No name TextNote')
-                    dict.append(' ')
-                dict.append(file_info.baseName())               # 3
-                dict.append(file_info.birthTime().toString())   # 4
+                    break
 
-                file_info_list.append(dict)
+                file_info_list.append(model_elements)
 
+        # PAINT NOTES
         paint_notes_folder = dir_checker.paint_notes_directory()
         for fileInfo in os.listdir(paint_notes_folder):
             if '.png' in fileInfo:
-                dict = []
+                model_elements = []
                 file_info = QFileInfo(f'{paint_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(file_info.suffix())     # 0
-                # Reading metadata
                 note_meta_data_file = f'{paint_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
-                meta_data = None
+
                 if QFile.exists(note_meta_data_file):
+                    meta_data = None
                     with open(note_meta_data_file, 'r') as file:
                         meta_data = json.load(file)
-                    dict.append(meta_data.get('note_name'))  # 1
-                    dict.append(meta_data.get('deadline'))   # 2
+                    model_elements.append(file_info.suffix())                   # 0
+                    model_elements.append(meta_data.get('note_name'))           # 1
+                    model_elements.append(meta_data.get('deadline'))            # 2
+                    model_elements.append(file_info.baseName())                 # 3
+                    model_elements.append(file_info.birthTime().toString())     # 4
                 else:
-                    dict.append('No name TextNote')
-                    dict.append(' ')
-                dict.append(file_info.baseName())               # 3
-                dict.append(file_info.birthTime().toString())   # 4
+                    break
 
-                file_info_list.append(dict)
+                file_info_list.append(model_elements)
 
+        # TOD0 NOTES
         todo_notes_folder = dir_checker.todo_notes_directory()
         for fileInfo in os.listdir(todo_notes_folder):
             if '.json' in fileInfo:
-                dict = []
+                model_elements = []
                 file_info = QFileInfo(f'{todo_notes_folder}{QDir.separator()}{fileInfo}')
-                dict.append(file_info.suffix())         # 0
-                # Reading metadata
                 note_meta_data_file = f'{todo_notes_folder}{QDir.separator()}{file_info.baseName()}.json'
-                json_data = None
+
                 if QFile.exists(note_meta_data_file):
+                    json_data = None
                     with open(note_meta_data_file, 'r') as file:
                         json_data = json.load(file)
-
                     meta_data = json_data.get('meta_data')
 
-                    dict.append(meta_data.get('note_name'))  # 1
-                    dict.append(meta_data.get('deadline'))   # 2
+                    model_elements.append(file_info.suffix())                   # 0
+                    model_elements.append(meta_data.get('note_name'))           # 1
+                    model_elements.append(meta_data.get('deadline'))            # 2
+                    model_elements.append(file_info.baseName())                 # 3
+                    model_elements.append(file_info.birthTime().toString())     # 4
                 else:
-                    dict.append('No name TextNote')
-                    dict.append(' ')
-                dict.append(file_info.baseName())               # 3
-                dict.append(file_info.birthTime().toString())   # 4
+                    break
 
-                file_info_list.append(dict)
+                file_info_list.append(model_elements)
 
         return file_info_list
 

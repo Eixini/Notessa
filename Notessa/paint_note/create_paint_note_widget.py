@@ -1,4 +1,4 @@
-import json
+import json, uuid
 
 from PySide6.QtWidgets import QWidget, QColorDialog, QMessageBox
 from PySide6.QtCore import QSize, QDir, Qt, QDateTime
@@ -23,7 +23,7 @@ class CreatePaintNoteWidget(QWidget):
         self.ui.note_date_time_edit.setDisabled(True)
         self.ui.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         self.ui.pen_width_double_spinbox.setValue(5.0)
@@ -91,8 +91,11 @@ class CreatePaintNoteWidget(QWidget):
             else:
                 meta_data_content.update({'deadline': ' '})
 
+            note_uuid = uuid.uuid1()
+            meta_data_content.update({'uuid': f'{note_uuid}'})
+
             with open(meta_data_file_path, 'w', encoding='utf-8') as file:
-                json.dump(meta_data_content, file)
+                json.dump(meta_data_content, file, indent=4)
 
             self.ui.painter_widget.save(url)
             self.close()

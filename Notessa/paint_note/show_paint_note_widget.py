@@ -11,7 +11,7 @@ class ShowPaintNoteWidget(QWidget):
         self.ui = Ui_ShowPaintNoteWidget()
         self.ui.setupUi(self)
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         self._note_data = note_data
@@ -20,7 +20,6 @@ class ShowPaintNoteWidget(QWidget):
 
         _dir_checker = DirectoryChecker()
         self._file_path = f'{_dir_checker.paint_notes_directory()}{QDir.separator()}{self._note_data[3]}.{self._note_data[0]}'
-        print(f'{self._file_path}: {QFile.exists(self._file_path)}')
 
         self._pixmap = QPixmap()
         self._pixmap.load(f'{QDir.toNativeSeparators(self._file_path)}')

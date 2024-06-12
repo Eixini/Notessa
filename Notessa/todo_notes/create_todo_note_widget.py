@@ -1,4 +1,4 @@
-import json
+import json, uuid
 
 from PySide6.QtCore import QDir, Qt, QDateTime
 from PySide6.QtWidgets import QWidget, QMessageBox
@@ -25,7 +25,7 @@ class CreateTodoNoteWidget(QWidget):
 
         self._parent = parent
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         self.ui.note_item_lineedit.setFocus()
@@ -92,12 +92,16 @@ class CreateTodoNoteWidget(QWidget):
             else:
                 meta_data.update({'deadline': ' '})
 
+            note_uuid = uuid.uuid1()
+            meta_data.update({'uuid': f'{note_uuid}'})
+
             json_data.update({'meta_data': meta_data})
 
             with open(file_path, 'w', encoding='utf-8') as file:
-                json.dump(json_data, file)
+                json.dump(json_data, file, indent=4)
 
             self.close()
+            self.parent().close()
         else:
             msg_box = QMessageBox()
             msg_box.setText(u"The note's deadline date and time cannot be less than the current one")

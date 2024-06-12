@@ -1,4 +1,4 @@
-import json
+import json, uuid
 
 from PySide6.QtCore import QTimer, QDir, QUrl, Qt, QDateTime
 from PySide6.QtGui import QIcon, QPixmap
@@ -15,7 +15,7 @@ class CreateVideoNoteWidget(QWidget):
         self.ui = Ui_CreateVideoNoteWidget()
         self.ui.setupUi(self)
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         # Set a default note deadline -
@@ -154,6 +154,9 @@ class CreateVideoNoteWidget(QWidget):
             else:
                 meta_data_content.update({'deadline': ' '})
 
+            note_uuid = uuid.uuid1()
+            meta_data_content.update({'uuid': f'{note_uuid}'})
+
             with open(meta_data_file_path, 'w') as file:
                 json.dump(meta_data_content, file, indent=4)
 
@@ -174,6 +177,9 @@ class CreateVideoNoteWidget(QWidget):
         # Reset duration
         self._timer.stop()
         self._duration = 0
+
+        self.parent().close()
+        self.close()
 
     def change_label(self):
         time_duration = self.sec_convert(self._duration)

@@ -42,7 +42,7 @@
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -86,54 +86,9 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="font_size_label">
-         <property name="text">
-          <string>Font size</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="font_size_spinbox"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="font_label">
-         <property name="text">
-          <string>Font</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFontComboBox" name="font_combobox"/>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
-   <item>
     <widget class="QTextEdit" name="textnote_contents">
      <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
      </property>
      <property name="placeholderText">
       <string>Here you can start writing your note...</string>
@@ -145,7 +100,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -175,7 +130,7 @@
      <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>

@@ -1,4 +1,4 @@
-import json
+import json, uuid
 
 from PySide6.QtCore import QUrl, QDir, Qt, QDateTime, QFile
 from PySide6.QtGui import QRegularExpressionValidator
@@ -24,7 +24,7 @@ class CreateVoiceNoteWidget(QWidget):
         self.ui.note_date_time_edit.setDisabled(True)
         self.ui.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
 
-        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         self.ui.voicenote_name_lineedit.setReadOnly(False)
@@ -151,6 +151,9 @@ class CreateVoiceNoteWidget(QWidget):
                 else:
                     meta_data_content.update({'deadline': ' '})
 
+                note_uuid = uuid.uuid1()
+                meta_data_content.update({'uuid': f'{note_uuid}'})
+
                 with open(meta_data_file_path, 'w') as file:
                     json.dump(meta_data_content, file, indent=4)
 
@@ -177,6 +180,9 @@ class CreateVoiceNoteWidget(QWidget):
         self._media_recorder.stop()
 
         self.ui.voicenote_name_lineedit.clear()
+
+        self.parent().close()
+        self.close()
 
     def closeEvent(self, *args):
         if (self._media_recorder.recorderState() == QMediaRecorder.RecorderState.PausedState or
