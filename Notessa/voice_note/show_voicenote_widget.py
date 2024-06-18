@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from Notessa.voice_note.ui_gen.ui_show_voicenote_widget import Ui_ShowVoiceNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
+from Notessa.common_modules import constants
 
 
 class ShowVoiceNoteWidget(QWidget):
@@ -16,11 +17,11 @@ class ShowVoiceNoteWidget(QWidget):
 
         self._note_data = note_data
 
-        self.ui.voicenote_name_label.setText(self._note_data[1])
-        self.setWindowTitle(self._note_data[1])
+        self.ui.voicenote_name_label.setText(self._note_data[constants.NOTE_NAME])
+        self.setWindowTitle(self._note_data[constants.NOTE_NAME])
 
         _dir_checker = DirectoryChecker()
-        self._file_path = f'{_dir_checker.voice_notes_directory()}{QDir.separator()}{self._note_data[3]}.{self._note_data[0]}'
+        self._file_path = f'{_dir_checker.voice_notes_directory()}{QDir.separator()}{self._note_data[constants.NOTE_FILE_BASENAME]}.{self._note_data[constants.NOTE_FILE_TYPE]}'
 
         # Media settings
         self._media_player = QMediaPlayer()

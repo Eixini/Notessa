@@ -15,7 +15,7 @@ class CreateTodoNoteWidget(QWidget):
         self.ui.setupUi(self)
 
         # Set a default note deadline -
-        self.note_deadline = ' '
+        self.note_deadline = 'None'
 
         # Default value
         self.ui.indefinite_checkbox.setChecked(True)
@@ -42,7 +42,7 @@ class CreateTodoNoteWidget(QWidget):
 
     def indefinite_change(self):
         if self.ui.indefinite_checkbox.isChecked():
-            self.note_deadline = ' '
+            self.note_deadline = 'None'
             self.ui.note_deadline_label.setDisabled(True)
             self.ui.note_date_time_edit.setDisabled(True)
         else:
@@ -52,7 +52,6 @@ class CreateTodoNoteWidget(QWidget):
 
     def select_date_time_change(self):
         self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
-        print(self.ui.note_date_time_edit.dateTime().toLocalTime())
 
     def add_note_item(self):
         if not self.ui.note_item_lineedit.text() == '':
@@ -86,11 +85,10 @@ class CreateTodoNoteWidget(QWidget):
             # Meta-data
             meta_data = {'note_name': note_name}
 
-
-            if not self.note_deadline == ' ':
+            if not self.note_deadline == 'None':
                 meta_data.update({'deadline': self.note_deadline.toString()})
             else:
-                meta_data.update({'deadline': ' '})
+                meta_data.update({'deadline': None})
 
             note_uuid = uuid.uuid1()
             meta_data.update({'uuid': f'{note_uuid}'})
@@ -111,7 +109,7 @@ class CreateTodoNoteWidget(QWidget):
 
     def date_time_check(self):
         """ To check the correctness of the note's deadline """
-        if not self.note_deadline == ' ':
+        if not self.note_deadline == 'None':
             if QDateTime.currentDateTime() < self.ui.note_date_time_edit.dateTime():
                 return 'Correct'
             else:

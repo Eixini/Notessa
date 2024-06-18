@@ -1,12 +1,13 @@
 import datetime, uuid
 
-from PySide6.QtCore import QTranslator, QFile, QSettings, QDateTime, QSortFilterProxyModel
+from PySide6.QtCore import QTranslator, QFile, QSettings, QDateTime, QSortFilterProxyModel, QTimer
 from PySide6.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QWidget
 from PySide6.QtGui import QAction, QIcon, QPixmap
 from Notessa.model.notelist_table_model.notes_model import NotesModel
 from Notessa.note_list_gadget.note_list_gadget import NoteListGadget
 from Notessa.settings.settings_widget import SettingsWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
+from Notessa.common_modules import constants
 
 from Notessa.resources.icons.common import common_icons_rc
 
@@ -65,19 +66,26 @@ class TrayMenu(QWidget):
         except Exception as err:
             print(err)
 
-        # TEST
-        # self.check_notes_deadline()
+        self.note_deadline_list = dict()
+
+        # Timer check deadline note
+        note_deadline_timer = QTimer(self)
+        note_deadline_timer.timeout.connect(self.check_notes_deadline)
+        # note_deadline_timer.start(60000)
+        note_deadline_timer.start(600)
 
     def update_model(self):
         """
         Method for reloading data into a model.
         """
-        view_model = NotesModel()
+        self.view_model = NotesModel()
 
         # Proxy model
         self._proxy_model = QSortFilterProxyModel()
         self._proxy_model.setDynamicSortFilter(False)
-        self._proxy_model.setSourceModel(view_model)
+        self._proxy_model.setSourceModel(self.view_model)
+
+        # self.check_notes_deadline()
 
     def open_settings_widget(self):
         self.settings_widget.setVisible(True)
@@ -90,15 +98,34 @@ class TrayMenu(QWidget):
         This method is needed to check the current time and the deadline time of notes.
         If a deadline is approaching, the user must be notified about this.
         """
-        # 1. Получение списка заметок, у которых имеется дедлайн
-        # 2. Сравнение текущего времени и времени дедлайна заметок
-        # 3. Если подходит время дедлайна заметки, то необходимо уведомить об этом пользователя.
-        # * Возможно пользователь может настроить время уведомления (например, 1, 5, 10 мин и т.д)
+        print(self.note_deadline_list)
 
-        # for item in self.view_model._data:
-        #     print(item[2])
-        # print(uuid.uuid4())
-        pass
+        for item in self.view_model._data:
+            if item[constants.NOTE_DEADLINE]:
+                if not item[constants.NOTE_UUID] in self.note_deadline_list:
+                    temp_dict = dict()
+                    temp_dict.update({'note_name': item[constants.NOTE_NAME]})
+                    temp_dict.update({'deadline': item[constants.NOTE_DEADLINE]})
+                    temp_dict.update({'checked': False})
+
+                    self.note_deadline_list.update({item[constants.NOTE_UUID]: temp_dict})
+
+        for k,v in self.note_deadline_list.items():
+            # Obtaining the necessary note data by its UUID
+            current_note = self.note_deadline_list[k]
+
+            deadline_msec = QDateTime.fromString(current_note['deadline']).toMSecsSinceEpoch()
+            time_diff = deadline_msec - QDateTime.currentDateTime().toMSecsSinceEpoch()
+
+            # min * 60 * 1000 = msec (5 min = 300000 msec)
+            if time_diff <= 300000 and time_diff >= 0 and current_note['checked'] == False:
+                msg = f"The deadline for note {current_note['note_name']} is approaching"
+                self.tray.showMessage(u'Timeout', msg)
+                print(msg)
+
+                # Set to "Checked" to avoid duplicate messages about a specific note's deadline.
+                current_note['checked'] = True
+                self.note_deadline_list.update({k: current_note})
 
     def checking_directories(self):
         # Checking application data directories
@@ -114,9 +141,3 @@ class TrayMenu(QWidget):
         directory_checker.video_notes_directory_checker()
         directory_checker.paint_notes_directory_checker()
         directory_checker.todo_notes_directory_checker()
-
-    # Work with model
-    def delete_note(self, proxy_index):
-        self.view_model.removeRows(proxy_index.row(), 1, proxy_index)
-        self.view_model.submit()
-        print('Call delete note')

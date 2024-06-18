@@ -15,7 +15,7 @@ class CreatePaintNoteWidget(QWidget):
         self.ui.setupUi(self)
 
         # Set a default note deadline -
-        self.note_deadline = ' '
+        self.note_deadline = 'None'
 
         # Default value
         self.ui.indefinite_checkbox.setChecked(True)
@@ -52,7 +52,7 @@ class CreatePaintNoteWidget(QWidget):
 
     def indefinite_change(self):
         if self.ui.indefinite_checkbox.isChecked():
-            self.note_deadline = ' '
+            self.note_deadline = 'None'
             self.ui.note_deadline_label.setDisabled(True)
             self.ui.note_date_time_edit.setDisabled(True)
         else:
@@ -62,7 +62,6 @@ class CreatePaintNoteWidget(QWidget):
 
     def select_date_time_change(self):
         self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
-        print(self.ui.note_date_time_edit.dateTime().toLocalTime())
 
     def pen_width_change(self):
         self.ui.painter_widget.set_pen_width(self.ui.pen_width_double_spinbox.value())
@@ -86,10 +85,10 @@ class CreatePaintNoteWidget(QWidget):
 
             meta_data_content = {'note_name': note_name}
 
-            if not self.note_deadline == ' ':
+            if not self.note_deadline == 'None':
                 meta_data_content.update({'deadline': self.note_deadline.toString()})
             else:
-                meta_data_content.update({'deadline': ' '})
+                meta_data_content.update({'deadline': None})
 
             note_uuid = uuid.uuid1()
             meta_data_content.update({'uuid': f'{note_uuid}'})
@@ -99,6 +98,7 @@ class CreatePaintNoteWidget(QWidget):
 
             self.ui.painter_widget.save(url)
             self.close()
+            self.parent().close()
         else:
             msg_box = QMessageBox()
             msg_box.setText(u"The note's deadline date and time cannot be less than the current one")
@@ -108,7 +108,7 @@ class CreatePaintNoteWidget(QWidget):
 
     def date_time_check(self):
         """ To check the correctness of the note's deadline """
-        if not self.note_deadline == ' ':
+        if not self.note_deadline:
             if QDateTime.currentDateTime() < self.ui.note_date_time_edit.dateTime():
                 return 'Correct'
             else:

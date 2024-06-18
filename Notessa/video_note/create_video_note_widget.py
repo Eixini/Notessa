@@ -19,7 +19,7 @@ class CreateVideoNoteWidget(QWidget):
         self.installEventFilter(self.parent())
 
         # Set a default note deadline -
-        self.note_deadline = ' '
+        self.note_deadline = 'None'
 
         # Default value
         self.ui.indefinite_checkbox.setChecked(True)
@@ -62,7 +62,7 @@ class CreateVideoNoteWidget(QWidget):
 
     def indefinite_change(self):
         if self.ui.indefinite_checkbox.isChecked():
-            self.note_deadline = ' '
+            self.note_deadline = 'None'
             self.ui.note_deadline_label.setDisabled(True)
             self.ui.note_date_time_edit.setDisabled(True)
         else:
@@ -72,7 +72,6 @@ class CreateVideoNoteWidget(QWidget):
 
     def select_date_time_change(self):
         self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
-        print(self.ui.note_date_time_edit.dateTime().toLocalTime())
 
     def media_devices_initialization(self):
         """ Method for initializing media devices such as microphone and camera """
@@ -119,7 +118,6 @@ class CreateVideoNoteWidget(QWidget):
         self._capture_session.setCamera(self._camera)
 
     def update_record_state(self, state):
-        print(f'Record state: {self._media_recorder.recorderState()}')
         if self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState:
             self.ui.record_button.setEnabled(False)
             self.ui.stop_button.setEnabled(True)
@@ -149,10 +147,10 @@ class CreateVideoNoteWidget(QWidget):
             url = f'{QDir.toNativeSeparators(file_path)}'
             self._media_recorder.setOutputLocation(QUrl.fromLocalFile(url))
 
-            if not self.note_deadline == ' ':
+            if not self.note_deadline == 'None':
                 meta_data_content.update({'deadline': self.note_deadline.toString()})
             else:
-                meta_data_content.update({'deadline': ' '})
+                meta_data_content.update({'deadline': None})
 
             note_uuid = uuid.uuid1()
             meta_data_content.update({'uuid': f'{note_uuid}'})
@@ -198,7 +196,7 @@ class CreateVideoNoteWidget(QWidget):
 
     def date_time_check(self):
         """ To check the correctness of the note's deadline """
-        if not self.note_deadline == ' ':
+        if not self.note_deadline == 'None':
             if QDateTime.currentDateTime() < self.ui.note_date_time_edit.dateTime():
                 return 'Correct'
             else:

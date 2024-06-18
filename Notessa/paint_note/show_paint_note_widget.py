@@ -3,6 +3,7 @@ from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt, QDir, QFile
 from Notessa.paint_note.ui_gen.ui_show_paintnote_widget import Ui_ShowPaintNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
+from Notessa.common_modules import constants
 
 
 class ShowPaintNoteWidget(QWidget):
@@ -16,10 +17,10 @@ class ShowPaintNoteWidget(QWidget):
 
         self._note_data = note_data
 
-        self.ui.paintnote_name_label.setText(self._note_data[1])
+        self.ui.paintnote_name_label.setText(self._note_data[constants.NOTE_NAME])
 
         _dir_checker = DirectoryChecker()
-        self._file_path = f'{_dir_checker.paint_notes_directory()}{QDir.separator()}{self._note_data[3]}.{self._note_data[0]}'
+        self._file_path = f'{_dir_checker.paint_notes_directory()}{QDir.separator()}{self._note_data[constants.NOTE_FILE_BASENAME]}.{self._note_data[constants.NOTE_FILE_TYPE]}'
 
         self._pixmap = QPixmap()
         self._pixmap.load(f'{QDir.toNativeSeparators(self._file_path)}')

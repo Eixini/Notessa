@@ -100,6 +100,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(meta_data.get('deadline'))            # 2
                     model_elements.append(file_info.baseName())                 # 3
                     model_elements.append(file_info.birthTime().toString())     # 4
+                    model_elements.append(meta_data.get('uuid'))                # 5
                 else:
                     break
 
@@ -122,6 +123,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(meta_data.get('deadline'))            # 2
                     model_elements.append(file_info.baseName())                 # 3
                     model_elements.append(file_info.birthTime().toString())     # 4
+                    model_elements.append(meta_data.get('uuid'))                # 5
                 else:
                     break
 
@@ -144,6 +146,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(meta_data.get('deadline'))            # 2
                     model_elements.append(file_info.baseName())                 # 3
                     model_elements.append(file_info.birthTime().toString())     # 4
+                    model_elements.append(meta_data.get('uuid'))                # 5
                 else:
                     break
 
@@ -166,6 +169,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(meta_data.get('deadline'))            # 2
                     model_elements.append(file_info.baseName())                 # 3
                     model_elements.append(file_info.birthTime().toString())     # 4
+                    model_elements.append(meta_data.get('uuid'))                # 5
                 else:
                     break
 
@@ -190,6 +194,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(meta_data.get('deadline'))            # 2
                     model_elements.append(file_info.baseName())                 # 3
                     model_elements.append(file_info.birthTime().toString())     # 4
+                    model_elements.append(meta_data.get('uuid'))                # 5
                 else:
                     break
 

@@ -20,8 +20,8 @@ class PainterWidget(QWidget):
 
     def set_pixmap(self, size: QSize):
         self._pixmap = QPixmap(size)
-        print(f'Painter widget size: {self.size()}')
-        print(f'Pixmap size: {self._pixmap.size()}')
+        # print(f'Painter widget size: {self.size()}')
+        # print(f'Pixmap size: {self._pixmap.size()}')
         self._pixmap.fill(QColor('white'))
 
     def set_pen_width(self, value: float):

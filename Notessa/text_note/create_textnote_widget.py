@@ -14,7 +14,7 @@ class CreateTextNoteWidget(QWidget):
         self.ui.setupUi(self)
 
         # Set a default note deadline -
-        self.note_deadline = ' '
+        self.note_deadline = 'None'
 
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
@@ -36,7 +36,7 @@ class CreateTextNoteWidget(QWidget):
 
     def indefinite_change(self):
         if self.ui.indefinite_checkbox.isChecked():
-            self.note_deadline = ' '
+            self.note_deadline = 'None'
             self.ui.note_deadline_label.setDisabled(True)
             self.ui.note_date_time_edit.setDisabled(True)
         else:
@@ -46,7 +46,6 @@ class CreateTextNoteWidget(QWidget):
 
     def select_date_time_change(self):
         self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
-        print(self.ui.note_date_time_edit.dateTime().toLocalTime())
 
     def save_text_note(self):
         dir_check = DirectoryChecker()
@@ -54,7 +53,7 @@ class CreateTextNoteWidget(QWidget):
 
         if self.date_time_check() == 'Correct' or self.date_time_check() == 'None':
 
-            if not self.ui.textnote_name_lineedit.text() == ' ':
+            if not self.ui.textnote_name_lineedit.text() == 'None':
                 note_name = self.ui.textnote_name_lineedit.text()
                 file_name = forming_note_file_name('TextNote')
                 file_path = str(f"{dir_check.text_notes_directory()}{QDir.separator()}{file_name}.txt")
@@ -65,10 +64,10 @@ class CreateTextNoteWidget(QWidget):
                 with open(file_path, 'w', encoding='utf-8') as fp:
                     fp.write(self.ui.textnote_contents.toPlainText())
 
-                if not self.note_deadline == ' ':
+                if not self.note_deadline == 'None':
                     meta_data_content.update({'deadline': self.note_deadline.toString()})
                 else:
-                    meta_data_content.update({'deadline': ' '})
+                    meta_data_content.update({'deadline': None})
 
                 note_uuid = uuid.uuid1()
                 meta_data_content.update({'uuid': f'{note_uuid}'})
@@ -87,7 +86,7 @@ class CreateTextNoteWidget(QWidget):
 
     def date_time_check(self):
         """ To check the correctness of the note's deadline """
-        if not self.note_deadline == ' ':
+        if not self.note_deadline == 'None':
             if QDateTime.currentDateTime() < self.ui.note_date_time_edit.dateTime():
                 return 'Correct'
             else:

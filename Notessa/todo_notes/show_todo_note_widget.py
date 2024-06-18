@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QWidget
 from Notessa.todo_notes.ui_gen.ui_show_todo_note_widget import Ui_ShowTodoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.model.todo_note_model.todo_model import TodoModel
+from Notessa.common_modules import constants
 
 
 class ShowTodoNoteWidget(QWidget):
@@ -18,10 +19,10 @@ class ShowTodoNoteWidget(QWidget):
 
         self._note_data = note_data
 
-        self.ui.todo_note_name_label.setText(self._note_data[1])
+        self.ui.todo_note_name_label.setText(self._note_data[constants.NOTE_NAME])
 
         self._dir_checker = DirectoryChecker()
-        self._file_path = f'{self._dir_checker.todo_notes_directory()}{QDir.separator()}{self._note_data[3]}.{self._note_data[0]}'
+        self._file_path = f'{self._dir_checker.todo_notes_directory()}{QDir.separator()}{self._note_data[constants.NOTE_FILE_BASENAME]}.{self._note_data[constants.NOTE_FILE_TYPE]}'
 
         self._json_data = dict()
         self.load_data()
@@ -52,8 +53,6 @@ class ShowTodoNoteWidget(QWidget):
                 true_count += 1
             else:
                 false_count += 1
-
-        print(f'True: {true_count} |  False: {false_count}')
 
         if (true_count + false_count) == 0:
             self.ui.todo_progressbar.setValue(0)
