@@ -14,6 +14,8 @@ class NoteCreationMenuWidget(QWidget):
         # self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
+        self._parent = parent
+
         # Signal - Slot
         self.ui.create_text_note_button.clicked.connect(self.create_text_note)
         self.ui.create_voice_note_button.clicked.connect(self.create_voice_note)
@@ -22,31 +24,31 @@ class NoteCreationMenuWidget(QWidget):
         self.ui.create_todo_note_button.clicked.connect(self.create_todo_note)
 
     def create_text_note(self):
-        create_note_window = WindowContainer(self)
+        create_note_window = WindowContainer(self._parent)
         create_note_window.create_note('text')
         self.close()
         create_note_window.exec()
 
     def create_voice_note(self):
-        create_note_window = WindowContainer(self)
+        create_note_window = WindowContainer(self._parent)
         create_note_window.create_note('voice')
         self.close()
         create_note_window.exec()
 
     def create_video_note(self):
-        create_note_window = WindowContainer(self)
+        create_note_window = WindowContainer(self._parent)
         create_note_window.create_note('video')
         self.close()
         create_note_window.exec()
 
     def create_paint_note(self):
-        create_note_window = WindowContainer(self)
+        create_note_window = WindowContainer(self._parent)
         create_note_window.create_note('paint')
         self.close()
         create_note_window.exec()
 
     def create_todo_note(self):
-        create_note_window = WindowContainer(self)
+        create_note_window = WindowContainer(self._parent)
         create_note_window.create_note('todo')
         self.close()
         create_note_window.exec()

@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QHBoxLayout,
-    QLabel, QSizePolicy, QSpacerItem, QVBoxLayout,
-    QWidget)
+    QLabel, QPushButton, QSizePolicy, QSpacerItem,
+    QSpinBox, QVBoxLayout, QWidget)
 
 class Ui_SettingsWidget(object):
     def setupUi(self, SettingsWidget):
@@ -66,9 +66,53 @@ class Ui_SettingsWidget(object):
 
         self.verticalLayout.addWidget(self.start_at_system_startup_checkbox)
 
-        self.verticalSpacer = QSpacerItem(20, 419, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.deadline_time_label = QLabel(SettingsWidget)
+        self.deadline_time_label.setObjectName(u"deadline_time_label")
+
+        self.horizontalLayout_3.addWidget(self.deadline_time_label)
+
+        self.deadline_time_spinbox = QSpinBox(SettingsWidget)
+        self.deadline_time_spinbox.setObjectName(u"deadline_time_spinbox")
+        self.deadline_time_spinbox.setMinimum(1)
+        self.deadline_time_spinbox.setMaximum(999999)
+
+        self.horizontalLayout_3.addWidget(self.deadline_time_spinbox)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
+
+        self.verticalSpacer = QSpacerItem(676, 340, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_2)
+
+        self.import_notes_button = QPushButton(SettingsWidget)
+        self.import_notes_button.setObjectName(u"import_notes_button")
+
+        self.horizontalLayout_4.addWidget(self.import_notes_button)
+
+        self.export_notes_button = QPushButton(SettingsWidget)
+        self.export_notes_button.setObjectName(u"export_notes_button")
+
+        self.horizontalLayout_4.addWidget(self.export_notes_button)
+
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_4)
 
         self.label = QLabel(SettingsWidget)
         self.label.setObjectName(u"label")
@@ -87,6 +131,10 @@ class Ui_SettingsWidget(object):
         self.style_label.setText(QCoreApplication.translate("SettingsWidget", u"Style", None))
         self.show_note_list_gadget_checkbox.setText(QCoreApplication.translate("SettingsWidget", u"Show notes gadget when app launches", None))
         self.start_at_system_startup_checkbox.setText(QCoreApplication.translate("SettingsWidget", u"Start at system startup", None))
+        self.deadline_time_label.setText(QCoreApplication.translate("SettingsWidget", u"Notify me when a deadline is approaching (minutes)", None))
+        self.deadline_time_spinbox.setSuffix("")
+        self.import_notes_button.setText(QCoreApplication.translate("SettingsWidget", u"Import notes", None))
+        self.export_notes_button.setText(QCoreApplication.translate("SettingsWidget", u"Export notes", None))
         self.label.setText(QCoreApplication.translate("SettingsWidget", u"Eixini (Roman R\u04d3ximov)", None))
     # retranslateUi
 

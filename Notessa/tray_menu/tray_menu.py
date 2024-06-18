@@ -1,6 +1,6 @@
 import datetime, uuid
 
-from PySide6.QtCore import QTranslator, QFile, QSettings, QDateTime, QSortFilterProxyModel, QTimer
+from PySide6.QtCore import QTranslator, QFile, QSettings, QDateTime, QSortFilterProxyModel, QTimer, QEvent
 from PySide6.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QWidget
 from PySide6.QtGui import QAction, QIcon, QPixmap
 from Notessa.model.notelist_table_model.notes_model import NotesModel
@@ -57,12 +57,17 @@ class TrayMenu(QWidget):
         self.tray.setContextMenu(self.menu)
 
         self.settings = QSettings(self)
+        # Default value (min * 60 * 1000 = msec (5 min = 300000 msec))
+        self.waiting_time_before_deadline = 300000
 
         try:
             if self.settings.value('AutoShowNoteListGadget') == 'True':
                 self.note_list_gadget.setVisible(True)
             else:
                 self.note_list_gadget.setVisible(False)
+
+            if self.settings.value('WaitingTimeBeforeDeadline'):
+                self.waiting_time_before_deadline = self.settings.value('WaitingTimeBeforeDeadline') * 60 * 1000
         except Exception as err:
             print(err)
 
@@ -98,8 +103,6 @@ class TrayMenu(QWidget):
         This method is needed to check the current time and the deadline time of notes.
         If a deadline is approaching, the user must be notified about this.
         """
-        print(self.note_deadline_list)
-
         for item in self.view_model._data:
             if item[constants.NOTE_DEADLINE]:
                 if not item[constants.NOTE_UUID] in self.note_deadline_list:
@@ -110,7 +113,7 @@ class TrayMenu(QWidget):
 
                     self.note_deadline_list.update({item[constants.NOTE_UUID]: temp_dict})
 
-        for k,v in self.note_deadline_list.items():
+        for k, v in self.note_deadline_list.items():
             # Obtaining the necessary note data by its UUID
             current_note = self.note_deadline_list[k]
 
@@ -118,14 +121,23 @@ class TrayMenu(QWidget):
             time_diff = deadline_msec - QDateTime.currentDateTime().toMSecsSinceEpoch()
 
             # min * 60 * 1000 = msec (5 min = 300000 msec)
-            if time_diff <= 300000 and time_diff >= 0 and current_note['checked'] == False:
-                msg = f"The deadline for note {current_note['note_name']} is approaching"
+            if time_diff <= self.waiting_time_before_deadline and time_diff >= 0 and current_note['checked'] == False:
+                msg = f"The deadline for note \"{current_note['note_name']}\" is approaching"
                 self.tray.showMessage(u'Timeout', msg)
                 print(msg)
 
                 # Set to "Checked" to avoid duplicate messages about a specific note's deadline.
                 current_note['checked'] = True
                 self.note_deadline_list.update({k: current_note})
+
+    def eventFilter(self, watched, event):
+        # QEvent::HideToParent
+        print(event.type())
+        if event.type() == QEvent.Type.Close and watched.objectName() == 'WindowContainer':
+            self.note_list_gadget.update_view()
+            return True
+        else:
+            return False
 
     def checking_directories(self):
         # Checking application data directories

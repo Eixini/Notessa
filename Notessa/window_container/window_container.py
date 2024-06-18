@@ -25,6 +25,8 @@ class WindowContainer(QDialog):
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
+        self._parent = parent
+
         # Signal - Slot
 
     def show_note(self, note_type, data):
@@ -51,22 +53,26 @@ class WindowContainer(QDialog):
 
     def create_note(self, note_type):
         if note_type == 'text':
-            text_note_widget = CreateTextNoteWidget(self)
+            text_note_widget = CreateTextNoteWidget(self.parent())
             self.ui.verticalLayout.addWidget(text_note_widget)
             text_note_widget.show()
         elif note_type == 'voice':
-            voice_note_widget = CreateVoiceNoteWidget(self)
+            voice_note_widget = CreateVoiceNoteWidget(self.parent())
             self.ui.verticalLayout.addWidget(voice_note_widget)
             voice_note_widget.show()
         elif note_type == 'video':
-            video_note_widget = CreateVideoNoteWidget(self)
+            video_note_widget = CreateVideoNoteWidget(self.parent())
             self.ui.verticalLayout.addWidget(video_note_widget)
             video_note_widget.show()
         elif note_type == 'paint':
-            paint_note_widget = CreatePaintNoteWidget(self)
+            paint_note_widget = CreatePaintNoteWidget(self.parent())
             self.ui.verticalLayout.addWidget(paint_note_widget)
             paint_note_widget.show()
         elif note_type == 'todo':
-            todo_note_widget = CreateTodoNoteWidget(self)
+            todo_note_widget = CreateTodoNoteWidget(self.parent())
             self.ui.verticalLayout.addWidget(todo_note_widget)
             todo_note_widget.show()
+
+    def closeEvent(self, *args):
+        print(self._parent)
+        self._parent.update_view()

@@ -50,14 +50,6 @@ class NoteListGadget(QWidget):
         self.ui.filter_combobox.addItem('Paint notes')
         self.ui.filter_combobox.addItem('Todo notes')
 
-        # # Setting View
-        # self.view_model = model
-        #
-        # # Sorting
-        # self._proxy_model = QSortFilterProxyModel()
-        # self._proxy_model.setDynamicSortFilter(False)
-        # self._proxy_model.setSourceModel(self.view_model)
-
         # TableView
         self.ui.table_view.setModel(self._parent._proxy_model)
         self.ui.table_view.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
@@ -71,7 +63,7 @@ class NoteListGadget(QWidget):
         self.ui.table_view.verticalHeader().hide()
 
         # Create new note Widget
-        self.note_creation_menu = NoteCreationMenuWidget(parent)
+        self.note_creation_menu = NoteCreationMenuWidget(self)
 
         # Signal - Slot
         self.ui.create_note_button.clicked.connect(self.open_note_creation_menu)
