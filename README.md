@@ -3,9 +3,15 @@
 This application allows you to create notes of many types.
 
 # Table of contents
+- [Note](#note)
+- [Installing dependencies](#installing-dependencies)
 - [Building the project](#building-the-project)
 - [Creating a translation](#creating-a-translation)
 - [Known Issues](#known-issues)
+
+## Note
+Currently, version 3.0 is being developed locally. The application architecture has been completely redesigned.
+Due to health issues, development time is increasing.
 
 ## Installing dependencies
 To install dependencies you need to run the following command: <br/>
