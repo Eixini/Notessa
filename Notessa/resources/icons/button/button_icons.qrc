@@ -2,10 +2,25 @@
   <qresource>
     <file>button/add.png</file>
     <file>button/close.png</file>
+    <file>button/minimized.png</file>
     <file>button/pin.png</file>
     <file>button/unpin.png</file>
     <file>button/table_view.png</file>
     <file>button/tree_view.png</file>
     <file>button/refresh.png</file>
+
+    <file>button/save.png</file>
+
+    <file>button/back.png</file>
+    <file>button/forward.png</file>
+    <file>button/garbage.png</file>
+    <file>button/colors.png</file>
+    <file>button/frame.png</file>
+
+    <file>button/play.png</file>
+    <file>button/stop.png</file>
+    <file>button/microphone.png</file>
+    <file>button/microphone_off.png</file>
+    <file>button/recording.png</file>
   </qresource>
 </RCC>

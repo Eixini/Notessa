@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1006</width>
-    <height>600</height>
+    <height>633</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -34,6 +34,15 @@
      </item>
      <item>
       <widget class="QPushButton" name="collapse_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Collapse</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -41,6 +50,15 @@
      </item>
      <item>
       <widget class="QPushButton" name="close_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Close</string>
+       </property>
        <property name="text">
         <string/>
        </property>

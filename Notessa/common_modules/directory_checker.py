@@ -15,14 +15,20 @@ class DirectoryChecker():
     def application_data_directory_checker(self):
         data_dir = QDir()
         if not QDir(self.applicationDataLocation).exists():
-            data_dir.mkdir(self.applicationDataLocation)
-            print(f'Directory create: {self.applicationDataLocation}')
+            data_dir.mkpath(self.applicationDataLocation)
+
+    def logs_directory_checker(self):
+        _dir = QDir()
+        log_path = QDir.toNativeSeparators(f'{self.applicationDataLocation}{QDir.separator()}logs')
+        if not QDir(log_path).exists():
+            _dir.mkpath(log_path)
+        return log_path
 
     # def style_directory_checker(self):
     #     data_dir = QDir()
     #     style_path = f'{self.applicationDataLocation}{QDir.separator()}styles'
     #     if not QDir(style_path).exists():
-    #         data_dir.mkdir(style_path)
+    #         data_dir.mkpath(style_path)
     #         print(f'Directory create: {style_path}')
     #     return style_path
     #
@@ -30,7 +36,7 @@ class DirectoryChecker():
     #     data_dir = QDir()
     #     translate_path = f'{self.applicationDataLocation}{QDir.separator()}translations'
     #     if not QDir(translate_path).exists():
-    #         data_dir.mkdir(translate_path)
+    #         data_dir.mkpath(translate_path)
     #         print(f'Directory create: {translate_path}')
     #     return translate_path
 

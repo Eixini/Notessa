@@ -9,6 +9,7 @@ class NotesModel(QAbstractTableModel):
     def __init__(self, *args):
         super(NotesModel, self).__init__()
         self._data = self.initialData()
+        self.corrupted_files = list()
 
     def columnCount(self, *args, **kwargs) -> int:
         return 3
@@ -94,7 +95,12 @@ class NotesModel(QAbstractTableModel):
                 if QFile.exists(note_meta_data_file):
                     meta_data = None
                     with open(note_meta_data_file, 'r') as file:
-                        meta_data = json.load(file)
+                        try:
+                            meta_data = json.load(file)
+                        except json.decoder.JSONDecodeError:
+                            print(f'Error file: {note_meta_data_file}')
+                            self.corrupted_files.append(note_meta_data_file)
+                            continue
                     model_elements.append(file_info.suffix())                   # 0
                     model_elements.append(meta_data.get('note_name'))           # 1
                     model_elements.append(meta_data.get('deadline'))            # 2
@@ -117,7 +123,12 @@ class NotesModel(QAbstractTableModel):
                 if QFile.exists(note_meta_data_file):
                     meta_data = None
                     with open(note_meta_data_file, 'r') as file:
-                        meta_data = json.load(file)
+                        try:
+                            meta_data = json.load(file)
+                        except json.decoder.JSONDecodeError:
+                            print(f'Error file: {note_meta_data_file}')
+                            self.corrupted_files.append(note_meta_data_file)
+                            continue
                     model_elements.append(file_info.suffix())                   # 0
                     model_elements.append(meta_data.get('note_name'))           # 1
                     model_elements.append(meta_data.get('deadline'))            # 2
@@ -140,7 +151,13 @@ class NotesModel(QAbstractTableModel):
                 if QFile.exists(note_meta_data_file):
                     meta_data = None
                     with open(note_meta_data_file, 'r') as file:
-                        meta_data = json.load(file)
+                        try:
+                            meta_data = json.load(file)
+                        except json.decoder.JSONDecodeError:
+                            print(f'Error file: {note_meta_data_file}')
+                            self.corrupted_files.append(note_meta_data_file)
+                            continue
+
                     model_elements.append(file_info.suffix())                   # 0
                     model_elements.append(meta_data.get('note_name'))           # 1
                     model_elements.append(meta_data.get('deadline'))            # 2
@@ -163,7 +180,13 @@ class NotesModel(QAbstractTableModel):
                 if QFile.exists(note_meta_data_file):
                     meta_data = None
                     with open(note_meta_data_file, 'r') as file:
-                        meta_data = json.load(file)
+                        try:
+                            meta_data = json.load(file)
+                        except json.decoder.JSONDecodeError:
+                            print(f'Error file: {note_meta_data_file}')
+                            self.corrupted_files.append(note_meta_data_file)
+                            continue
+
                     model_elements.append(file_info.suffix())                   # 0
                     model_elements.append(meta_data.get('note_name'))           # 1
                     model_elements.append(meta_data.get('deadline'))            # 2
@@ -186,15 +209,21 @@ class NotesModel(QAbstractTableModel):
                 if QFile.exists(note_meta_data_file):
                     json_data = None
                     with open(note_meta_data_file, 'r') as file:
-                        json_data = json.load(file)
-                    meta_data = json_data.get('meta_data')
+                        try:
+                            json_data = json.load(file)
+                        except json.decoder.JSONDecodeError:
+                            print(f'Error file: {note_meta_data_file}')
+                            self.corrupted_files.append(note_meta_data_file)
+                            continue
 
-                    model_elements.append(file_info.suffix())                   # 0
-                    model_elements.append(meta_data.get('note_name'))           # 1
-                    model_elements.append(meta_data.get('deadline'))            # 2
-                    model_elements.append(file_info.baseName())                 # 3
-                    model_elements.append(file_info.birthTime().toString())     # 4
-                    model_elements.append(meta_data.get('uuid'))                # 5
+                        meta_data = json_data.get('meta_data')
+
+                        model_elements.append(file_info.suffix())                   # 0
+                        model_elements.append(meta_data.get('note_name'))           # 1
+                        model_elements.append(meta_data.get('deadline'))            # 2
+                        model_elements.append(file_info.baseName())                 # 3
+                        model_elements.append(file_info.birthTime().toString())     # 4
+                        model_elements.append(meta_data.get('uuid'))                # 5
                 else:
                     break
 
@@ -207,3 +236,7 @@ class NotesModel(QAbstractTableModel):
 
     def getCurrentData(self, QModelIndex) -> list:
         return list(self._data[QModelIndex.row()])
+
+    def get_corrupted_files(self):
+        """ Returns a list of corrupted files with metadata """
+        return self.corrupted_files

@@ -33,10 +33,10 @@
      <item>
       <spacer name="horizontalSpacer_6">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Preferred</enum>
+        <enum>QSizePolicy::Policy::Preferred</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -57,6 +57,38 @@
       <widget class="QComboBox" name="microphones_combobox">
        <property name="placeholderText">
         <string>Select microphone</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Policy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="reload_devices_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Reload devices</string>
+       </property>
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>
@@ -81,7 +113,7 @@
      <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -105,7 +137,7 @@
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -123,14 +155,19 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="note_deadline_label">
-       <property name="text">
-        <string>Note deadline</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QDateTimeEdit" name="note_date_time_edit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>170</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="minimumDateTime">
         <datetime>
          <hour>0</hour>
@@ -163,7 +200,7 @@
      <item>
       <spacer name="horizontalSpacer_4">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -175,6 +212,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="record_button">
+       <property name="toolTip">
+        <string>Record</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -192,6 +232,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="stop_button">
+       <property name="toolTip">
+        <string>Stop</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -209,6 +252,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="mute_button">
+       <property name="toolTip">
+        <string>Mute</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -227,7 +273,7 @@
      <item>
       <spacer name="horizontalSpacer_5">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>

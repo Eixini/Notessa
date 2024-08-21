@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QWidget
 from PySide6.QtGui import QAction, QIcon, QPixmap
 from Notessa.note_creation_menu.ui_gen.ui_note_creation_menu_widget import Ui_NoteCreationMenuWidget
 from Notessa.window_container.window_container import WindowContainer
+from Notessa.paint_note.create_paint_note_window import CreatePaintNoteWindow
 
 
 class NoteCreationMenuWidget(QWidget):
@@ -15,6 +16,10 @@ class NoteCreationMenuWidget(QWidget):
         self.installEventFilter(self.parent())
 
         self._parent = parent
+
+        # Since it is impossible to create widgets in functions on the stack that will be displayed after creation,
+        # a separate definition is made for MainWindows
+        self.create_note_window = CreatePaintNoteWindow(self._parent)
 
         # Signal - Slot
         self.ui.create_text_note_button.clicked.connect(self.create_text_note)
@@ -42,10 +47,9 @@ class NoteCreationMenuWidget(QWidget):
         create_note_window.exec()
 
     def create_paint_note(self):
-        create_note_window = WindowContainer(self._parent)
-        create_note_window.create_note('paint')
+        # create_note_window = CreatePaintNoteWindow(self._parent)  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.close()
-        create_note_window.exec()
+        self.create_note_window.show()
 
     def create_todo_note(self):
         create_note_window = WindowContainer(self._parent)

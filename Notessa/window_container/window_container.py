@@ -12,8 +12,10 @@ from Notessa.todo_notes.show_todo_note_widget import ShowTodoNoteWidget
 from Notessa.text_note.create_textnote_widget import CreateTextNoteWidget
 from Notessa.voice_note.create_voice_note_widget import CreateVoiceNoteWidget
 from Notessa.video_note.create_video_note_widget import CreateVideoNoteWidget
-from Notessa.paint_note.create_paint_note_widget import CreatePaintNoteWidget
+from Notessa.paint_note.create_paint_note_window import CreatePaintNoteWindow
 from Notessa.todo_notes.create_todo_note_widget import CreateTodoNoteWidget
+
+from Notessa.resources.icons.button import button_icons_rc
 
 
 class WindowContainer(QDialog):
@@ -22,12 +24,21 @@ class WindowContainer(QDialog):
         self.ui = Ui_WindowContainer()
         self.ui.setupUi(self)
 
+        self.setWindowFlags(self.windowFlags() | Qt.WindowType.FramelessWindowHint)
+
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())
 
         self._parent = parent
 
+        self._old_position = None
+
+        self.ui.collapse_button.setIcon(QIcon(':/button/minimized.png'))
+        self.ui.close_button.setIcon(QIcon(':/button/close.png'))
+
         # Signal - Slot
+        self.ui.collapse_button.clicked.connect(self.minimize_window)
+        self.ui.close_button.clicked.connect(self.close_window)
 
     def show_note(self, note_type, data):
         if note_type == 'text':
@@ -65,14 +76,34 @@ class WindowContainer(QDialog):
             self.ui.verticalLayout.addWidget(video_note_widget)
             video_note_widget.show()
         elif note_type == 'paint':
-            paint_note_widget = CreatePaintNoteWidget(self.parent())
-            self.ui.verticalLayout.addWidget(paint_note_widget)
-            paint_note_widget.show()
+            pass
+            # paint_note_widget = CreatePaintNoteWindow(self.parent())
+            # self.ui.verticalLayout.addWidget(paint_note_widget)
+            # paint_note_widget.show()
         elif note_type == 'todo':
             todo_note_widget = CreateTodoNoteWidget(self.parent())
             self.ui.verticalLayout.addWidget(todo_note_widget)
             todo_note_widget.show()
 
+    def mousePressEvent(self, event: QMouseEvent):
+        if event.button() == Qt.MouseButton.LeftButton and event.modifiers() == Qt.KeyboardModifier.NoModifier:
+            self._old_position = event.pos()
+
+    def mouseMoveEvent(self, event):
+        if not self._old_position:
+            return
+        delta = event.pos() - self._old_position
+        self.move(self.pos() + delta)
+
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self._old_position = None
+
     def closeEvent(self, *args):
-        print(self._parent)
         self._parent.update_view()
+
+    def minimize_window(self):
+        self.showMinimized()
+
+    def close_window(self):
+        self.close()

@@ -1,4 +1,4 @@
-import json, uuid
+import json, uuid, os, platform
 
 from PySide6.QtCore import QTimer, QDir, QUrl, Qt, QDateTime
 from PySide6.QtGui import QIcon, QPixmap
@@ -23,7 +23,6 @@ class CreateVideoNoteWidget(QWidget):
 
         # Default value
         self.ui.indefinite_checkbox.setChecked(True)
-        self.ui.note_deadline_label.setDisabled(True)
         self.ui.note_date_time_edit.setDisabled(True)
         self.ui.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
 
@@ -50,9 +49,11 @@ class CreateVideoNoteWidget(QWidget):
         self._timer.timeout.connect(self.update_duration)
 
         # Signal - Slot
+        self.ui.reload_devices_button.clicked.connect(self.reload_devices)
         self.ui.record_button.clicked.connect(self.record)
         self.ui.stop_button.clicked.connect(self.stop)
         self.ui.mute_button.clicked.connect(self.mute)
+
         self._media_recorder.durationChanged.connect(self.change_label)
         self._media_recorder.recorderStateChanged.connect(self.update_record_state)
         self.ui.microphones_combobox.currentIndexChanged.connect(self.microphone_selection_changed)
@@ -60,14 +61,14 @@ class CreateVideoNoteWidget(QWidget):
         self.ui.note_date_time_edit.dateTimeChanged.connect(self.select_date_time_change)
         self.ui.indefinite_checkbox.checkStateChanged.connect(self.indefinite_change)
 
+        self._camera.errorChanged.connect(self.disconnect_devices_handler)
+
     def indefinite_change(self):
         if self.ui.indefinite_checkbox.isChecked():
             self.note_deadline = 'None'
-            self.ui.note_deadline_label.setDisabled(True)
             self.ui.note_date_time_edit.setDisabled(True)
         else:
             self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
-            self.ui.note_deadline_label.setEnabled(True)
             self.ui.note_date_time_edit.setEnabled(True)
 
     def select_date_time_change(self):
@@ -76,18 +77,18 @@ class CreateVideoNoteWidget(QWidget):
     def media_devices_initialization(self):
         """ Method for initializing media devices such as microphone and camera """
         # Initializing the microphone
-        self._microphones = QMediaDevices.audioInputs()
-        if len(self._microphones) > 0:
-            for mic in self._microphones:
-                self.ui.microphones_combobox.addItem(mic.description())
-            self._audio_input = QAudioInput(self._microphones[0])
-
-        # Initializing the camera
-        self._cameras = QMediaDevices.videoInputs()
-        if len(self._cameras) > 0:
-            for camera in self._cameras:
-                self.ui.cameras_combobox.addItem(camera.description())
-            self._camera = QCamera(self._cameras[0])
+        # self._microphones = QMediaDevices.audioInputs()
+        # if len(self._microphones) > 0:
+        #     for mic in self._microphones:
+        #         self.ui.microphones_combobox.addItem(mic.description())
+        #     self._audio_input = QAudioInput(self._microphones[0])
+        #
+        # # Initializing the camera
+        # self._cameras = QMediaDevices.videoInputs()
+        # if len(self._cameras) > 0:
+        #     for camera in self._cameras:
+        #         self.ui.cameras_combobox.addItem(camera.description())
+        #     self._camera = QCamera(self._cameras[0])
 
         if self._camera.isAvailable():
             self._media_format.setFileFormat(QMediaFormat.FileFormat.AVI)
@@ -100,8 +101,6 @@ class CreateVideoNoteWidget(QWidget):
             self._capture_session.setVideoOutput(self.ui.video_display)
             self._capture_session.setCamera(self._camera)
             self.ui.video_display.show()
-        # else:
-        #     self.close()
 
             self._camera.start()
 
@@ -111,11 +110,15 @@ class CreateVideoNoteWidget(QWidget):
         self._audio_input = QAudioInput(self._microphones[index])
         self._capture_session.setAudioInput(self._audio_input)
 
+        self.media_devices_initialization()
+
     def camera_selection_changed(self):
         """ The method is called when the camera selection has been changed """
         index = self.ui.cameras_combobox.currentIndex()
         self._camera = QCamera(self._cameras[index])
         self._capture_session.setCamera(self._camera)
+
+        self.media_devices_initialization()
 
     def update_record_state(self, state):
         if self._media_recorder.recorderState() == QMediaRecorder.RecorderState.RecordingState:
@@ -179,9 +182,43 @@ class CreateVideoNoteWidget(QWidget):
         self.parent().close()
         self.close()
 
+    def disconnect_devices_handler(self):
+        """
+        If the devices suddenly turn off, you need to:
+            1. Display a message to the user about the loss of signal with the device;
+            2. Offer to save a note / cancel recording / pause / continue recording;
+        """
+
+        if self._camera.error() == 'Error.CameraError':
+            print(self._camera.error())
+            self.stop()
+
+    def reload_devices(self):
+        # Microphones
+        self._microphones = QMediaDevices.audioInputs()
+        print(f'Microphones list: {[mic.description() for mic in self._microphones]}')
+        self.ui.microphones_combobox.clear()
+        if len(self._microphones) > 0:
+            for mic in self._microphones:
+                self.ui.microphones_combobox.addItem(mic.description())
+
+        # Cameras
+        self._cameras = QMediaDevices.videoInputs()
+        print(f'Cameras list: {[cam.description() for cam in self._cameras]}')
+        self.ui.cameras_combobox.clear()
+        if len(self._cameras) > 0:
+            for cam in self._cameras:
+                self.ui.cameras_combobox.addItem(cam.description())
+
     def change_label(self):
         time_duration = self.sec_convert(self._duration)
         self.ui.duration_label.setText(f'{time_duration["min"]}:{time_duration["sec"]}')
+
+    # def event(self, event):
+    #     print(event.type())
+
+    def nativeEvent(self, eventType, message):
+        print(message)
 
     def update_duration(self):
         self._duration += 1
@@ -204,17 +241,17 @@ class CreateVideoNoteWidget(QWidget):
         else:
             return 'None'
 
-    def __del__(self):
-        self._camera.deleteLater()
-        self._media_recorder.deleteLater()
-        self._audio_input.deleteLater()
-        self._capture_session.deleteLater()
-
-        # Disconnect Signal - Slot
-        self._timer.timeout.disconnect(self.update_duration)
-        self.ui.record_button.clicked.disconnect(self.record)
-        self.ui.stop_button.clicked.disconnect(self.stop)
-        self.ui.mute_button.clicked.disconnect(self.mute)
-        self._media_recorder.durationChanged.disconnect(self.change_label)
-        self._media_recorder.recorderStateChanged.disconnect(self.update_record_state)
-        self.ui.microphones_combobox.currentIndexChanged.disconnect(self.microphone_selection_changed)
+    # def __del__(self):
+    #     self._camera.deleteLater()
+    #     self._media_recorder.deleteLater()
+    #     self._audio_input.deleteLater()
+    #     self._capture_session.deleteLater()
+    #
+    #     # Disconnect Signal - Slot
+    #     self._timer.timeout.disconnect(self.update_duration)
+    #     self.ui.record_button.clicked.disconnect(self.record)
+    #     self.ui.stop_button.clicked.disconnect(self.stop)
+    #     self.ui.mute_button.clicked.disconnect(self.mute)
+    #     self._media_recorder.durationChanged.disconnect(self.change_label)
+    #     self._media_recorder.recorderStateChanged.disconnect(self.update_record_state)
+    #     self.ui.microphones_combobox.currentIndexChanged.disconnect(self.microphone_selection_changed)

@@ -81,7 +81,7 @@ class SettingsWidget(QWidget):
         dir_checker = DirectoryChecker()
 
         with ZipFile(full_path, "w") as zip:
-            for root, firs, files in os.walk(dir_checker.notes_directory_checker()):
+            for root, dirs, files in os.walk(dir_checker.notes_directory_checker()):
                 for file in files:
                     file_path = os.path.join(root, file)
                     archive_path = os.path.relpath(file_path, dir_checker.notes_directory_checker())

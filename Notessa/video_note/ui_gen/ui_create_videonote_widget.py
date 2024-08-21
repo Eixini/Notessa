@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'create_videonote_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -53,6 +53,20 @@ class Ui_CreateVideoNoteWidget(object):
 
         self.horizontalLayout_4.addWidget(self.microphones_combobox)
 
+        self.horizontalSpacer = QSpacerItem(20, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer)
+
+        self.reload_devices_button = QPushButton(CreateVideoNoteWidget)
+        self.reload_devices_button.setObjectName(u"reload_devices_button")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.reload_devices_button.sizePolicy().hasHeightForWidth())
+        self.reload_devices_button.setSizePolicy(sizePolicy)
+
+        self.horizontalLayout_4.addWidget(self.reload_devices_button)
+
 
         self.verticalLayout.addLayout(self.horizontalLayout_4)
 
@@ -91,13 +105,14 @@ class Ui_CreateVideoNoteWidget(object):
 
         self.horizontalLayout_2.addWidget(self.indefinite_checkbox)
 
-        self.note_deadline_label = QLabel(CreateVideoNoteWidget)
-        self.note_deadline_label.setObjectName(u"note_deadline_label")
-
-        self.horizontalLayout_2.addWidget(self.note_deadline_label)
-
         self.note_date_time_edit = QDateTimeEdit(CreateVideoNoteWidget)
         self.note_date_time_edit.setObjectName(u"note_date_time_edit")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.note_date_time_edit.sizePolicy().hasHeightForWidth())
+        self.note_date_time_edit.setSizePolicy(sizePolicy1)
+        self.note_date_time_edit.setMinimumSize(QSize(170, 0))
         self.note_date_time_edit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)))
         self.note_date_time_edit.setCalendarPopup(False)
 
@@ -108,11 +123,11 @@ class Ui_CreateVideoNoteWidget(object):
 
         self.video_display = QVideoWidget(CreateVideoNoteWidget)
         self.video_display.setObjectName(u"video_display")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.video_display.sizePolicy().hasHeightForWidth())
-        self.video_display.setSizePolicy(sizePolicy)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.video_display.sizePolicy().hasHeightForWidth())
+        self.video_display.setSizePolicy(sizePolicy2)
 
         self.verticalLayout.addWidget(self.video_display)
 
@@ -125,7 +140,7 @@ class Ui_CreateVideoNoteWidget(object):
         self.record_button = QPushButton(CreateVideoNoteWidget)
         self.record_button.setObjectName(u"record_button")
         icon = QIcon()
-        icon.addFile(u":/icons/play.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/play.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.record_button.setIcon(icon)
         self.record_button.setIconSize(QSize(32, 32))
 
@@ -134,7 +149,7 @@ class Ui_CreateVideoNoteWidget(object):
         self.stop_button = QPushButton(CreateVideoNoteWidget)
         self.stop_button.setObjectName(u"stop_button")
         icon1 = QIcon()
-        icon1.addFile(u":/icons/stop.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/icons/stop.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.stop_button.setIcon(icon1)
         self.stop_button.setIconSize(QSize(32, 32))
 
@@ -143,7 +158,7 @@ class Ui_CreateVideoNoteWidget(object):
         self.mute_button = QPushButton(CreateVideoNoteWidget)
         self.mute_button.setObjectName(u"mute_button")
         icon2 = QIcon()
-        icon2.addFile(u":/icons/microphone_off.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u":/icons/microphone_off.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.mute_button.setIcon(icon2)
         self.mute_button.setIconSize(QSize(32, 32))
 
@@ -168,13 +183,25 @@ class Ui_CreateVideoNoteWidget(object):
         self.cameras_combobox.setPlaceholderText(QCoreApplication.translate("CreateVideoNoteWidget", u"Select camera", None))
         self.select_microphone_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"Microphone", None))
         self.microphones_combobox.setPlaceholderText(QCoreApplication.translate("CreateVideoNoteWidget", u"Select microphone", None))
+#if QT_CONFIG(tooltip)
+        self.reload_devices_button.setToolTip(QCoreApplication.translate("CreateVideoNoteWidget", u"Reload devices", None))
+#endif // QT_CONFIG(tooltip)
+        self.reload_devices_button.setText("")
         self.state_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"STATE", None))
         self.duration_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"00:00", None))
         self.videonote_name_lineedit.setPlaceholderText(QCoreApplication.translate("CreateVideoNoteWidget", u"Enter video note name ...", None))
         self.indefinite_checkbox.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"Indefinite", None))
-        self.note_deadline_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"Note deadline", None))
+#if QT_CONFIG(tooltip)
+        self.record_button.setToolTip(QCoreApplication.translate("CreateVideoNoteWidget", u"Record", None))
+#endif // QT_CONFIG(tooltip)
         self.record_button.setText("")
+#if QT_CONFIG(tooltip)
+        self.stop_button.setToolTip(QCoreApplication.translate("CreateVideoNoteWidget", u"Stop", None))
+#endif // QT_CONFIG(tooltip)
         self.stop_button.setText("")
+#if QT_CONFIG(tooltip)
+        self.mute_button.setToolTip(QCoreApplication.translate("CreateVideoNoteWidget", u"Mute", None))
+#endif // QT_CONFIG(tooltip)
         self.mute_button.setText("")
     # retranslateUi
 

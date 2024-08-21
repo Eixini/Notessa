@@ -142,8 +142,9 @@ class TrayMenu(QWidget):
     def checking_directories(self):
         # Checking application data directories
         directory_checker = DirectoryChecker()
-        # directory_checker.application_data_directory_checker()
+        directory_checker.application_data_directory_checker()
         # directory_checker.style_directory_checker()
+        directory_checker.logs_directory_checker()
 
         # Checking directories with notes
         directory_checker.notes_location_directory_checker()
