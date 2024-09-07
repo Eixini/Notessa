@@ -24,6 +24,10 @@ class TrayMenu(QWidget):
         # Setting View
         self.view_model = NotesModel()
 
+        # List of corrupted meta data files
+        self.corrupted_files = self.view_model.get_corrupted_files()
+        # print(self.corrupted_files)
+
         # Proxy model
         self._proxy_model = QSortFilterProxyModel()
         self._proxy_model.setDynamicSortFilter(False)
@@ -84,6 +88,11 @@ class TrayMenu(QWidget):
         Method for reloading data into a model.
         """
         self.view_model = NotesModel()
+
+        # List of corrupted meta data files
+        self.corrupted_files.clear()
+        self.corrupted_files = self.view_model.get_corrupted_files()
+        # print(self.corrupted_files)
 
         # Proxy model
         self._proxy_model = QSortFilterProxyModel()

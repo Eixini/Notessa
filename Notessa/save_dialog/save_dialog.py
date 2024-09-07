@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QDialog, QDateTimeEdit
+from PySide6.QtWidgets import QDialog, QDateTimeEdit, QInputDialog
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt, QDateTime
 
@@ -16,6 +16,7 @@ class SaveDialog(QDialog):
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
 
         self.ui.warning_message_label.hide()
+        self.ui.warning_deadline_message_label.hide()
 
         self.ui.save_button.setIcon(QIcon(':/button/save.png'))
         self.ui.cancel_button.setIcon(QIcon(':/button/close.png'))
@@ -34,6 +35,7 @@ class SaveDialog(QDialog):
     def date_time_change(self):
         if not self.ui.indefinite_checkbox.isChecked():
             self.note_date_time = self.ui.note_date_time_edit.dateTime()
+            self.ui.warning_deadline_message_label.hide()
         else:
             self.note_date_time = None
 
@@ -51,18 +53,30 @@ class SaveDialog(QDialog):
             self.note_name = self.ui.note_name_lineedit.text()
 
     def save(self):
-        if self.ui.note_name_lineedit.text() != '':
-            self.accept()
-        else:
+        if self.ui.note_name_lineedit.text() == '' and self.date_time_check() == 'Incorrect':
             self.ui.warning_message_label.show()
+            self.ui.warning_deadline_message_label.show()
+        elif self.ui.note_name_lineedit.text() == '':
+            self.ui.warning_message_label.show()
+        elif self.date_time_check() == 'Incorrect':
+            self.ui.warning_deadline_message_label.show()
+        elif self.date_time_check() == 'Correct':
+            self.accept()
+        elif self.date_time_check() == 'None':
+            self.accept()
 
     def exec(self):
-        # self.note_name = self.ui.note_name_lineedit.text()
-        # self.note_date_time = self.ui.note_date_time_edit.dateTime()
+        return super().exec(), self.note_name, self.note_date_time
+
+    def date_time_check(self):
+        """ To check the correctness of the note's deadline """
         if not self.note_date_time == 'None':
-            return super().exec(), self.note_name, self.note_date_time
+            if QDateTime.currentDateTime().toSecsSinceEpoch() < self.ui.note_date_time_edit.dateTime().toSecsSinceEpoch():
+                return 'Correct'
+            else:
+                return 'Incorrect'
         else:
-            return super().exec(), self.note_name, "None"
+            return 'None'
 
     def cancel(self):
         self.reject()

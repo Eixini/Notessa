@@ -23,7 +23,7 @@ class Ui_SaveDialog(object):
     def setupUi(self, SaveDialog):
         if not SaveDialog.objectName():
             SaveDialog.setObjectName(u"SaveDialog")
-        SaveDialog.resize(471, 146)
+        SaveDialog.resize(496, 196)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -67,6 +67,22 @@ class Ui_SaveDialog(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer)
+
+        self.warning_deadline_message_label = QLabel(SaveDialog)
+        self.warning_deadline_message_label.setObjectName(u"warning_deadline_message_label")
+        self.warning_deadline_message_label.setEnabled(True)
+        self.warning_deadline_message_label.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
+
+        self.horizontalLayout_3.addWidget(self.warning_deadline_message_label)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
+
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
@@ -103,6 +119,7 @@ class Ui_SaveDialog(object):
         self.note_name_lineedit.setPlaceholderText(QCoreApplication.translate("SaveDialog", u"Enter note name ...", None))
         self.warning_message_label.setText(QCoreApplication.translate("SaveDialog", u"No note name entered!", None))
         self.indefinite_checkbox.setText(QCoreApplication.translate("SaveDialog", u"Indefinite", None))
+        self.warning_deadline_message_label.setText(QCoreApplication.translate("SaveDialog", u"The deadline time must be greater than the current one!", None))
 #if QT_CONFIG(tooltip)
         self.save_button.setToolTip(QCoreApplication.translate("SaveDialog", u"Save", None))
 #endif // QT_CONFIG(tooltip)

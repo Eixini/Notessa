@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'create_voice_note_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
-    QHBoxLayout, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_CreateVoiceNoteWidget(object):
     def setupUi(self, CreateVoiceNoteWidget):
@@ -28,12 +28,6 @@ class Ui_CreateVoiceNoteWidget(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.up_horizontal_layout = QHBoxLayout()
         self.up_horizontal_layout.setObjectName(u"up_horizontal_layout")
-        self.voicenote_name_lineedit = QLineEdit(CreateVoiceNoteWidget)
-        self.voicenote_name_lineedit.setObjectName(u"voicenote_name_lineedit")
-        self.voicenote_name_lineedit.setFrame(True)
-
-        self.up_horizontal_layout.addWidget(self.voicenote_name_lineedit)
-
         self.available_devices_label = QLabel(CreateVoiceNoteWidget)
         self.available_devices_label.setObjectName(u"available_devices_label")
 
@@ -46,32 +40,6 @@ class Ui_CreateVoiceNoteWidget(object):
 
 
         self.verticalLayout.addLayout(self.up_horizontal_layout)
-
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_6)
-
-        self.indefinite_checkbox = QCheckBox(CreateVoiceNoteWidget)
-        self.indefinite_checkbox.setObjectName(u"indefinite_checkbox")
-
-        self.horizontalLayout_2.addWidget(self.indefinite_checkbox)
-
-        self.note_deadline_label = QLabel(CreateVoiceNoteWidget)
-        self.note_deadline_label.setObjectName(u"note_deadline_label")
-
-        self.horizontalLayout_2.addWidget(self.note_deadline_label)
-
-        self.note_date_time_edit = QDateTimeEdit(CreateVoiceNoteWidget)
-        self.note_date_time_edit.setObjectName(u"note_date_time_edit")
-        self.note_date_time_edit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)))
-        self.note_date_time_edit.setCalendarPopup(False)
-
-        self.horizontalLayout_2.addWidget(self.note_date_time_edit)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.verticalSpacer_2 = QSpacerItem(20, 129, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -191,7 +159,7 @@ class Ui_CreateVoiceNoteWidget(object):
 #endif
         self.pause_button.setPalette(palette)
         icon = QIcon()
-        icon.addFile(u":/icons/pause.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/pause.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pause_button.setIcon(icon)
         self.pause_button.setIconSize(QSize(32, 32))
 
@@ -202,7 +170,7 @@ class Ui_CreateVoiceNoteWidget(object):
         sizePolicy.setHeightForWidth(self.record_button.sizePolicy().hasHeightForWidth())
         self.record_button.setSizePolicy(sizePolicy)
         icon1 = QIcon()
-        icon1.addFile(u":/icons/play.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/icons/play.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.record_button.setIcon(icon1)
         self.record_button.setIconSize(QSize(32, 32))
 
@@ -213,7 +181,7 @@ class Ui_CreateVoiceNoteWidget(object):
         sizePolicy.setHeightForWidth(self.stop_button.sizePolicy().hasHeightForWidth())
         self.stop_button.setSizePolicy(sizePolicy)
         icon2 = QIcon()
-        icon2.addFile(u":/icons/stop.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u":/icons/stop.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.stop_button.setIcon(icon2)
         self.stop_button.setIconSize(QSize(32, 32))
 
@@ -238,13 +206,19 @@ class Ui_CreateVoiceNoteWidget(object):
 
     def retranslateUi(self, CreateVoiceNoteWidget):
         CreateVoiceNoteWidget.setWindowTitle(QCoreApplication.translate("CreateVoiceNoteWidget", u"Form", None))
-        self.voicenote_name_lineedit.setPlaceholderText(QCoreApplication.translate("CreateVoiceNoteWidget", u"Enter note name...", None))
         self.available_devices_label.setText(QCoreApplication.translate("CreateVoiceNoteWidget", u"Available devices", None))
-        self.indefinite_checkbox.setText(QCoreApplication.translate("CreateVoiceNoteWidget", u"Indefinite", None))
-        self.note_deadline_label.setText(QCoreApplication.translate("CreateVoiceNoteWidget", u"Note deadline", None))
         self.duration_label.setText(QCoreApplication.translate("CreateVoiceNoteWidget", u"0:00", None))
+#if QT_CONFIG(tooltip)
+        self.pause_button.setToolTip(QCoreApplication.translate("CreateVoiceNoteWidget", u"Pause", None))
+#endif // QT_CONFIG(tooltip)
         self.pause_button.setText("")
+#if QT_CONFIG(tooltip)
+        self.record_button.setToolTip(QCoreApplication.translate("CreateVoiceNoteWidget", u"Record", None))
+#endif // QT_CONFIG(tooltip)
         self.record_button.setText("")
+#if QT_CONFIG(tooltip)
+        self.stop_button.setToolTip(QCoreApplication.translate("CreateVoiceNoteWidget", u"Stop", None))
+#endif // QT_CONFIG(tooltip)
         self.stop_button.setText("")
     # retranslateUi
 

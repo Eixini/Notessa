@@ -6,6 +6,7 @@ from PySide6.QtGui import QRegularExpressionValidator
 from Notessa.todo_notes.ui_gen.ui_create_todo_note_widget import Ui_CreateTodoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.common_modules.forming_note_name import forming_note_file_name
+from Notessa.save_dialog.save_dialog import SaveDialog
 
 
 class CreateTodoNoteWidget(QWidget):
@@ -16,12 +17,6 @@ class CreateTodoNoteWidget(QWidget):
 
         # Set a default note deadline -
         self.note_deadline = 'None'
-
-        # Default value
-        self.ui.indefinite_checkbox.setChecked(True)
-        self.ui.note_deadline_label.setDisabled(True)
-        self.ui.note_date_time_edit.setDisabled(True)
-        self.ui.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
 
         self._parent = parent
 
@@ -37,21 +32,6 @@ class CreateTodoNoteWidget(QWidget):
         self.ui.add_item_button.clicked.connect(self.add_note_item)
         self.ui.delete_button.clicked.connect(self.delete_note_item)
         self.ui.save_button.clicked.connect(self.save_note)
-        self.ui.indefinite_checkbox.checkStateChanged.connect(self.indefinite_change)
-        self.ui.note_date_time_edit.dateTimeChanged.connect(self.select_date_time_change)
-
-    def indefinite_change(self):
-        if self.ui.indefinite_checkbox.isChecked():
-            self.note_deadline = 'None'
-            self.ui.note_deadline_label.setDisabled(True)
-            self.ui.note_date_time_edit.setDisabled(True)
-        else:
-            self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
-            self.ui.note_deadline_label.setEnabled(True)
-            self.ui.note_date_time_edit.setEnabled(True)
-
-    def select_date_time_change(self):
-        self.note_deadline = self.ui.note_date_time_edit.dateTime().toLocalTime()
 
     def add_note_item(self):
         if not self.ui.note_item_lineedit.text() == '':
@@ -66,53 +46,38 @@ class CreateTodoNoteWidget(QWidget):
             self.ui.note_items_list_widget.takeItem(self.ui.note_items_list_widget.row(item))
 
     def save_note(self):
-        if self.date_time_check() == 'Correct' or self.date_time_check() == 'None':
-            dir_checker = DirectoryChecker()
+        save_dialog = SaveDialog(self)
+        _, note_name, deadline_datetime = save_dialog.exec()
 
-            note_name = self.ui.todo_note_name_lineedit.text()
-            file_name = forming_note_file_name('TodoNote')
+        dir_checker = DirectoryChecker()
 
-            file_path = str(f"{dir_checker.todo_notes_directory()}{QDir.separator()}{file_name}.json")
+        file_name = forming_note_file_name('TodoNote')
 
-            json_data = dict()
+        file_path = str(f"{dir_checker.todo_notes_directory()}{QDir.separator()}{file_name}.json")
 
-            item_list = list()
-            for it in range(self.ui.note_items_list_widget.count()):
-                item_list.append((self.ui.note_items_list_widget.item(it).text(), False))
+        json_data = dict()
 
-            json_data.update({'note_data': item_list})
+        item_list = list()
+        for it in range(self.ui.note_items_list_widget.count()):
+            item_list.append((self.ui.note_items_list_widget.item(it).text(), False))
 
-            # Meta-data
-            meta_data = {'note_name': note_name}
+        json_data.update({'note_data': item_list})
 
-            if not self.note_deadline == 'None':
-                meta_data.update({'deadline': self.note_deadline.toString()})
-            else:
-                meta_data.update({'deadline': None})
+        # Meta-data
+        meta_data = {'note_name': note_name}
 
-            note_uuid = uuid.uuid1()
-            meta_data.update({'uuid': f'{note_uuid}'})
-
-            json_data.update({'meta_data': meta_data})
-
-            with open(file_path, 'w', encoding='utf-8') as file:
-                json.dump(json_data, file, indent=4)
-
-            self.close()
-            self.parent().close()
-        else:
-            msg_box = QMessageBox()
-            msg_box.setText(u"The note's deadline date and time cannot be less than the current one")
-            msg_box.setWindowTitle(u"Invalid value")
-            msg_box.exec()
-            return
-
-    def date_time_check(self):
-        """ To check the correctness of the note's deadline """
         if not self.note_deadline == 'None':
-            if QDateTime.currentDateTime() < self.ui.note_date_time_edit.dateTime():
-                return 'Correct'
-            else:
-                return 'Incorrect'
+            meta_data.update({'deadline': deadline_datetime.toString()})
         else:
-            return 'None'
+            meta_data.update({'deadline': None})
+
+        note_uuid = uuid.uuid1()
+        meta_data.update({'uuid': f'{note_uuid}'})
+
+        json_data.update({'meta_data': meta_data})
+
+        with open(file_path, 'w', encoding='utf-8') as file:
+            json.dump(json_data, file, indent=4)
+
+        self.close()
+        self.parent().close()

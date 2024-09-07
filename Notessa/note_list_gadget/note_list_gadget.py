@@ -1,11 +1,14 @@
 from PySide6.QtWidgets import QWidget, QHeaderView, QAbstractItemView, QMenu, QDialog
 from PySide6.QtCore import QSortFilterProxyModel, Qt, QEvent, QSettings, QPoint, QRegularExpression
 from PySide6.QtGui import QIcon, QPixmap, QMouseEvent, QAction, QCursor
+
 from Notessa.note_list_gadget.ui_gen.ui_note_list_gadget import Ui_NoteListGadget
 from Notessa.note_creation_menu.note_creation_menu_widget import NoteCreationMenuWidget
 from Notessa.model.notelist_table_model.notes_model import NotesModel
 from Notessa.model.notelist_table_model.note_item_delegate import NoteItemDelegate
 from Notessa.window_container.window_container import WindowContainer
+from Notessa.edit_note_info_window.edit_note_info_window import EditNoteInfoWindow
+
 from Notessa.resources.icons.button import button_icons_rc
 
 
@@ -121,6 +124,10 @@ class NoteListGadget(QWidget):
             open_note_action = QAction(u'Open', self)
             self.table_item_context_menu.addAction(open_note_action)
             open_note_action.triggered.connect(self.open_note)
+            # Edit note info
+            edit_note_info_action = QAction(u'Edit info', self)
+            self.table_item_context_menu.addAction(edit_note_info_action)
+            edit_note_info_action.triggered.connect(self.edit_note_info)
             # Delete note
             delete_note_action = QAction(u'Delete', self)
             self.table_item_context_menu.addAction(delete_note_action)
@@ -155,6 +162,16 @@ class NoteListGadget(QWidget):
             show_note_window = WindowContainer(self)
             show_note_window.show_note('todo', data)
             show_note_window.exec()
+
+    def edit_note_info(self):
+        index = self.ui.table_view.currentIndex()
+        sort_note_type = self._parent.view_model.getNoteType(self._parent._proxy_model.mapToSource(index))
+        sort_index = self._parent._proxy_model.mapToSource(index)
+
+        data = self._parent.view_model.get_current_data_dict(sort_index)
+
+        edit_note_info_window = EditNoteInfoWindow(data)
+        edit_note_info_window.exec()
 
     def delete_note(self):
         index = self.ui.table_view.currentIndex()

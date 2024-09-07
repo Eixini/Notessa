@@ -8,8 +8,7 @@ import json
 class NotesModel(QAbstractTableModel):
     def __init__(self, *args):
         super(NotesModel, self).__init__()
-        self._data = self.initialData()
-        self.corrupted_files = list()
+        self._data, self.corrupted_files = self.initialData()
 
     def columnCount(self, *args, **kwargs) -> int:
         return 3
@@ -83,6 +82,8 @@ class NotesModel(QAbstractTableModel):
         dir_checker = DirectoryChecker()
         # Getting a list of files
         file_info_list = []
+        # Corrupted files
+        corrupted_files = list()
 
         # TEXT NOTES
         text_notes_folder = dir_checker.text_notes_directory()
@@ -98,8 +99,7 @@ class NotesModel(QAbstractTableModel):
                         try:
                             meta_data = json.load(file)
                         except json.decoder.JSONDecodeError:
-                            print(f'Error file: {note_meta_data_file}')
-                            self.corrupted_files.append(note_meta_data_file)
+                            corrupted_files.append(note_meta_data_file)
                             continue
                     model_elements.append(file_info.suffix())                   # 0
                     model_elements.append(meta_data.get('note_name'))           # 1
@@ -108,7 +108,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(file_info.birthTime().toString())     # 4
                     model_elements.append(meta_data.get('uuid'))                # 5
                 else:
-                    break
+                    continue
 
                 file_info_list.append(model_elements)
 
@@ -126,8 +126,7 @@ class NotesModel(QAbstractTableModel):
                         try:
                             meta_data = json.load(file)
                         except json.decoder.JSONDecodeError:
-                            print(f'Error file: {note_meta_data_file}')
-                            self.corrupted_files.append(note_meta_data_file)
+                            corrupted_files.append(note_meta_data_file)
                             continue
                     model_elements.append(file_info.suffix())                   # 0
                     model_elements.append(meta_data.get('note_name'))           # 1
@@ -136,7 +135,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(file_info.birthTime().toString())     # 4
                     model_elements.append(meta_data.get('uuid'))                # 5
                 else:
-                    break
+                    continue
 
                 file_info_list.append(model_elements)
 
@@ -154,8 +153,7 @@ class NotesModel(QAbstractTableModel):
                         try:
                             meta_data = json.load(file)
                         except json.decoder.JSONDecodeError:
-                            print(f'Error file: {note_meta_data_file}')
-                            self.corrupted_files.append(note_meta_data_file)
+                            corrupted_files.append(note_meta_data_file)
                             continue
 
                     model_elements.append(file_info.suffix())                   # 0
@@ -165,7 +163,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(file_info.birthTime().toString())     # 4
                     model_elements.append(meta_data.get('uuid'))                # 5
                 else:
-                    break
+                    continue
 
                 file_info_list.append(model_elements)
 
@@ -183,8 +181,7 @@ class NotesModel(QAbstractTableModel):
                         try:
                             meta_data = json.load(file)
                         except json.decoder.JSONDecodeError:
-                            print(f'Error file: {note_meta_data_file}')
-                            self.corrupted_files.append(note_meta_data_file)
+                            corrupted_files.append(note_meta_data_file)
                             continue
 
                     model_elements.append(file_info.suffix())                   # 0
@@ -194,7 +191,7 @@ class NotesModel(QAbstractTableModel):
                     model_elements.append(file_info.birthTime().toString())     # 4
                     model_elements.append(meta_data.get('uuid'))                # 5
                 else:
-                    break
+                    continue
 
                 file_info_list.append(model_elements)
 
@@ -212,8 +209,7 @@ class NotesModel(QAbstractTableModel):
                         try:
                             json_data = json.load(file)
                         except json.decoder.JSONDecodeError:
-                            print(f'Error file: {note_meta_data_file}')
-                            self.corrupted_files.append(note_meta_data_file)
+                            corrupted_files.append(note_meta_data_file)
                             continue
 
                         meta_data = json_data.get('meta_data')
@@ -225,17 +221,29 @@ class NotesModel(QAbstractTableModel):
                         model_elements.append(file_info.birthTime().toString())     # 4
                         model_elements.append(meta_data.get('uuid'))                # 5
                 else:
-                    break
+                    continue
 
                 file_info_list.append(model_elements)
 
-        return file_info_list
+        return file_info_list, corrupted_files
 
     def getNoteType(self, QModelIndex):
         return self._data[QModelIndex.row()][0]
 
     def getCurrentData(self, QModelIndex) -> list:
         return list(self._data[QModelIndex.row()])
+
+    def get_current_data_dict(self, QModelIndex) -> dict:
+        current_data_dict = dict()
+
+        current_data_dict.update({'type': self._data[QModelIndex.row()][0]})
+        current_data_dict.update({'note_name': self._data[QModelIndex.row()][1]})
+        current_data_dict.update({'deadline': self._data[QModelIndex.row()][2]})
+        current_data_dict.update({'file_name': self._data[QModelIndex.row()][3]})
+        current_data_dict.update({'file_birth_time': self._data[QModelIndex.row()][4]})
+        current_data_dict.update({'uuid': self._data[QModelIndex.row()][5]})
+
+        return current_data_dict
 
     def get_corrupted_files(self):
         """ Returns a list of corrupted files with metadata """

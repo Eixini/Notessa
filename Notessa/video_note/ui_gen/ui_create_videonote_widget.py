@@ -16,9 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtMultimediaWidgets import QVideoWidget
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
-    QHBoxLayout, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_CreateVideoNoteWidget(object):
     def setupUi(self, CreateVideoNoteWidget):
@@ -86,48 +86,16 @@ class Ui_CreateVideoNoteWidget(object):
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer_3)
 
-        self.videonote_name_lineedit = QLineEdit(CreateVideoNoteWidget)
-        self.videonote_name_lineedit.setObjectName(u"videonote_name_lineedit")
-
-        self.horizontalLayout_3.addWidget(self.videonote_name_lineedit)
-
 
         self.verticalLayout.addLayout(self.horizontalLayout_3)
 
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
-
-        self.indefinite_checkbox = QCheckBox(CreateVideoNoteWidget)
-        self.indefinite_checkbox.setObjectName(u"indefinite_checkbox")
-
-        self.horizontalLayout_2.addWidget(self.indefinite_checkbox)
-
-        self.note_date_time_edit = QDateTimeEdit(CreateVideoNoteWidget)
-        self.note_date_time_edit.setObjectName(u"note_date_time_edit")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.note_date_time_edit.sizePolicy().hasHeightForWidth())
-        self.note_date_time_edit.setSizePolicy(sizePolicy1)
-        self.note_date_time_edit.setMinimumSize(QSize(170, 0))
-        self.note_date_time_edit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)))
-        self.note_date_time_edit.setCalendarPopup(False)
-
-        self.horizontalLayout_2.addWidget(self.note_date_time_edit)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
-
         self.video_display = QVideoWidget(CreateVideoNoteWidget)
         self.video_display.setObjectName(u"video_display")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.video_display.sizePolicy().hasHeightForWidth())
-        self.video_display.setSizePolicy(sizePolicy2)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.video_display.sizePolicy().hasHeightForWidth())
+        self.video_display.setSizePolicy(sizePolicy1)
 
         self.verticalLayout.addWidget(self.video_display)
 
@@ -189,8 +157,6 @@ class Ui_CreateVideoNoteWidget(object):
         self.reload_devices_button.setText("")
         self.state_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"STATE", None))
         self.duration_label.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"00:00", None))
-        self.videonote_name_lineedit.setPlaceholderText(QCoreApplication.translate("CreateVideoNoteWidget", u"Enter video note name ...", None))
-        self.indefinite_checkbox.setText(QCoreApplication.translate("CreateVideoNoteWidget", u"Indefinite", None))
 #if QT_CONFIG(tooltip)
         self.record_button.setToolTip(QCoreApplication.translate("CreateVideoNoteWidget", u"Record", None))
 #endif // QT_CONFIG(tooltip)

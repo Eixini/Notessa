@@ -1,6 +1,6 @@
 import json, uuid
 
-from PySide6.QtWidgets import QMainWindow, QWidget, QColorDialog, QSizePolicy, QLabel, QSpinBox, QPushButton, QDateTimeEdit, QCheckBox
+from PySide6.QtWidgets import QMainWindow, QWidget, QColorDialog, QSizePolicy, QLabel, QSpinBox, QPushButton, QDialog, QCheckBox, QInputDialog, QDateTimeEdit, QLineEdit
 from PySide6.QtGui import QAction, QIcon, QUndoStack
 from PySide6.QtCore import Qt, QSize, QPoint, QDateTime, QDir
 from Notessa.paint_note.ui_gen.ui_create_paintnote_window import Ui_CreatePaintNoteWindow
@@ -135,10 +135,9 @@ class CreatePaintNoteWindow(QMainWindow):
     #     self.note_deadline = self.note_date_time_edit.dateTime().toLocalTime()
 
     def save(self):
-        pass
+
         save_dialog = SaveDialog(self)
         _, note_name, deadline_datetime = save_dialog.exec()
-        print(f'Note name: {note_name}, note deadline: {deadline_datetime}')
 
         dir_checker = DirectoryChecker()
 
@@ -150,8 +149,8 @@ class CreatePaintNoteWindow(QMainWindow):
 
         meta_data_content = {'note_name': note_name}
 
-        if not deadline_datetime == 'None':
-            meta_data_content.update({'deadline': deadline_datetime})
+        if not deadline_datetime == "None":
+            meta_data_content.update({'deadline': deadline_datetime.toString()})
         else:
             meta_data_content.update({'deadline': None})
 
