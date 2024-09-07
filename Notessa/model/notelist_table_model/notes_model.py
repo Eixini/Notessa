@@ -243,6 +243,39 @@ class NotesModel(QAbstractTableModel):
         current_data_dict.update({'file_birth_time': self._data[QModelIndex.row()][4]})
         current_data_dict.update({'uuid': self._data[QModelIndex.row()][5]})
 
+        # File path
+        dir_checker = DirectoryChecker()
+
+        if self._data[QModelIndex.row()][0] == 'txt':
+
+            text_notes_folder = dir_checker.text_notes_directory()
+            note_meta_data_file = f'{text_notes_folder}{QDir.separator()}{self._data[QModelIndex.row()][3]}.json'
+            current_data_dict.update({'meta_data_file': note_meta_data_file})
+
+        elif self._data[QModelIndex.row()][0] == 'wav':
+
+            voice_notes_folder = dir_checker.voice_notes_directory()
+            note_meta_data_file = f'{voice_notes_folder}{QDir.separator()}{self._data[QModelIndex.row()][3]}.json'
+            current_data_dict.update({'meta_data_file': note_meta_data_file})
+
+        elif self._data[QModelIndex.row()][0] == 'mp4':
+
+            video_notes_folder = dir_checker.video_notes_directory()
+            note_meta_data_file = f'{video_notes_folder}{QDir.separator()}{self._data[QModelIndex.row()][3]}.json'
+            current_data_dict.update({'meta_data_file': note_meta_data_file})
+
+        elif self._data[QModelIndex.row()][0] == 'png':
+
+            paint_notes_folder = dir_checker.paint_notes_directory()
+            note_meta_data_file = f'{paint_notes_folder}{QDir.separator()}{self._data[QModelIndex.row()][3]}.json'
+            current_data_dict.update({'meta_data_file': note_meta_data_file})
+
+        elif self._data[QModelIndex.row()][0] == 'json':
+
+            todo_notes_folder = dir_checker.todo_notes_directory()
+            note_meta_data_file = f'{todo_notes_folder}{QDir.separator()}{self._data[QModelIndex.row()][3]}.json'
+            current_data_dict.update({'meta_data_file': note_meta_data_file})
+
         return current_data_dict
 
     def get_corrupted_files(self):
