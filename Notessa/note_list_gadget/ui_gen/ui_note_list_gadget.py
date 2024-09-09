@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'note_list_gadget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView,
     QPushButton, QSizePolicy, QSpacerItem, QTableView,
     QVBoxLayout, QWidget)
-import Notessa.resources.icons.button.button_icons_rc
+from Notessa.resources.icons.button import button_icons_rc
 
 class Ui_NoteListGadget(object):
     def setupUi(self, NoteListGadget):
@@ -26,7 +26,9 @@ class Ui_NoteListGadget(object):
             NoteListGadget.setObjectName(u"NoteListGadget")
         NoteListGadget.resize(557, 511)
         self.verticalLayout = QVBoxLayout(NoteListGadget)
+        self.verticalLayout.setSpacing(1)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.create_note_button = QPushButton(NoteListGadget)
@@ -42,7 +44,7 @@ class Ui_NoteListGadget(object):
         font.setBold(True)
         self.create_note_button.setFont(font)
         icon = QIcon()
-        icon.addFile(u":/button/add.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/button/add.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.create_note_button.setIcon(icon)
         self.create_note_button.setIconSize(QSize(25, 25))
 
@@ -54,11 +56,23 @@ class Ui_NoteListGadget(object):
         self.refresh_button.setSizePolicy(sizePolicy)
         self.refresh_button.setFont(font)
         icon1 = QIcon()
-        icon1.addFile(u":/button/refresh.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/button/refresh.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.refresh_button.setIcon(icon1)
         self.refresh_button.setIconSize(QSize(25, 25))
 
         self.horizontalLayout.addWidget(self.refresh_button)
+
+        self.calendar_button = QPushButton(NoteListGadget)
+        self.calendar_button.setObjectName(u"calendar_button")
+        sizePolicy.setHeightForWidth(self.calendar_button.sizePolicy().hasHeightForWidth())
+        self.calendar_button.setSizePolicy(sizePolicy)
+        self.calendar_button.setFont(font)
+        icon2 = QIcon()
+        icon2.addFile(u":/button/calendar.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.calendar_button.setIcon(icon2)
+        self.calendar_button.setIconSize(QSize(25, 25))
+
+        self.horizontalLayout.addWidget(self.calendar_button)
 
         self.horizontalSpacer = QSpacerItem(138, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -76,9 +90,9 @@ class Ui_NoteListGadget(object):
         font1.setPointSize(11)
         font1.setBold(False)
         self.pin_gadget_button.setFont(font1)
-        icon2 = QIcon()
-        icon2.addFile(u":/button/pin.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pin_gadget_button.setIcon(icon2)
+        icon3 = QIcon()
+        icon3.addFile(u":/button/pin.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pin_gadget_button.setIcon(icon3)
         self.pin_gadget_button.setIconSize(QSize(25, 25))
 
         self.horizontalLayout.addWidget(self.pin_gadget_button)
@@ -86,9 +100,9 @@ class Ui_NoteListGadget(object):
         self.close_button = QPushButton(NoteListGadget)
         self.close_button.setObjectName(u"close_button")
         self.close_button.setFont(font)
-        icon3 = QIcon()
-        icon3.addFile(u":/button/close.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.close_button.setIcon(icon3)
+        icon4 = QIcon()
+        icon4.addFile(u":/button/close.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.close_button.setIcon(icon4)
         self.close_button.setIconSize(QSize(25, 25))
 
         self.horizontalLayout.addWidget(self.close_button)
@@ -109,10 +123,26 @@ class Ui_NoteListGadget(object):
 
     def retranslateUi(self, NoteListGadget):
         NoteListGadget.setWindowTitle(QCoreApplication.translate("NoteListGadget", u"Form", None))
+#if QT_CONFIG(tooltip)
+        self.create_note_button.setToolTip(QCoreApplication.translate("NoteListGadget", u"Add note", None))
+#endif // QT_CONFIG(tooltip)
         self.create_note_button.setText("")
+#if QT_CONFIG(tooltip)
+        self.refresh_button.setToolTip(QCoreApplication.translate("NoteListGadget", u"Refresh notes list", None))
+#endif // QT_CONFIG(tooltip)
         self.refresh_button.setText("")
+#if QT_CONFIG(tooltip)
+        self.calendar_button.setToolTip(QCoreApplication.translate("NoteListGadget", u"Calendar", None))
+#endif // QT_CONFIG(tooltip)
+        self.calendar_button.setText("")
         self.filter_combobox.setPlaceholderText(QCoreApplication.translate("NoteListGadget", u"Show note types", None))
+#if QT_CONFIG(tooltip)
+        self.pin_gadget_button.setToolTip(QCoreApplication.translate("NoteListGadget", u"Pin/Unpin", None))
+#endif // QT_CONFIG(tooltip)
         self.pin_gadget_button.setText("")
+#if QT_CONFIG(tooltip)
+        self.close_button.setToolTip(QCoreApplication.translate("NoteListGadget", u"Hide", None))
+#endif // QT_CONFIG(tooltip)
         self.close_button.setText("")
     # retranslateUi
 

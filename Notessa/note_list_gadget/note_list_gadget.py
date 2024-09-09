@@ -8,6 +8,7 @@ from Notessa.model.notelist_table_model.notes_model import NotesModel
 from Notessa.model.notelist_table_model.note_item_delegate import NoteItemDelegate
 from Notessa.window_container.window_container import WindowContainer
 from Notessa.edit_note_info_window.edit_note_info_window import EditNoteInfoWindow
+from Notessa.calendar_window.calendar_window import CalendarWindow
 
 from Notessa.resources.icons.button import button_icons_rc
 
@@ -75,6 +76,7 @@ class NoteListGadget(QWidget):
         self.ui.table_view.customContextMenuRequested.connect(self.contex_menu)
         self.ui.filter_combobox.currentIndexChanged.connect(self.filter_notes)
         self.ui.refresh_button.clicked.connect(self.update_view)
+        self.ui.calendar_button.clicked.connect(self.calendar)
 
     def update_view(self):
 
@@ -86,6 +88,14 @@ class NoteListGadget(QWidget):
 
     def open_note_creation_menu(self):
         self.note_creation_menu.setVisible(True)
+
+    def calendar(self):
+        # Get list notes with deadline
+        notes_with_deadline = self._parent.view_model.get_notes_with_deadline()
+
+        # Call calendar window
+        calendar_window = CalendarWindow(notes_with_deadline)
+        calendar_window.exec()
 
     def pin_widget_position(self):
         self.gadget_pin = not self.gadget_pin
@@ -172,6 +182,9 @@ class NoteListGadget(QWidget):
 
         edit_note_info_window = EditNoteInfoWindow(data)
         edit_note_info_window.exec()
+
+        self.update_view()
+        self.ui.table_view.setModel(self._parent._proxy_model)
 
     def delete_note(self):
         index = self.ui.table_view.currentIndex()

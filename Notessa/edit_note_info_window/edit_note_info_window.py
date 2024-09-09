@@ -38,6 +38,7 @@ class EditNoteInfoWindow(QDialog):
         self.ui.indefinite_checkbox.checkStateChanged.connect(self.deadline_checkbox_state_change)
         self.ui.indefinite_checkbox.checkStateChanged.connect(self.indefinite_change)
         self.ui.new_name_line_edit.textChanged.connect(self.text_entered)
+        self.ui.new_deadline_datetime_edit.dateTimeChanged.connect(self.date_time_change)
 
         self.ui.apply_button.clicked.connect(self.apply_button_press)
         self.ui.cancel_button.clicked.connect(self.cancel_button_press)

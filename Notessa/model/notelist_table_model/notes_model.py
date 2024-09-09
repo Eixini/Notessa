@@ -278,6 +278,25 @@ class NotesModel(QAbstractTableModel):
 
         return current_data_dict
 
+    def get_notes_with_deadline(self):
+        notes_with_deadline = list()
+
+        for item in self._data:
+            if item[2]:
+
+                note = dict()
+
+                note.update({'type': item[0]})
+                note.update({'note_name': item[1]})
+                note.update({'deadline': item[2]})
+                note.update({'file_name': item[3]})
+                note.update({'file_birth_time': item[4]})
+                note.update({'uuid': item[5]})
+
+                notes_with_deadline.append(note)
+
+        return notes_with_deadline
+
     def get_corrupted_files(self):
         """ Returns a list of corrupted files with metadata """
         return self.corrupted_files

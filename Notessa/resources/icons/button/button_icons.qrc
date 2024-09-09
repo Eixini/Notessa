@@ -23,5 +23,7 @@
     <file>button/microphone_off.png</file>
     <file>button/recording.png</file>
     <file>button/video_off.png</file>
+
+    <file>button/calendar.png</file>
   </qresource>
 </RCC>
