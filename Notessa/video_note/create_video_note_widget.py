@@ -139,7 +139,7 @@ class CreateVideoNoteWidget(QWidget):
         url = f'{QDir.toNativeSeparators(file_path)}'
         self._media_recorder.setOutputLocation(QUrl.fromLocalFile(url))
 
-        if not self.note_deadline == 'None':
+        if not self.note_deadline == None:
             meta_data_content.update({'deadline': deadline_datetime.toString()})
         else:
             meta_data_content.update({'deadline': None})

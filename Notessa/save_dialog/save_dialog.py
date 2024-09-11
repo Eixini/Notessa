@@ -41,7 +41,7 @@ class SaveDialog(QDialog):
 
     def indefinite_change(self):
         if self.ui.indefinite_checkbox.isChecked():
-            self.note_date_time = 'None'
+            self.note_date_time = None
             self.ui.note_date_time_edit.setDisabled(True)
         else:
             self.note_date_time = self.ui.note_date_time_edit.dateTime().toLocalTime()
@@ -70,7 +70,7 @@ class SaveDialog(QDialog):
 
     def date_time_check(self):
         """ To check the correctness of the note's deadline """
-        if not self.note_date_time == 'None':
+        if not self.note_date_time == None:
             if QDateTime.currentDateTime().toSecsSinceEpoch() < self.ui.note_date_time_edit.dateTime().toSecsSinceEpoch():
                 return 'Correct'
             else:

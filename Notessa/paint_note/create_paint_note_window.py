@@ -20,6 +20,8 @@ class CreatePaintNoteWindow(QMainWindow):
         self.ui = Ui_CreatePaintNoteWindow()
         self.ui.setupUi(self)
 
+        self._parent = parent
+
         # self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
 
         self.setWindowTitle('Create paint note')
@@ -204,3 +206,6 @@ class CreatePaintNoteWindow(QMainWindow):
 
         # self.note_date_time_edit.setDateTime(QDateTime.currentDateTime())
         self.ui.canvas.image.fill(Qt.GlobalColor.white)
+
+    def closeEvent(self, *args):
+        self._parent.update_view()

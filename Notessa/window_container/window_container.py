@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QWidget, QHeaderView, QAbstractItemView, QMenu, QDialog
 from PySide6.QtCore import QSortFilterProxyModel, Qt, QEvent, QSettings, QPoint
 from PySide6.QtGui import QIcon, QPixmap, QMouseEvent, QAction, QCursor
+
 from Notessa.window_container.ui_gen.ui_window_container import Ui_WindowContainer
 
 from Notessa.text_note.show_textnote_widget import ShowTextNoteWidget
@@ -16,13 +17,15 @@ from Notessa.paint_note.create_paint_note_window import CreatePaintNoteWindow
 from Notessa.todo_notes.create_todo_note_widget import CreateTodoNoteWidget
 
 from Notessa.resources.icons.button import button_icons_rc
-
+from Notessa.resources.icons.common import common_icons_rc
 
 class WindowContainer(QDialog):
     def __init__(self, parent):
         super().__init__()
         self.ui = Ui_WindowContainer()
         self.ui.setupUi(self)
+
+        self.setWindowIcon(QIcon(':/common/notessa_logo.png'))
 
         self.setWindowFlags(self.windowFlags() | Qt.WindowType.FramelessWindowHint)
 

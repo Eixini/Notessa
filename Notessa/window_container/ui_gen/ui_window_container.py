@@ -59,7 +59,7 @@ class Ui_WindowContainer(object):
     # setupUi
 
     def retranslateUi(self, WindowContainer):
-        WindowContainer.setWindowTitle(QCoreApplication.translate("WindowContainer", u"Dialog", None))
+        WindowContainer.setWindowTitle(QCoreApplication.translate("WindowContainer", u"Notessa", None))
 #if QT_CONFIG(tooltip)
         self.collapse_button.setToolTip(QCoreApplication.translate("WindowContainer", u"Collapse", None))
 #endif // QT_CONFIG(tooltip)

@@ -1,9 +1,13 @@
 from PySide6.QtCore import QUrl, QDir, Qt
 from PySide6.QtWidgets import QWidget
+from PySide6.QtGui import QIcon
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
+
 from Notessa.voice_note.ui_gen.ui_show_voicenote_widget import Ui_ShowVoiceNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.common_modules import constants
+
+from Notessa.resources.icons.button import button_icons_rc
 
 
 class ShowVoiceNoteWidget(QWidget):
@@ -11,6 +15,10 @@ class ShowVoiceNoteWidget(QWidget):
         super().__init__(parent)
         self.ui = Ui_ShowVoiceNoteWidget()
         self.ui.setupUi(self)
+
+        self.ui.play_button.setIcon(QIcon(':/button/play.png'))
+        self.ui.pause_button.setIcon(QIcon(':/button/pause.png'))
+        self.ui.stop_button.setIcon(QIcon(':/button/stop.png'))
 
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.installEventFilter(self.parent())

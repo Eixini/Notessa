@@ -1,18 +1,21 @@
 import json, uuid
 from PySide6.QtWidgets import QWidget, QScrollBar, QMessageBox
-from PySide6.QtGui import QRegularExpressionValidator
+from PySide6.QtGui import QIcon
 from PySide6.QtCore import QFile, QDateTime, QDir, Qt, QIODevice
 from Notessa.text_note.ui_gen.ui_create_textnote_widget import Ui_CreateTextNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.common_modules.forming_note_name import forming_note_file_name
 from Notessa.save_dialog.save_dialog import SaveDialog
 
+from Notessa.resources.icons.button import button_icons_rc
 
 class CreateTextNoteWidget(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.ui = Ui_CreateTextNoteWidget()
         self.ui.setupUi(self)
+
+        self.ui.save_button.setIcon(QIcon(':/button/save.png'))
 
         # Set a default note deadline -
         self.note_deadline = 'None'
@@ -42,7 +45,7 @@ class CreateTextNoteWidget(QWidget):
         with open(file_path, 'w', encoding='utf-8') as fp:
             fp.write(self.ui.textnote_contents.toPlainText())
 
-        if not self.note_deadline == 'None':
+        if not self.note_deadline == None:
             meta_data_content.update({'deadline': deadline_datetime.toString()})
         else:
             meta_data_content.update({'deadline': None})

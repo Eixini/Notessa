@@ -2,11 +2,13 @@ import json, uuid
 
 from PySide6.QtCore import QDir, Qt, QDateTime
 from PySide6.QtWidgets import QWidget, QMessageBox
-from PySide6.QtGui import QRegularExpressionValidator
+from PySide6.QtGui import QIcon
 from Notessa.todo_notes.ui_gen.ui_create_todo_note_widget import Ui_CreateTodoNoteWidget
 from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.common_modules.forming_note_name import forming_note_file_name
 from Notessa.save_dialog.save_dialog import SaveDialog
+
+from Notessa.resources.icons.button import button_icons_rc
 
 
 class CreateTodoNoteWidget(QWidget):
@@ -14,6 +16,10 @@ class CreateTodoNoteWidget(QWidget):
         super().__init__(parent)
         self.ui = Ui_CreateTodoNoteWidget()
         self.ui.setupUi(self)
+
+        self.ui.save_button.setIcon(QIcon(':/button/save.png'))
+        self.ui.add_item_button.setIcon(QIcon(':/button/add.png'))
+        self.ui.delete_button.setIcon(QIcon(':/button/garbage.png'))
 
         # Set a default note deadline -
         self.note_deadline = 'None'
@@ -66,7 +72,7 @@ class CreateTodoNoteWidget(QWidget):
         # Meta-data
         meta_data = {'note_name': note_name}
 
-        if not self.note_deadline == 'None':
+        if not self.note_deadline == None:
             meta_data.update({'deadline': deadline_datetime.toString()})
         else:
             meta_data.update({'deadline': None})

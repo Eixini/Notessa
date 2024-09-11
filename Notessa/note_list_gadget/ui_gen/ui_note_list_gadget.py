@@ -122,7 +122,7 @@ class Ui_NoteListGadget(object):
     # setupUi
 
     def retranslateUi(self, NoteListGadget):
-        NoteListGadget.setWindowTitle(QCoreApplication.translate("NoteListGadget", u"Form", None))
+        NoteListGadget.setWindowTitle(QCoreApplication.translate("NoteListGadget", u"Note list", None))
 #if QT_CONFIG(tooltip)
         self.create_note_button.setToolTip(QCoreApplication.translate("NoteListGadget", u"Add note", None))
 #endif // QT_CONFIG(tooltip)

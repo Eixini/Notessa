@@ -1,7 +1,7 @@
 import json, uuid
 
 from PySide6.QtCore import QUrl, QDir, Qt, QDateTime, QFile
-from PySide6.QtGui import QRegularExpressionValidator
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QWidget, QMessageBox
 from PySide6.QtMultimedia import QMediaDevices, QMediaFormat, QMediaRecorder, QMediaCaptureSession, QAudioInput
 from Notessa.voice_note.ui_gen.ui_create_voice_note_widget import Ui_CreateVoiceNoteWidget
@@ -9,12 +9,18 @@ from Notessa.common_modules.directory_checker import DirectoryChecker
 from Notessa.common_modules.forming_note_name import forming_note_file_name
 from Notessa.save_dialog.save_dialog import SaveDialog
 
+from Notessa.resources.icons.button import button_icons_rc
+
 
 class CreateVoiceNoteWidget(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.ui = Ui_CreateVoiceNoteWidget()
         self.ui.setupUi(self)
+
+        self.ui.record_button.setIcon(QIcon(':/button/play.png'))
+        self.ui.stop_button.setIcon(QIcon(':/button/stop.png'))
+        self.ui.pause_button.setIcon(QIcon(':/button/pause.png'))
 
         # Set a default note deadline -
         self.note_deadline = 'None'
@@ -109,7 +115,7 @@ class CreateVoiceNoteWidget(QWidget):
             url = f'{QDir.toNativeSeparators(file_path)}'
             self._media_recorder.setOutputLocation(QUrl.fromLocalFile(url))
 
-            if not self.note_deadline == 'None':
+            if not self.note_deadline == None:
                 meta_data_content.update({'deadline': deadline_datetime.toString()})
             else:
                 meta_data_content.update({'deadline': None})

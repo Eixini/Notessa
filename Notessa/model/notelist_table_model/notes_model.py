@@ -1,4 +1,4 @@
-from PySide6.QtCore import QAbstractTableModel, Qt, QDir, QFile, QFileInfo, QModelIndex
+from PySide6.QtCore import QAbstractTableModel, Qt, QDir, QFile, QFileInfo, QModelIndex, QTranslator
 from Notessa.common_modules.directory_checker import DirectoryChecker
 import os
 import json
@@ -26,9 +26,9 @@ class NotesModel(QAbstractTableModel):
         if role == Qt.ItemDataRole.DisplayRole:
             if orientation == Qt.Orientation.Horizontal:
                 return {
-                    0: 'Type',
-                    1: 'Name',
-                    2: 'Deadline'
+                    0: QTranslator.tr(u'Type'),
+                    1: QTranslator.tr(u'Name'),
+                    2: QTranslator.tr(u'Deadline')
                 }.get(section)
 
     def removeRows(self, position: QModelIndex, rows: int, QModelIndex: QModelIndex):

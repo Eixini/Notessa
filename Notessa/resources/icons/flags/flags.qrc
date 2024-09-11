@@ -1,0 +1,6 @@
+<RCC>
+  <qresource>
+      <file>flags/russian.png</file>
+      <file>flags/american.png</file>
+  </qresource>
+</RCC>

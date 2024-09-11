@@ -62,7 +62,10 @@ class Ui_CreateTextNoteWidget(object):
 
     def retranslateUi(self, CreateTextNoteWidget):
         CreateTextNoteWidget.setWindowTitle(QCoreApplication.translate("CreateTextNoteWidget", u"Form", None))
+#if QT_CONFIG(tooltip)
+        self.textnote_contents.setToolTip(QCoreApplication.translate("CreateTextNoteWidget", u"Save", None))
+#endif // QT_CONFIG(tooltip)
         self.textnote_contents.setPlaceholderText(QCoreApplication.translate("CreateTextNoteWidget", u"Here you can start writing your note...", None))
-        self.save_button.setText(QCoreApplication.translate("CreateTextNoteWidget", u"Save", None))
+        self.save_button.setText("")
     # retranslateUi
 

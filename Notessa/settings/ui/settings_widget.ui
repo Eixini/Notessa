@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Settings</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -81,7 +81,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -96,7 +96,7 @@
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -111,7 +111,7 @@
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -123,13 +123,25 @@
      </item>
      <item>
       <widget class="QPushButton" name="import_notes_button">
+       <property name="toolTip">
+        <string>Import notes</string>
+       </property>
        <property name="text">
         <string>Import notes</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>19</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="export_notes_button">
+       <property name="toolTip">
+        <string>Export notes</string>
+       </property>
        <property name="text">
         <string>Export notes</string>
        </property>
@@ -138,7 +150,7 @@
      <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>

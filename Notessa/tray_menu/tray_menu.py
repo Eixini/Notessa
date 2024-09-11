@@ -38,13 +38,13 @@ class TrayMenu(QWidget):
         self.settings_widget = SettingsWidget(self)
 
         # Actions
-        self.open_note_list_gadget_action = QAction(u'Note list gadget')
+        self.open_note_list_gadget_action = QAction(QTranslator.tr(u'Note list gadget'))
         self.open_note_list_gadget_action.triggered.connect(self.open_note_list_gadget)
 
-        self.open_settings_widget_action = QAction(u'Settings')
+        self.open_settings_widget_action = QAction(QTranslator.tr(u'Settings'))
         self.open_settings_widget_action.triggered.connect(self.open_settings_widget)
 
-        self.quit_action = QAction(u'Quit')
+        self.quit_action = QAction(QTranslator.tr(u'Quit'))
         self.quit_action.triggered.connect(self.app.quit)
 
         # Tray Menu
@@ -131,8 +131,8 @@ class TrayMenu(QWidget):
 
             # min * 60 * 1000 = msec (5 min = 300000 msec)
             if time_diff <= self.waiting_time_before_deadline and time_diff >= 0 and current_note['checked'] == False:
-                msg = f"The deadline for note \"{current_note['note_name']}\" is approaching"
-                self.tray.showMessage(u'Timeout', msg)
+                msg = QTranslator.tr(f"The deadline for note \"{current_note['note_name']}\" is approaching")
+                self.tray.showMessage(QTranslator.tr(u'Timeout'), msg)
                 print(msg)
 
                 # Set to "Checked" to avoid duplicate messages about a specific note's deadline.

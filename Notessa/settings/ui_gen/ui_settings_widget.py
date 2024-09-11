@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'settings_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -99,6 +99,7 @@ class Ui_SettingsWidget(object):
 
         self.import_notes_button = QPushButton(SettingsWidget)
         self.import_notes_button.setObjectName(u"import_notes_button")
+        self.import_notes_button.setIconSize(QSize(16, 19))
 
         self.horizontalLayout_4.addWidget(self.import_notes_button)
 
@@ -126,14 +127,20 @@ class Ui_SettingsWidget(object):
     # setupUi
 
     def retranslateUi(self, SettingsWidget):
-        SettingsWidget.setWindowTitle(QCoreApplication.translate("SettingsWidget", u"Form", None))
+        SettingsWidget.setWindowTitle(QCoreApplication.translate("SettingsWidget", u"Settings", None))
         self.language_label.setText(QCoreApplication.translate("SettingsWidget", u"Language", None))
         self.style_label.setText(QCoreApplication.translate("SettingsWidget", u"Style", None))
         self.show_note_list_gadget_checkbox.setText(QCoreApplication.translate("SettingsWidget", u"Show notes gadget when app launches", None))
         self.start_at_system_startup_checkbox.setText(QCoreApplication.translate("SettingsWidget", u"Start at system startup", None))
         self.deadline_time_label.setText(QCoreApplication.translate("SettingsWidget", u"Notify me when a deadline is approaching (minutes)", None))
         self.deadline_time_spinbox.setSuffix("")
+#if QT_CONFIG(tooltip)
+        self.import_notes_button.setToolTip(QCoreApplication.translate("SettingsWidget", u"Import notes", None))
+#endif // QT_CONFIG(tooltip)
         self.import_notes_button.setText(QCoreApplication.translate("SettingsWidget", u"Import notes", None))
+#if QT_CONFIG(tooltip)
+        self.export_notes_button.setToolTip(QCoreApplication.translate("SettingsWidget", u"Export notes", None))
+#endif // QT_CONFIG(tooltip)
         self.export_notes_button.setText(QCoreApplication.translate("SettingsWidget", u"Export notes", None))
         self.label.setText(QCoreApplication.translate("SettingsWidget", u"Eixini (Roman R\u04d3ximov)", None))
     # retranslateUi

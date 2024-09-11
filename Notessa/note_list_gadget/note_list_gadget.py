@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QHeaderView, QAbstractItemView, QMenu, QDialog
-from PySide6.QtCore import QSortFilterProxyModel, Qt, QEvent, QSettings, QPoint, QRegularExpression
+from PySide6.QtCore import QSortFilterProxyModel, Qt, QEvent, QSettings, QPoint, QRegularExpression, QTranslator
 from PySide6.QtGui import QIcon, QPixmap, QMouseEvent, QAction, QCursor
 
 from Notessa.note_list_gadget.ui_gen.ui_note_list_gadget import Ui_NoteListGadget
@@ -11,6 +11,7 @@ from Notessa.edit_note_info_window.edit_note_info_window import EditNoteInfoWind
 from Notessa.calendar_window.calendar_window import CalendarWindow
 
 from Notessa.resources.icons.button import button_icons_rc
+from Notessa.resources.icons.common import common_icons_rc
 
 
 class NoteListGadget(QWidget):
@@ -18,6 +19,8 @@ class NoteListGadget(QWidget):
         super().__init__()
         self.ui = Ui_NoteListGadget()
         self.ui.setupUi(self)
+
+        self.setWindowIcon(QIcon(':/common/notessa_logo.png'))
 
         self.setWindowFlags(self.windowFlags() | Qt.WindowType.FramelessWindowHint)
 
@@ -47,12 +50,12 @@ class NoteListGadget(QWidget):
             self.ui.pin_gadget_button.setIcon(QPixmap(':/button/pin.png').scaledToWidth(25).scaledToHeight(25))
 
         # ComboBox
-        self.ui.filter_combobox.addItem('All notes')
-        self.ui.filter_combobox.addItem('Text notes')
-        self.ui.filter_combobox.addItem('Voice notes')
-        self.ui.filter_combobox.addItem('Video notes')
-        self.ui.filter_combobox.addItem('Paint notes')
-        self.ui.filter_combobox.addItem('Todo notes')
+        self.ui.filter_combobox.addItem(QTranslator.tr(u'All notes'))
+        self.ui.filter_combobox.addItem(QTranslator.tr(u'Text notes'))
+        self.ui.filter_combobox.addItem(QTranslator.tr(u'Voice notes'))
+        self.ui.filter_combobox.addItem(QTranslator.tr(u'Video notes'))
+        self.ui.filter_combobox.addItem(QTranslator.tr(u'Paint notes'))
+        self.ui.filter_combobox.addItem(QTranslator.tr(u'Todo notes'))
 
         # TableView
         self.ui.table_view.setModel(self._parent._proxy_model)
@@ -131,15 +134,15 @@ class NoteListGadget(QWidget):
         if self.ui.table_view.underMouse():
             self.table_item_context_menu = QMenu(self)
             # Open note
-            open_note_action = QAction(u'Open', self)
+            open_note_action = QAction(QTranslator.tr(u'Open'), self)
             self.table_item_context_menu.addAction(open_note_action)
             open_note_action.triggered.connect(self.open_note)
             # Edit note info
-            edit_note_info_action = QAction(u'Edit info', self)
+            edit_note_info_action = QAction(QTranslator.tr(u'Edit info'), self)
             self.table_item_context_menu.addAction(edit_note_info_action)
             edit_note_info_action.triggered.connect(self.edit_note_info)
             # Delete note
-            delete_note_action = QAction(u'Delete', self)
+            delete_note_action = QAction(QTranslator.tr(u'Delete'), self)
             self.table_item_context_menu.addAction(delete_note_action)
             delete_note_action.triggered.connect(self.delete_note)
 
