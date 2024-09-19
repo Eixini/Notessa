@@ -32,16 +32,16 @@ Autcip = 1
 [Uninstall]
 Vwau = 0
 Website = https://
-Include uninstaller = 0
+Include uninstaller = 1
 Uninstaller filename = Uninstall
 UseCustomDisplayIcon = 0
 CustomDisplayIcon = <InstallPath>\
 [Licence]
 Licence dialog = 0
 [Finish]
-Sart program = 0
+Sart program = 1
 Reboot computer = 0
-Program = <InstallPath>\
+Program = <InstallPath>\Notessa.exe
 ProgramArguments = 
 [Shortcuts]
 Allowtc = 0
@@ -57,7 +57,7 @@ Time = 2
 PlaySound = 0
 Allow = 0
 [Build]
-File = Notessa 3.0
+File = K:\Eixini\Programming\Projects\Notessa\setup\Notessa_3.0.0.exe
 SetupIconPath = ..\icons\ancient.ico
 UninstallIconPath = ..\icons\ancient.ico
 CompressionMethod = 0
@@ -75,10 +75,9 @@ RunProg =
 RunProgs = 0
 Execdlls = 0
 [Languages]
+2
+11
 [Files/Dirs]
-K:\Eixini\Programming\Projects\Notessa\Notessa\dist\
-N/A
-[Folder]
 K:\Eixini\Programming\Projects\Notessa\Notessa\build\Notessa\
 N/A
 [Folder]
