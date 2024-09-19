@@ -1,3 +1,9 @@
+# 3.0.0 (13.09.2024)
+## Features
+- New application architecture implemented
+- Added a calendar with display of notes by days, when you click on a day it shows a list of notes for that day
+- PaintNote has been redesigned. A new mechanism has been implemented, and Undo/Redo has also been added
+
 # 2.1.0 (27.04.2024)
 ## Features
 - Add widget for viewing existing notes
