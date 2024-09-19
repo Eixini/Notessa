@@ -10,8 +10,7 @@ This application allows you to create notes of many types.
 - [Known Issues](#known-issues)
 
 ## Note
-Currently, version 3.0 is being developed locally. The application architecture has been completely redesigned.
-Due to health issues, development time is increasing.
+Current version - Notessa 3. It was compiled for Windows 10/11, on Linux and macOS some things may not work correctly.
 
 ## Installing dependencies
 To install dependencies you need to run the following command: <br/>
